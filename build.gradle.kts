@@ -1,6 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-group = "com.github.lenope1214"
+group = "com.github.kimleepark2"
 version = ""
 
 plugins {
@@ -41,6 +41,7 @@ subprojects {
 
     dependencies {
         val querydslVersion: String by System.getProperties() // 5.0.0
+        val springAwsVersion: String by System.getProperties() // 2.2.6.RELEASE
 
         // kotlin supports module
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -49,6 +50,9 @@ subprojects {
 //
         // databases
         implementation("org.mariadb.jdbc:mariadb-java-client:3.1.0")
+
+        // aws s3
+        implementation("org.springframework.cloud:spring-cloud-starter-aws:${springAwsVersion}")
 
         // jpa가 사용하는 javax가 jakarta로 변경됨에 따라 아래 어노테이션 프로세서를 추가해줘야 한다.
         annotationProcessor ("jakarta.annotation:jakarta.annotation-api")
