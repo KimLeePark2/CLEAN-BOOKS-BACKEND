@@ -6,6 +6,7 @@ build/
 *.yaml
 
 ### IntelliJ IDEA ###
+.idea/dataSources
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml

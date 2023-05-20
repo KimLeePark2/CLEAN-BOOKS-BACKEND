@@ -26,10 +26,5 @@ dependencies {
     api("io.jsonwebtoken:jjwt-api:0.11.5") // implementation을 api로 변경하면 오류가 발생한다??
 
     // swagger
-//    api("org.springdoc:springdoc-openapi-webmvc-core:1.6.14")
-//    api("org.springdoc:springdoc-openapi-data-rest:1.6.14")
-//    api("org.springdoc:springdoc-openapi-ui:1.6.14")
-//    api("org.springdoc:springdoc-openapi-kotlin:1.6.14")
-    // k
     api("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
 }
