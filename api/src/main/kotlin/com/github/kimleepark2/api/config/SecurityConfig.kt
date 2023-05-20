@@ -23,11 +23,26 @@ import org.springframework.security.web.firewall.HttpFirewall
 class SecurityConfig(
     private val jwtTokenProvider: JwtTokenProvider,
     private val jwtExceptionFilter: JwtExceptionFilter,
+    private val oAuth2AuthenticationSuccessHandler: OAuth2AuthenticationSuccessHandler,
+//    private val userOAuth2Service: UserOAuth2Service,
 ) {
 
     @Bean // 더블 슬래쉬 허용
     fun defaultHttpFirewall(): HttpFirewall {
         return DefaultHttpFirewall()
+    }
+
+    @Bean
+    fun authenticationManager(
+        http: HttpSecurity,
+        passwordEncoder: BCryptPasswordEncoder?,
+        userDetailsService: UserDetailsService?
+    ): AuthenticationManager? {
+        return http.getSharedObject<AuthenticationManagerBuilder>(AuthenticationManagerBuilder::class.java)
+            .userDetailsService<UserDetailsService>(userDetailsService)
+            .passwordEncoder(passwordEncoder)
+            .and()
+            .build()
     }
 
     @Bean
@@ -45,11 +60,17 @@ class SecurityConfig(
             .and()
             .formLogin()
             .disable()
+
             // oauth2 로그인 설정 추가
 //            .logout()
 //            .logoutSuccessUrl("/")
 //            .and()
 //            .oauth2Login()
+//            // 로그인 성공 시 설정 추가
+//            .defaultSuccessUrl("/login-success")
+//            .successHandler(oAuth2AuthenticationSuccessHandler)
+//            .userInfoEndpoint()
+//            .userService(userOAuth2Service)
 
         http
             // jwt 토큰 필터
