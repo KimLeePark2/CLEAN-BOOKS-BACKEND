@@ -1,0 +1,1 @@
+package com.github.kimleepark2.domain.entity.user

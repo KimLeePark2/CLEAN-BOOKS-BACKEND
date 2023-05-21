@@ -1,10 +1,8 @@
 package com.github.kimleepark2.api.config
 
-import com.github.kimleepark2.api.config.oauth2.OAuth2AuthenticationSuccessHandler
 import com.github.kimleepark2.common.jwt.JwtTokenProvider
 import com.github.kimleepark2.common.jwt.filter.JwtAuthenticationFilter
 import com.github.kimleepark2.common.jwt.filter.JwtExceptionFilter
-import com.github.kimleepark2.domain.entity.user.UserOAuth2Service
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -29,8 +27,8 @@ import org.springframework.security.web.firewall.HttpFirewall
 class SecurityConfig(
     private val jwtTokenProvider: JwtTokenProvider,
     private val jwtExceptionFilter: JwtExceptionFilter,
-    private val oAuth2AuthenticationSuccessHandler: OAuth2AuthenticationSuccessHandler,
-    private val userOAuth2Service: UserOAuth2Service,
+//    private val oAuth2AuthenticationSuccessHandler: OAuth2AuthenticationSuccessHandler,
+//    private val userOAuth2Service: UserOAuth2Service,
 ) {
 
     @Bean // 더블 슬래쉬 허용
@@ -41,12 +39,12 @@ class SecurityConfig(
     @Bean
     fun authenticationManager(
         http: HttpSecurity,
-        bCryptPasswordEncoder: BCryptPasswordEncoder?,
+        passwordEncoder: BCryptPasswordEncoder?,
         userDetailsService: UserDetailsService?
     ): AuthenticationManager? {
         return http.getSharedObject<AuthenticationManagerBuilder>(AuthenticationManagerBuilder::class.java)
             .userDetailsService<UserDetailsService>(userDetailsService)
-            .passwordEncoder(bCryptPasswordEncoder)
+            .passwordEncoder(passwordEncoder)
             .and()
             .build()
     }
@@ -66,16 +64,17 @@ class SecurityConfig(
             .and()
             .formLogin()
             .disable()
-            // oauth2 로그인 설정 추가
-            .logout()
-            .logoutSuccessUrl("/")
-            .and()
-            .oauth2Login()
-            // 로그인 성공 시 설정 추가
-            .defaultSuccessUrl("/login-success")
-            .successHandler(oAuth2AuthenticationSuccessHandler)
-            .userInfoEndpoint()
-            .userService(userOAuth2Service)
+
+        // oauth2 로그인 설정 추가
+//            .logout()
+//            .logoutSuccessUrl("/")
+//            .and()
+//            .oauth2Login()
+//            // 로그인 성공 시 설정 추가
+//            .defaultSuccessUrl("/login-success")
+//            .successHandler(oAuth2AuthenticationSuccessHandler)
+//            .userInfoEndpoint()
+//            .userService(userOAuth2Service)
 
         http
             // jwt 토큰 필터

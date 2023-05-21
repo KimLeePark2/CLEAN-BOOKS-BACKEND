@@ -8,7 +8,6 @@ plugins {
     idea
 }
 
-// allopen setting 1
 allOpen {
     annotation("jakarta.persistence.Entity")
     annotation("jakarta.persistence.MappedSuperclass")

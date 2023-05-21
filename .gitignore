@@ -3,9 +3,11 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+logs/
 *.yaml
 
 ### IntelliJ IDEA ###
+.idea/dataSources
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
