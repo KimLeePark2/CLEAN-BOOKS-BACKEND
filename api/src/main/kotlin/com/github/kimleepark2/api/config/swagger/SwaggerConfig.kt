@@ -7,6 +7,7 @@ import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.info.License
 import io.swagger.v3.oas.models.security.SecurityRequirement
 import io.swagger.v3.oas.models.security.SecurityScheme
+import io.swagger.v3.oas.models.servers.Server
 import org.springdoc.core.models.GroupedOpenApi
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -17,12 +18,12 @@ class SwaggerConfig {
 
     @Bean
     fun openAPI(@Value("\${springdoc.version:0.0.0}") appVersion: String?): OpenAPI {
-//        val localServer = Server()
-//        localServer.url = "http://localhost:54101"
-//        localServer.description = "Server URL in Local environment"
-//        val prodServer = Server()
-//        prodServer.url = "http://52.69.157.151:54101/"
-//        prodServer.description = "Server URL in Production environment"
+        val localServer = Server()
+        localServer.url = "http://localhost:53101"
+        localServer.description = "Server URL in Local environment"
+        val prodServer = Server()
+        prodServer.url = "http://43.201.203.197:53101/"
+        prodServer.description = "Server URL in Production environment"
         val mitLicense = License()
             .name("MIT License")
             .url("https://choosealicense.com/licenses/mit/")

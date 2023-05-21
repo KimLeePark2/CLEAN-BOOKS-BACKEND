@@ -1,6 +1,5 @@
 package com.github.kimleepark2.api.config
 
-import com.github.kimleepark2.api.config.oauth2.OAuth2AuthenticationSuccessHandler
 import com.github.kimleepark2.common.jwt.JwtTokenProvider
 import com.github.kimleepark2.common.jwt.filter.JwtAuthenticationFilter
 import com.github.kimleepark2.common.jwt.filter.JwtExceptionFilter

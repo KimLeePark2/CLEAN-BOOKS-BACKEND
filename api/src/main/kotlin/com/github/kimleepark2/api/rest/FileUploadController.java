@@ -2,6 +2,8 @@ package com.github.kimleepark2.api.rest;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -15,8 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/upload")
+@RequestMapping("/api/files")
 @RequiredArgsConstructor
+@Tag(name = "999. 파일", description = "S3파일 관리")
 public class FileUploadController {
 
     private final AmazonS3Client amazonS3Client;
@@ -24,7 +27,7 @@ public class FileUploadController {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    @PostMapping
+    @PostMapping("")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             String fileName = file.getOriginalFilename();

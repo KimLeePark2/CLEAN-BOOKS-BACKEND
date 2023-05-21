@@ -16,10 +16,6 @@ data class UserCreateRequest(
     @Length(min = 4, max = 20, message = "비밀번호는 4~20자 이내로 설정해주세요.")
     val password: String,
 
-    // swagger-ui에 보이지 않도록 설정
-    @Schema(hidden = true)
-    var encryptedPassword: String = "",
-
     @Schema(name = "이름", description = "사용자 이름")
     @NotBlank(message = "이름을 입력해주세요.")
     @Length(min = 2, max = 50, message = "이름은 최대 50자 입니다.")
@@ -28,7 +24,7 @@ data class UserCreateRequest(
     @Schema(
         name = "권한",
         description = "권한은 형식을 맞춰주세요.",
-        allowableValues = ["ROLE_JSOL", "ROLE_LAUNDRY", "ROLE_CLIENT", "ROLE_DEPARTMENT", "ROLE_USER"]
+        allowableValues = ["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_USER"]
     )
     val role: UserRoleType,
 
@@ -38,4 +34,8 @@ data class UserCreateRequest(
 //        message = "연락처 형식이 올바르지 않습니다."
 //    )
     val phone: String,
-)
+){
+    // swagger-ui에 보이지 않도록 설정
+    @Schema(hidden = true)
+    var encryptedPassword: String = ""
+}
