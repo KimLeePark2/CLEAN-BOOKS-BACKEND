@@ -1,14 +1,19 @@
 package com.github.kimleepark2.api.config
 
+import com.github.kimleepark2.api.config.oauth2.OAuth2AuthenticationSuccessHandler
 import com.github.kimleepark2.common.jwt.JwtTokenProvider
 import com.github.kimleepark2.common.jwt.filter.JwtAuthenticationFilter
 import com.github.kimleepark2.common.jwt.filter.JwtExceptionFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.firewall.DefaultHttpFirewall
@@ -23,7 +28,7 @@ import org.springframework.security.web.firewall.HttpFirewall
 class SecurityConfig(
     private val jwtTokenProvider: JwtTokenProvider,
     private val jwtExceptionFilter: JwtExceptionFilter,
-    private val oAuth2AuthenticationSuccessHandler: OAuth2AuthenticationSuccessHandler,
+//    private val oAuth2AuthenticationSuccessHandler: OAuth2AuthenticationSuccessHandler,
 //    private val userOAuth2Service: UserOAuth2Service,
 ) {
 
@@ -61,7 +66,7 @@ class SecurityConfig(
             .formLogin()
             .disable()
 
-            // oauth2 로그인 설정 추가
+        // oauth2 로그인 설정 추가
 //            .logout()
 //            .logoutSuccessUrl("/")
 //            .and()

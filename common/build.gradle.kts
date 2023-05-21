@@ -16,7 +16,8 @@ dependencies {
     api("org.springframework.boot:spring-boot-starter-data-jpa")
     api("org.springframework.boot:spring-boot-starter-jdbc")
     api("org.springframework.boot:spring-boot-starter-security")
-    api("org.springframework.boot:spring-boot-starter-validation") // 파라미터 값 확인(인증, Bean Validation)을 위해
+    api("org.springframework.security:spring-security-oauth2-client:6.0.1") // security.oauth2 사용을 위해 추가
+     api("org.springframework.boot:spring-boot-starter-validation") // 파라미터 값 확인(인증, Bean Validation)을 위해
     api("org.springframework.data:spring-data-commons")
 
     // jwt
@@ -27,4 +28,7 @@ dependencies {
 
     // swagger
     api("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
+
+    // p6spy jdbc logger
+    api("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0")
 }

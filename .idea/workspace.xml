@@ -5,28 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2da9b406-185f-4999-bbf9-ac1ce44d403e" name="변경" comment="[FEAT] 상품 및 찜 추가">
-      <change afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/github/kimleepark2/api/config/oauth2/OAuth2AuthenticationSuccessHandler.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/resources/logback-local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/resources/logback-prod.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/kotlin/com/github/kimleepark2/api/config/SecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/github/kimleepark2/api/config/SecurityConfig.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/domain/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/UserOAuth2Service.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/UserOAuth2Service.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/Product.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/Product.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/request/UserCreateRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/request/UserCreateRequest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/wish/Wish.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/wish/Wish.kt" afterDir="false" />
     </list>
-    <list id="27238f5b-7b79-4874-8ad6-70cd2a0493a3" name="local" comment="">
-      <change afterPath="$PROJECT_DIR$/api/src/main/resources/application-local.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/resources/application-prod.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/resources/application.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jpa-buddy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list id="27238f5b-7b79-4874-8ad6-70cd2a0493a3" name="local" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -142,7 +134,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "jdk.selected.JAVA_MODULE": "17",
-    "last_opened_file_path": "D:/git/clean-books",
+    "last_opened_file_path": "D:/git/clean-books/api/src/main/resources",
     "nodejs_package_manager_path": "npm",
     "spring.configuration.checksum": "95340891a587e50e0b8eb7d1ac398592"
   },
@@ -154,11 +146,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\git\clean-books\api\src\main\resources" />
       <recent name="D:\git\clean-books" />
       <recent name="D:\git\clean-books\api\src\main\kotlin\com\github\kimleepark2\api\config" />
       <recent name="D:\git\clean-books\domain\src\main\kotlin\com\github\kimleepark2" />
       <recent name="D:\git\clean-books\common\src\main\kotlin\com\github\kimleepark2" />
-      <recent name="D:\git\clean-books\api\src\main\kotlin\com\github\kimleepark2" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
       <recent name="com.github.kimleepark2.api.config" />
@@ -284,6 +276,9 @@
       <workItem from="1684560291932" duration="1656000" />
       <workItem from="1684577342475" duration="2589000" />
       <workItem from="1684589497029" duration="2792000" />
+      <workItem from="1684641781443" duration="596000" />
+      <workItem from="1684675836697" duration="3048000" />
+      <workItem from="1684682798501" duration="1124000" />
     </task>
     <task id="LOCAL-00001" summary="init gradle">
       <created>1684157731873</created>
