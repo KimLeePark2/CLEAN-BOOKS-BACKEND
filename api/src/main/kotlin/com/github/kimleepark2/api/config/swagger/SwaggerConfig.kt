@@ -47,24 +47,29 @@ class SwaggerConfig {
                     "Authorization", jwtScheme
                 )
             )
+            .servers(
+                listOf(
+                    localServer, prodServer,
+                )
+            )
             .info(info)
             .security(listOf(SecurityRequirement().addList("Authorization")))
     }
 
     @Bean
-    fun userApi(): GroupedOpenApi {
+    fun swaggerCommonGroupApi(): GroupedOpenApi {
         return GroupedOpenApi.builder()
-            .group("v1 user")
+            .group("공통 API")
             .pathsToMatch("/api/**")
             .pathsToExclude("/api/admin/**")
             .build()
     }
 
     @Bean
-    fun adminApi(): GroupedOpenApi {
+    fun swaggerAdminGroupApi(): GroupedOpenApi {
         return GroupedOpenApi.builder()
-            .group("v1 admin")
-            .pathsToMatch("/api/admin/**", "/api/auth/**")
+            .group("시스템 관리자 API")
+            .pathsToMatch("/api/admin/**")
             .build()
     }
 }
