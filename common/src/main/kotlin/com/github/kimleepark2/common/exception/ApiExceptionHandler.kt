@@ -3,6 +3,7 @@ package com.github.kimleepark2.common.exception
 import org.slf4j.LoggerFactory
 import org.springframework.beans.BeanInstantiationException
 import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.dao.InvalidDataAccessApiUsageException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
@@ -15,13 +16,24 @@ import org.springframework.web.server.ResponseStatusException
 class ApiExceptionHandler {
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    @ExceptionHandler(HttpMessageNotReadableException::class)
-    fun httpMessageNotReadableException(ex: HttpMessageNotReadableException): ResponseEntity<com.github.kimleepark2.common.exception.BadRequestException> {
-        val message =
-            ex.message ?: com.github.kimleepark2.common.exception.ApiExceptionHandler.Companion.REQUEST_BODY_ERROR
+
+    @ExceptionHandler(InvalidDataAccessApiUsageException::class)
+    fun invalidDataAccessApiUsageException(ex: InvalidDataAccessApiUsageException): ResponseEntity<BadRequestException> {
+        val message = ex.message ?: "데이터베이스에서 데이터를 가져올 때 매핑할 수 없는 값이 포함되었습니다."
         logger.error("httpMessageNotReadableException - message : $message")
-        return ResponseEntity<com.github.kimleepark2.common.exception.BadRequestException>(
-            com.github.kimleepark2.common.exception.BadRequestException(
+        return ResponseEntity<BadRequestException>(
+            BadRequestException(message),
+            HttpStatus.INTERNAL_SERVER_ERROR,
+        )
+    }
+    
+    @ExceptionHandler(HttpMessageNotReadableException::class)
+    fun httpMessageNotReadableException(ex: HttpMessageNotReadableException): ResponseEntity<BadRequestException> {
+        val message =
+            ex.message ?: ApiExceptionHandler.Companion.REQUEST_BODY_ERROR
+        logger.error("httpMessageNotReadableException - message : $message")
+        return ResponseEntity<BadRequestException>(
+            BadRequestException(
                 message
             ),
             HttpStatus.BAD_REQUEST
@@ -30,13 +42,13 @@ class ApiExceptionHandler {
 
     // MethodArgumentNotValidException - @Valid 검증 실패 시 Catch된다.
     @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ResponseEntity<com.github.kimleepark2.common.exception.BadRequestException> {
+    fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ResponseEntity<BadRequestException> {
         val message = e.bindingResult
             .allErrors[0]
-            .defaultMessage ?: com.github.kimleepark2.common.exception.ApiExceptionHandler.Companion.REQUEST_BODY_ERROR
+            .defaultMessage ?: ApiExceptionHandler.Companion.REQUEST_BODY_ERROR
         logger.error("handleMethodArgumentNotValidException - message : $message")
-        return ResponseEntity<com.github.kimleepark2.common.exception.BadRequestException>(
-            com.github.kimleepark2.common.exception.BadRequestException(
+        return ResponseEntity<BadRequestException>(
+            BadRequestException(
                 message
             ),
             HttpStatus.BAD_REQUEST
@@ -44,29 +56,29 @@ class ApiExceptionHandler {
     }
 
     // @Valid 검증 실패 시 Catch
-    @ExceptionHandler(com.github.kimleepark2.common.exception.InvalidParameterException::class)
-    fun handleInvalidParameterException(ex: com.github.kimleepark2.common.exception.InvalidParameterException): ResponseEntity<com.github.kimleepark2.common.exception.InternalServerException> {
+    @ExceptionHandler(InvalidParameterException::class)
+    fun handleInvalidParameterException(ex: InvalidParameterException): ResponseEntity<InternalServerException> {
         logger.error("handleInvalidParameterException - message : $ex.message")
-        return ResponseEntity<com.github.kimleepark2.common.exception.InternalServerException>(
-            com.github.kimleepark2.common.exception.InternalServerException("서버에서 오류가 발생했습니다. - Invalid Parameter Exception"),
+        return ResponseEntity<InternalServerException>(
+            InternalServerException("서버에서 오류가 발생했습니다. - Invalid Parameter Exception"),
             HttpStatus.BAD_REQUEST
         )
     }
 
     @ExceptionHandler(DataIntegrityViolationException::class)
-    fun dataIntegrityViolationException(ex: DataIntegrityViolationException): ResponseEntity<com.github.kimleepark2.common.exception.BadRequestException> {
+    fun dataIntegrityViolationException(ex: DataIntegrityViolationException): ResponseEntity<BadRequestException> {
         val message = ex.rootCause?.message
         logger.error("dataIntegrityViolationException - message : $message")
-        return ResponseEntity<com.github.kimleepark2.common.exception.BadRequestException>(
-            com.github.kimleepark2.common.exception.BadRequestException(
+        return ResponseEntity<BadRequestException>(
+            BadRequestException(
                 "데이터 제약조건 오류가 발생했습니다."
             ),
             HttpStatus.BAD_REQUEST
         )
     }
 
-    @ExceptionHandler(com.github.kimleepark2.common.exception.UnauthorizedException::class)
-    fun handleUnauthorizedException(ex: com.github.kimleepark2.common.exception.UnauthorizedException): ResponseEntity<String> {
+    @ExceptionHandler(UnauthorizedException::class)
+    fun handleUnauthorizedException(ex: UnauthorizedException): ResponseEntity<String> {
         logger.error("handleBasicException - message : ${ex.message}")
         ex.printStackTrace()
         return ResponseEntity<String>(
@@ -74,8 +86,8 @@ class ApiExceptionHandler {
         )
     }
 
-    @ExceptionHandler(com.github.kimleepark2.common.exception.BasicException::class)
-    fun handleBasicException(ex: com.github.kimleepark2.common.exception.BasicException): ResponseEntity<String> {
+    @ExceptionHandler(BasicException::class)
+    fun handleBasicException(ex: BasicException): ResponseEntity<String> {
         logger.error("handleBasicException - message : ${ex.message}")
         ex.printStackTrace()
         return ResponseEntity<String>(
@@ -84,17 +96,17 @@ class ApiExceptionHandler {
     }
 
     @ExceptionHandler(IllegalArgumentException::class)
-    fun illegalArgumentExceptionHandler(ex: IllegalArgumentException): ResponseEntity<com.github.kimleepark2.common.exception.InternalServerException> {
+    fun illegalArgumentExceptionHandler(ex: IllegalArgumentException): ResponseEntity<InternalServerException> {
         logger.error("illegalArgumentExceptionHandler - message : ${ex.message}")
         ex.printStackTrace()
-        return ResponseEntity<com.github.kimleepark2.common.exception.InternalServerException>(
-            com.github.kimleepark2.common.exception.InternalServerException(ex.message ?: "서버에서 오류가 발생했습니다."),
+        return ResponseEntity<InternalServerException>(
+            InternalServerException(ex.message ?: "서버에서 오류가 발생했습니다."),
             HttpStatus.INTERNAL_SERVER_ERROR
         )
     }
 
     @ExceptionHandler(BeanInstantiationException::class)
-    fun beanInstantiationExceptionHandler(ex: BeanInstantiationException): ResponseEntity<com.github.kimleepark2.common.exception.BadRequestException> {
+    fun beanInstantiationExceptionHandler(ex: BeanInstantiationException): ResponseEntity<BadRequestException> {
         logger.error("beanInstantiationExceptionHandler - message : ${ex.message}")
         val message: String = ex.message ?: "Bad request"
         var parsedMessage: String = message
@@ -104,8 +116,8 @@ class ApiExceptionHandler {
         }
 
         ex.printStackTrace()
-        return ResponseEntity<com.github.kimleepark2.common.exception.BadRequestException>(
-            com.github.kimleepark2.common.exception.BadRequestException(parsedMessage),
+        return ResponseEntity<BadRequestException>(
+            BadRequestException(parsedMessage),
             HttpStatus.INTERNAL_SERVER_ERROR
         )
     }
@@ -121,11 +133,11 @@ class ApiExceptionHandler {
 
     // 모든 예외를 핸들링하여 ErrorResponse 형식으로 반환한다.
     @ExceptionHandler(Exception::class)
-    fun handleException(ex: Exception): ResponseEntity<com.github.kimleepark2.common.exception.InternalServerException> {
+    fun handleException(ex: Exception): ResponseEntity<InternalServerException> {
         logger.error("handleException - message : ${ex.message}")
         ex.printStackTrace()
-        return ResponseEntity<com.github.kimleepark2.common.exception.InternalServerException>(
-            com.github.kimleepark2.common.exception.InternalServerException(com.github.kimleepark2.common.exception.ApiExceptionHandler.Companion.UNKNOWN_ERROR),
+        return ResponseEntity<InternalServerException>(
+            InternalServerException(ApiExceptionHandler.Companion.UNKNOWN_ERROR),
             HttpStatus.INTERNAL_SERVER_ERROR
         )
     }
