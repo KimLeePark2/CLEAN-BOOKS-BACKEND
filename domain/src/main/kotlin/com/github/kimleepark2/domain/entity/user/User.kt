@@ -1,6 +1,7 @@
 package com.github.kimleepark2.domain.entity.user
 
 import com.github.kimleepark2.domain.entity.BaseEntity
+import com.github.kimleepark2.domain.entity.product.dto.request.ProductUpdateRequest
 import com.github.kimleepark2.domain.entity.user.dto.request.UserUpdateRequest
 import com.github.kimleepark2.domain.entity.user.enum.OAuth2Provider
 import com.github.kimleepark2.domain.entity.user.enum.UserRoleType
@@ -50,10 +51,15 @@ class User(
     @Comment(value = "사용자 비밀번호 변경 유무")
     val changePassword: Boolean = false,
 
-    @Id
     @Column(name = "email", length = 255, nullable = false)
     @Comment(value = "사용자 이메일, 아이디")
     private val email: String,
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", nullable = false)
+    @Comment(value = "사용자 고유번호")
+    val id: Long? = null
 ) : UserDetails, BaseEntity() {
 
     private var loginAt: LocalDateTime? = null

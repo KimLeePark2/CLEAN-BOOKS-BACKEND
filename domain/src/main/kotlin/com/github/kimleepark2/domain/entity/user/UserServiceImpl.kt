@@ -1,31 +1,26 @@
 package com.github.kimleepark2.domain.entity.user
 
-import jakarta.persistence.LockModeType
-import com.github.kimleepark2.domain.entity.user.dto.request.*
-import com.github.kimleepark2.domain.entity.util.findByIdOrThrow
 import com.github.kimleepark2.common.exception.UnauthorizedException
 import com.github.kimleepark2.common.jwt.JwtTokenProvider
 import com.github.kimleepark2.common.jwt.dto.JwtToken
+import com.github.kimleepark2.domain.entity.user.dto.request.RefreshTokenRequest
+import com.github.kimleepark2.domain.entity.user.dto.request.UserUpdateRequest
 import com.github.kimleepark2.domain.entity.user.dto.response.UserResponse
+import com.github.kimleepark2.domain.entity.util.findByIdOrThrow
+import jakarta.persistence.LockModeType
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.jpa.repository.Lock
-import org.springframework.security.authentication.*
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
-import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
 
 @Service
 class UserServiceImpl(
-    private val jwtTokenProvider: JwtTokenProvider,
     private val userRepository: UserRepository,
+    private val jwtTokenProvider: JwtTokenProvider,
     private val passwordEncoder: PasswordEncoder,
-): UserService {
+) : UserService {
 
 //    @Value("\${auth.kakao.key.admin}")
 //    private lateinit var adminKey: String
@@ -38,25 +33,25 @@ class UserServiceImpl(
         return JwtToken(jwtTokenProvider.createAccessToken(userPk), jwtTokenProvider.createRefreshToken(userPk))
     }
 
-    override fun getUserById(id: Long): User {
-        return userRepository.findByIdOrThrow(id, "사용자를 찾을 수 없습니다.")
+    override fun getUserById(id: Long): UserResponse {
+        return UserResponse(userRepository.findByIdOrThrow(id, "사용자를 찾을 수 없습니다."))
     }
 
-    override fun getLoginUserInfo(): User {
-        return getAccountFromSecurityContext()
-////        val newLpList = lpQueryRepository.findMyNewLpList(loginUser.id!!)
-//        return UserResponse.of(loginUser)
+    override fun getLoginUserInfo(): UserResponse {
+        return UserResponse(getAccountFromSecurityContext())
     }
 
-    override fun getUserByUsername(email: String): User {
-        return userRepository.findByEmail(email)
-            ?: throw IllegalArgumentException("사용자를 찾을 수 없습니다.")
+    override fun getUserByUsername(email: String): UserResponse {
+        return UserResponse(
+            userRepository.findByEmail(email)
+                ?: throw IllegalArgumentException("사용자를 찾을 수 없습니다.")
+        )
     }
 
     override fun updateUser(userUpdateRequest: UserUpdateRequest): Unit {
         val loginUser = getAccountFromSecurityContext()
 
-        val user = getUserById(userUpdateRequest.id)
+        val user = userRepository.findByIdOrThrow(userUpdateRequest.id, "사용자를 찾을 수 없습니다.")
 
 //        val laundryId = loginUser.getLaundry()?.id
 //        val clientId = loginUser.getClient()?.id
@@ -72,7 +67,7 @@ class UserServiceImpl(
 
     @Lock(value = LockModeType.PESSIMISTIC_WRITE) // 읽기 쓰기 모두 불가능하도록 LOCK 걸기
     override fun deleteUser(id: Long): UserResponse {
-        val user = getUserById(id)
+        val user = userRepository.findByIdOrThrow(id, "사용자를 찾을 수 없습니다.")
 
         val loginUser = getAccountFromSecurityContext()
 
@@ -83,20 +78,20 @@ class UserServiceImpl(
         return UserResponse(user)
     }
 
-    fun changePassword(putPasswordRequest: PutPasswordRequest): Boolean {
-        val loginUser = getAccountFromSecurityContext()
-        
-        // 권한체크
-
-        val user = getUserByUsername(putPasswordRequest.email)
-
-        val encryptPassword = passwordEncoder.encode(putPasswordRequest.password)
-        user.changePassword(encryptPassword)
-
-        userRepository.save(user)
-
-        return true
-    }
+//    fun changePassword(putPasswordRequest: PutPasswordRequest): Boolean {
+//        val loginUser = getAccountFromSecurityContext()
+//
+//        // 권한체크
+//
+//        val user = getUserByUsername(putPasswordRequest.id)
+//
+//        val encryptPassword = passwordEncoder.encode(putPasswordRequest.password)
+//        user.changePassword(encryptPassword)
+//
+//        userRepository.save(user)
+//
+//        return true
+//    }
 
     override fun kakaoLogout(): String {
 //        val loginUser: User = getAccountFromSecurityContext()

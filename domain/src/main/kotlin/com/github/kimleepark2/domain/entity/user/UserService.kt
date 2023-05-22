@@ -8,11 +8,11 @@ import com.github.kimleepark2.domain.entity.user.dto.response.UserResponse
 interface UserService {
     fun refreshToken(refreshTokenRequest: RefreshTokenRequest): JwtToken
 
-    fun getUserById(id: Long): User
+    fun getUserById(id: Long): UserResponse
 
-    fun getLoginUserInfo(): User
+    fun getLoginUserInfo(): UserResponse
 
-    fun getUserByUsername(username: String): User
+    fun getUserByUsername(username: String): UserResponse
 
     fun updateUser(userUpdateRequest: UserUpdateRequest)
 
