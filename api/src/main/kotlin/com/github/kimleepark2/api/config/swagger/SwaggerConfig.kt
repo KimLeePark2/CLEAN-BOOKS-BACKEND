@@ -22,7 +22,7 @@ class SwaggerConfig {
         localServer.url = "http://localhost:53101"
         localServer.description = "Server URL in Local environment"
         val prodServer = Server()
-        prodServer.url = "http://43.201.203.197:53101/"
+        prodServer.url = "http://43.201.203.197:53103"
         prodServer.description = "Server URL in Production environment"
         val mitLicense = License()
             .name("MIT License")
@@ -49,7 +49,7 @@ class SwaggerConfig {
             )
             .servers(
                 listOf(
-                    localServer, prodServer,
+                    prodServer, localServer,
                 )
             )
             .info(info)
