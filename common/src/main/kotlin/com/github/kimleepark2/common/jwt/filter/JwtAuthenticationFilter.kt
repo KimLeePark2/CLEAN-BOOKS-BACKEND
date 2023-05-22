@@ -31,7 +31,7 @@ class JwtAuthenticationFilter(private val jwtTokenProvider: JwtTokenProvider) : 
         IllegalArgumentException::class,
     )
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
-        val res: HttpServletResponse = response as HttpServletResponse
+        val res: HttpServletResponse = response
         res.setHeader("Access-Control-Allow-Origin", "*")
         res.setHeader("Access-Control-Allow-Methods", "*")
         res.setHeader("Access-Control-Max-Age", "3600")
@@ -40,7 +40,7 @@ class JwtAuthenticationFilter(private val jwtTokenProvider: JwtTokenProvider) : 
             "Origin, Content-Type, Accept, Authorization"
         )
 
-        val token: String? = jwtTokenProvider.resolveToken((request as HttpServletRequest))
+        val token: String? = jwtTokenProvider.resolveToken(request)
 
 //        val path = request.requestURI
 

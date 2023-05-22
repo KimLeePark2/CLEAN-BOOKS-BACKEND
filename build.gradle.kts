@@ -11,6 +11,7 @@ plugins {
     id("org.springframework.boot") version springBootVersion apply false
     id("io.spring.dependency-management") version "1.1.0" apply false
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0" apply false
+    id("io.gitlab.arturbosch.detekt") version "1.20.0"
 
     kotlin("jvm") version kotlinVersion apply false                   // 1.7.22
     kotlin("kapt") version kotlinVersion apply false                  // 1.7.22
@@ -103,4 +104,8 @@ subprojects {
     tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
         enabled = false
     }
+}
+
+detekt {
+    config = files("$rootDir/detekt.yml")
 }
