@@ -6,6 +6,9 @@ import com.github.kimleepark2.domain.entity.user.User
 import com.github.kimleepark2.domain.entity.user.enum.UserRoleType
 
 data class UserResponse(
+    @Schema(description = "사용자 계정(아이디)")
+    val username: String,
+
     @Schema(description = "사용자 이름")
     val name: String,
 
@@ -21,6 +24,7 @@ data class UserResponse(
     val changePassword: Boolean? = null,
 ){
     constructor(user: User, isFirst: Boolean? = null) : this(
+        username = user.username,
         name = user.name,
         role = user.role,
         isFirst = isFirst,
