@@ -4,7 +4,7 @@ FROM openjdk:17-jdk-slim
 # FROM openjdk:17-jdk-slim
 
 # Add Author info
-LABEL maintainer="j-sol.co.kr"
+LABEL maintainer="lsb123@g.yju.ac.kr"
 
 # The application's jar file
 ARG JAR_FILE=api/build/libs/api.jar
