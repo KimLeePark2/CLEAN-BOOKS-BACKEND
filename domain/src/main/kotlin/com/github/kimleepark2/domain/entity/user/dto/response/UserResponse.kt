@@ -12,6 +12,9 @@ data class UserResponse(
     @Schema(description = "사용자 이름")
     val name: String,
 
+    @Schema(description = "사용자 닉네임")
+    val nickname: String,
+
     @Schema(description = "사용자 권한")
     val role: UserRoleType = UserRoleType.ROLE_USER,
 
@@ -26,6 +29,7 @@ data class UserResponse(
     constructor(user: User, isFirst: Boolean? = null) : this(
         username = user.username,
         name = user.name,
+        nickname = user.nickname,
         role = user.role,
         isFirst = isFirst,
         changePassword = user.changePassword
