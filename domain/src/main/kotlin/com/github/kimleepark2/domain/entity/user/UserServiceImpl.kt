@@ -27,11 +27,11 @@ class UserServiceImpl(
     private val passwordEncoder: PasswordEncoder,
 ): UserService {
 
-    @Value("\${auth.kakao.key.admin}")
-    private lateinit var adminKey: String
-
-    @Value("\${auth.kakao.logout.redirect.url}")
-    private lateinit var kakaoLogoutRedirectUrl: String
+//    @Value("\${auth.kakao.key.admin}")
+//    private lateinit var adminKey: String
+//
+//    @Value("\${auth.kakao.logout.redirect.url}")
+//    private lateinit var kakaoLogoutRedirectUrl: String
 
     override fun refreshToken(refreshTokenRequest: RefreshTokenRequest): JwtToken {
         val userPk = jwtTokenProvider.getUserPk(refreshTokenRequest.refreshToken)
@@ -99,23 +99,23 @@ class UserServiceImpl(
     }
 
     override fun kakaoLogout(): String {
-        val loginUser: User = getAccountFromSecurityContext()
-        log.info("카카오 로그아웃 - $adminKey,${loginUser.providerId!!}")
-
-        val logoutUrl: String = "https://kapi.kakao.com/v1/user/logout"
-
-        val client: HttpClient = HttpClient.newBuilder().build()
-        val request: HttpRequest = HttpRequest.newBuilder()
-            .uri(URI.create("$logoutUrl?target_id_type=user_id&target_id=${loginUser.providerId!!}"))
-            .setHeader("Authorization", "KakaoAK $adminKey")
-            .POST(HttpRequest.BodyPublishers.ofString(""))
-            .build()
-
-        log.info("request : $request")
-        request.headers().map().forEach { (key, value) -> log.info("key : $key, value : $value") }
-
-        val response = client.send(request, HttpResponse.BodyHandlers.ofString())
-        log.info("${response.body()[0]} 유저 로그아웃")
+//        val loginUser: User = getAccountFromSecurityContext()
+//        log.info("카카오 로그아웃 - $adminKey,${loginUser.providerId!!}")
+//
+//        val logoutUrl: String = "https://kapi.kakao.com/v1/user/logout"
+//
+//        val client: HttpClient = HttpClient.newBuilder().build()
+//        val request: HttpRequest = HttpRequest.newBuilder()
+//            .uri(URI.create("$logoutUrl?target_id_type=user_id&target_id=${loginUser.providerId!!}"))
+//            .setHeader("Authorization", "KakaoAK $adminKey")
+//            .POST(HttpRequest.BodyPublishers.ofString(""))
+//            .build()
+//
+//        log.info("request : $request")
+//        request.headers().map().forEach { (key, value) -> log.info("key : $key, value : $value") }
+//
+//        val response = client.send(request, HttpResponse.BodyHandlers.ofString())
+//        log.info("${response.body()[0]} 유저 로그아웃")
         return "success"
     }
 
