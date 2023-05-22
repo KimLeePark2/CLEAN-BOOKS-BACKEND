@@ -13,7 +13,7 @@ interface PaginationSortRepository : PaginationRepository {
         sort.stream().forEach { order: Sort.Order ->
             val direction = if (order.isAscending) Order.ASC else Order.DESC
             val orderByExpression: PathBuilder<*> = PathBuilder(classType, className)
-            orders.add(OrderSpecifier(direction, orderByExpression[order.property] as Expression<Comparable<*>>))
+            orders.add(OrderSpecifier(direction, orderByExpression[order.property] as Expression<Comparable<Any>>))
         }
         return orders.toTypedArray()
     }

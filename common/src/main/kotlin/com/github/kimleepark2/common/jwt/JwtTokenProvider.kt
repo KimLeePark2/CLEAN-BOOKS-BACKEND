@@ -78,7 +78,7 @@ class JwtTokenProvider(private val userDetailsService: UserDetailsService) {
             return null
         }
 
-        return if (token != null && token.indexOf("Bearer ") > -1) token.replace("Bearer ", "") else ""
+        return if (token.indexOf("Bearer ") > -1) token.replace("Bearer ", "") else ""
         // 여기서 오류를 반환하게 되면 로그인 전 유저나 게스트 권한 등은 아무 요청도 할 수 없게 됨.
 //            throw UnauthorizedException("Unsupported JWT token")
     }
