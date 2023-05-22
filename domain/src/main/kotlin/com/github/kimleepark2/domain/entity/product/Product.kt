@@ -13,33 +13,32 @@ import org.hibernate.annotations.Where
 @Entity
 @Table(name = "tb_product")
 class Product(
-
-    @Column(name = "title", length = 20, nullable = false)
+    @Column(name = "title", length = 50, nullable = false)
     @Comment(value = "상품 게시글 제목")
     var title: String,
-
-    @Column(name = "book_title", length = 50, nullable = false)
-    @Comment(value = "책 제목")
-    var bookTitle: String,
-
-    @Column(name = "author", length = 30, nullable = false)
-    @Comment(value = "책 작가")
-    var author: String,
-
-    @Column(name = "price", length = 20, nullable = false)
-    @Comment(value = "책 가격")
-    var price: Integer,
-
-    @Column(name = "publisher", length = 20, nullable = false)
-    @Comment(value = "출판사")
-    var publisher: String,
 
     @Column(name = "status", length = 20, nullable = false)
     @Enumerated(EnumType.STRING) // 문자열로 저장하기 위하여
     @Comment(value = "상태")
     var status: ProductStatus = ProductStatus.SALE,
 
-    @Column(name = "thumbnail_image_path", length = 20, nullable = false)
+    @Column(name = "book_title", length = 50, nullable = false)
+    @Comment(value = "책 제목")
+    var bookTitle: String,
+
+    @Column(name = "author", length = 50, nullable = false)
+    @Comment(value = "책 저자")
+    var author: String,
+
+    @Column(name = "price", length = 9, nullable = false)
+    @Comment(value = "책 가격")
+    var price: Integer,
+
+    @Column(name = "publisher", length = 50, nullable = false)
+    @Comment(value = "출판사")
+    var publisher: String,
+
+    @Column(name = "thumbnail_image_path", length = 255, nullable = false)
     @Comment(value = "사용자 프로필 경로(S3 Path)")
     var thumbnailImagePath: String,
 
