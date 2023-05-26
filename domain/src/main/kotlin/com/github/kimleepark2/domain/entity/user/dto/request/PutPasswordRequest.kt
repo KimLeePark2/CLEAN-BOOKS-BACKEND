@@ -8,7 +8,7 @@ data class PutPasswordRequest(
     @Schema(description = "사용자 번호는 4~16자 이내로 설정해주세요.")
     @NotBlank(message = "사용자 번호를 입력해주세요.")
     @Length(min = 0, message = "사용자 번호를 입력해주세요.")
-    val id: Long,
+    val id: String,
 
     @Schema(description = "변경할 비밀번호는 4~20자 이내로 설정해주세요.")
     @NotBlank(message = "비밀번호를 입력해주세요.")

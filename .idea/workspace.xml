@@ -5,18 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2da9b406-185f-4999-bbf9-ac1ce44d403e" name="변경" comment="[FEAT] 상품 및 찜 추가">
-      <change afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/github/kimleepark2/api/config/oauth2/OAuth2AuthenticationSuccessHandler.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/resources/logback-local.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/resources/logback-prod.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common/querydsl/QFunction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/common/BaseCondition.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/common/JpaRepositoryUtils.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/common/ListRequestResult.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/kotlin/com/github/kimleepark2/api/config/SecurityConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/github/kimleepark2/api/config/SecurityConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/Product.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/Product.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/kotlin/com/github/kimleepark2/api/rest/UserRest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/github/kimleepark2/api/rest/UserRest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common/paging/PaginationSortRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common/paging/PaginationSortRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common/util/LocalDateTimeUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common/util/LocalDateTimeUtils.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common/util/StringUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common/util/StringUtils.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/ProductQueryRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/ProductQueryRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/ProductServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/ProductServiceImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/User.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/UserRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/UserRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/UserService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/UserService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/UserServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/UserServiceImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/request/PutPasswordRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/request/PutPasswordRequest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/request/UserCreateRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/request/UserCreateRequest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/wish/Wish.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/wish/Wish.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/request/UserUpdateRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/request/UserUpdateRequest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/response/LoginResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/response/LoginResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/response/SellerResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/response/SellerResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/response/UserResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/response/UserResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/enum/OAuth2Provider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/enum/OAuth2Provider.kt" afterDir="false" />
     </list>
     <list id="27238f5b-7b79-4874-8ad6-70cd2a0493a3" name="local" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,6 +82,13 @@
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="formatting" type="c8890929:TasksNode$1" />
               </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="clean-books" type="f1a62948:ProjectNode" />
+                <item name="api" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
             </expand>
             <select />
           </tree_state>
@@ -95,21 +112,37 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="develop" />
+                    <option name="lastUsedInstant" value="1684747196" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1684747195" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.querydsl/querydsl-jpa/5.0.0/68336df7aacb30570ef281e82ce695479ff9fef9/querydsl-jpa-5.0.0-sources.jar!/com/querydsl/jpa/JPAQueryBase.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-config/6.0.1/a4f90a47fff7a3cea88f08fb9bc7d9b68a50a76d/spring-security-config-6.0.1-sources.jar!/org/springframework/security/config/annotation/web/builders/HttpSecurity.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="JpbToolWindowState">
-    <option name="myId2FirstActivated">
-      <map>
-        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
-        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
-        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
-      </map>
-    </option>
-    <option name="myId2Visible">
-      <map>
-        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
-        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
-        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
-      </map>
-    </option>
+    <option name="isToolWindowVisible" value="false" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -134,9 +167,14 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "jdk.selected.JAVA_MODULE": "17",
-    "last_opened_file_path": "D:/git/clean-books/api/src/main/resources",
+    "last_opened_file_path": "/Users/leeseongbok/workspace/Github/CLEAN-BOOKS-BACKEND/domain/src/main/kotlin/com/github/kimleepark2/domain",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "spring.configuration.checksum": "95340891a587e50e0b8eb7d1ac398592"
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "spring.configuration.checksum": "95340891a587e50e0b8eb7d1ac398592",
+    "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
@@ -146,17 +184,60 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain" />
+      <recent name="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common" />
+      <recent name="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common/util" />
       <recent name="D:\git\clean-books\api\src\main\resources" />
       <recent name="D:\git\clean-books" />
-      <recent name="D:\git\clean-books\api\src\main\kotlin\com\github\kimleepark2\api\config" />
-      <recent name="D:\git\clean-books\domain\src\main\kotlin\com\github\kimleepark2" />
-      <recent name="D:\git\clean-books\common\src\main\kotlin\com\github\kimleepark2" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.github.kimleepark2.common.exception.entities.product" />
       <recent name="com.github.kimleepark2.api.config" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.ApiApplication">
+    <configuration name="CLEAN-BOOKS-BACKEND:api [compileKotlin]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="compileKotlin" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="CLEAN-BOOKS-BACKEND:api [compileTestJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="compileTestJava" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="clean-books:api [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -169,27 +250,6 @@
         <option name="taskNames">
           <list>
             <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="clean-books:api [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/api" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="clean" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -234,26 +294,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="db.yaml.mariadb: Compose 배포" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="services">
-            <list>
-              <option value="mariadb" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="db.yaml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
+    <list>
+      <item itemvalue="Gradle.CLEAN-BOOKS-BACKEND:api [compileTestJava]" />
+      <item itemvalue="Gradle.CLEAN-BOOKS-BACKEND:api [compileKotlin]" />
+      <item itemvalue="Gradle.clean-books:api [build]" />
+      <item itemvalue="Gradle.clean-books:api [ktlintFormat]" />
+      <item itemvalue="Spring Boot.ApiApplication" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.ApiApplication" />
-        <item itemvalue="Gradle.clean-books:api [build]" />
+        <item itemvalue="Gradle.CLEAN-BOOKS-BACKEND:api [compileKotlin]" />
+        <item itemvalue="Gradle.CLEAN-BOOKS-BACKEND:api [compileTestJava]" />
         <item itemvalue="Gradle.clean-books:api [ktlintFormat]" />
-        <item itemvalue="Gradle.clean-books:api [clean]" />
-        <item itemvalue="Docker.db.yaml.mariadb: Compose 배포" />
+        <item itemvalue="Gradle.clean-books:api [build]" />
       </list>
     </recent_temporary>
   </component>
@@ -279,6 +333,12 @@
       <workItem from="1684641781443" duration="596000" />
       <workItem from="1684675836697" duration="3048000" />
       <workItem from="1684682798501" duration="1124000" />
+      <workItem from="1684804316104" duration="11535000" />
+      <workItem from="1684890151071" duration="597000" />
+      <workItem from="1684976321414" duration="1449000" />
+      <workItem from="1685063563461" duration="44000" />
+      <workItem from="1685089486855" duration="2343000" />
+      <workItem from="1685111719148" duration="2888000" />
     </task>
     <task id="LOCAL-00001" summary="init gradle">
       <created>1684157731873</created>
@@ -389,5 +449,9 @@
     <MESSAGE value="[FEAT] 사용자 도메인 추가" />
     <MESSAGE value="[FEAT] 상품 및 찜 추가" />
     <option name="LAST_COMMIT_MESSAGE" value="[FEAT] 상품 및 찜 추가" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

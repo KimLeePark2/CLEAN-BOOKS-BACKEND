@@ -1,25 +1,30 @@
 package com.github.kimleepark2.common.jwt.filter
 
+import com.github.kimleepark2.common.jwt.JwtTokenProvider
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.MalformedJwtException
 import io.jsonwebtoken.UnsupportedJwtException
 import io.jsonwebtoken.io.IOException
 import io.jsonwebtoken.security.SecurityException
-import com.github.kimleepark2.common.jwt.JwtTokenProvider
+import jakarta.servlet.FilterChain
+import jakarta.servlet.ServletException
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
-import jakarta.servlet.FilterChain
-import jakarta.servlet.ServletException
-import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse
 
 @Component
 class JwtAuthenticationFilter(private val jwtTokenProvider: JwtTokenProvider) : OncePerRequestFilter() {
 
     val log: Logger = LoggerFactory.getLogger(this.javaClass)
+
+    val TOKEN_PASSER: List<String> = listOf(
+        "/swagger",
+        "login",
+    )
 
     @Throws(
         IOException::class,
@@ -40,28 +45,32 @@ class JwtAuthenticationFilter(private val jwtTokenProvider: JwtTokenProvider) : 
             "Origin, Content-Type, Accept, Authorization"
         )
 
-        val token: String? = jwtTokenProvider.resolveToken(request)
+        val requestURI = request.requestURI
+        log.info("requestURI : $requestURI")
 
-//        val path = request.requestURI
+        // 토큰 확인을 통과시킬 URI인지 확인
+        if (!checkTokenPasser(requestURI)) {
+            val token: String? = jwtTokenProvider.resolveToken(request)
 
-//        log.info("token.isNullOrBlank() : ${token.isNullOrBlank()}")
-//        log.info("validPaths.isNotEmpty() : ${validPaths.isNotEmpty()}")
-//        log.info("validPaths.contains(path) : ${validPaths.contains(path)}\nvalidPaths : $validPaths")
-
-        if (!token.isNullOrBlank() &&
-            // 요청 경로 검증 경로 인증은 처음 인증시엔 validPaths 데이터가 없으므로 하지 않는다.
-//            && validPaths.isNotEmpty()
-//            // 요청 경로가 검증할 경로에 포함되어 있다면, 토큰 인증 o
-//            // 요청 경로가 검증할 경로에 포함되어있지 않다면 토큰 인증 x
-//            && validPaths.contains(path)
-            // 토큰이 인증 가능한 토큰이면
-            jwtTokenProvider.validateToken(token)
-        ) {
-//            log.info("[${request.method}] ${path}?${request.queryString} -: 인증 토큰 검증 성공")
-            val authentication = jwtTokenProvider.getAuthentication(token)
-            SecurityContextHolder.getContext().authentication = authentication
+            if (
+                !token.isNullOrBlank() &&
+                jwtTokenProvider.validateToken(token)
+            ) {
+                val authentication = jwtTokenProvider.getAuthentication(token)
+                log.info("authentication : $authentication")
+                SecurityContextHolder.getContext().authentication = authentication
+            }
         }
 
         chain.doFilter(request, response)
+    }
+
+    private fun checkTokenPasser(requestURI: String): Boolean {
+        log.debug("[checkTokenPasser] requestURI : $requestURI")
+        log.debug("[checkTokenPasser] tokenPasser : $TOKEN_PASSER")
+        return TOKEN_PASSER.any {
+            if (it.startsWith("/")) requestURI.startsWith(it)
+            else requestURI.contains(it)
+        }
     }
 }

@@ -7,9 +7,9 @@ import com.github.kimleepark2.domain.entity.product.dto.response.ProductResponse
 interface ProductService {
     fun createProduct(productCreateRequest: ProductCreateRequest): ProductResponse
 
-    fun getProductById(id: Long): ProductResponse
+    fun getById(id: Long): ProductResponse
 
-    fun updateProduct(userUpdateRequest: ProductUpdateRequest)
+    fun update(userUpdateRequest: ProductUpdateRequest)
 
-    fun deleteProduct(id: Long): ProductResponse
+    fun deleteById(id: Long): ProductResponse
 }
