@@ -62,6 +62,18 @@ class SecurityConfig(
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
+        // application.yml의 jwt.paths에 있는 경로는 인증필요
+        // anyRequest 인증 처리 전에 있어야 함.
+        validPaths.forEach { path ->
+            // validPaths에 해당하는 요청은 인증이 필요한 요청이므로 필터링 되도록 설정한다.
+            http.authorizeHttpRequests()
+                .requestMatchers(path).authenticated()
+
+//            http.authorizeHttpRequests()
+//                .requestMatchers(path).authenticated()
+//                .antMatchers(path).authenticated()
+        }
+
         http.authorizeHttpRequests()
             // 모든 요청 처리 허용
             .anyRequest().permitAll()
@@ -80,12 +92,7 @@ class SecurityConfig(
 //            .userInfoEndpoint()
 //            .userService(userOAuth2Service)
 
-        // application.yml의 jwt.paths에 있는 경로는 인증필요
-        validPaths.forEach { path ->
-            http.authorizeHttpRequests()
-                .requestMatchers(path).authenticated()
-//                .antMatchers(path).authenticated()
-        }
+
         http
             // jwt 토큰 필터
             .addFilterBefore(
