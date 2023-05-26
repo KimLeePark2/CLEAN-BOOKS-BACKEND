@@ -47,9 +47,9 @@ class UserRest(
         description = "OAuth2 사용자 정보로 등록"
     )
     @PostMapping("")
-       @ResponseBody
-       @ResponseStatus(HttpStatus.CREATED)
-    fun createUser(@RequestBody userCreateRequest: UserCreateRequest): UserResponse{
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createUser(@RequestBody userCreateRequest: UserCreateRequest): UserResponse {
         return UserResponse(userService.saveUser(userCreateRequest))
     }
 
