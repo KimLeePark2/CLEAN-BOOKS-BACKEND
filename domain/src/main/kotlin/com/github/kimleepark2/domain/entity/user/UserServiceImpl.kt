@@ -4,16 +4,17 @@ import com.github.kimleepark2.common.exception.UnauthorizedException
 import com.github.kimleepark2.common.jwt.JwtTokenProvider
 import com.github.kimleepark2.common.jwt.dto.JwtToken
 import com.github.kimleepark2.domain.entity.user.dto.request.RefreshTokenRequest
+import com.github.kimleepark2.domain.entity.user.dto.request.UserCreateRequest
 import com.github.kimleepark2.domain.entity.user.dto.request.UserUpdateRequest
+import com.github.kimleepark2.domain.entity.user.dto.response.LoginResponse
 import com.github.kimleepark2.domain.entity.user.dto.response.UserResponse
 import com.github.kimleepark2.domain.entity.util.findByIdOrThrow
-import jakarta.persistence.LockModeType
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.data.jpa.repository.Lock
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.util.UUID
 
 @Service
 class UserServiceImpl(
@@ -33,17 +34,13 @@ class UserServiceImpl(
         return JwtToken(jwtTokenProvider.createAccessToken(userPk), jwtTokenProvider.createRefreshToken(userPk))
     }
 
-    override fun getUserById(id: Long): UserResponse {
+    override fun getUserById(id: String): UserResponse {
         return UserResponse(userRepository.findByIdOrThrow(id, "사용자를 찾을 수 없습니다."))
-    }
-
-    override fun getLoginUserInfo(): UserResponse {
-        return UserResponse(getAccountFromSecurityContext())
     }
 
     override fun getUserByUsername(email: String): UserResponse {
         return UserResponse(
-            userRepository.findByEmail(email)
+            userRepository.findByUsername(email)
                 ?: throw IllegalArgumentException("사용자를 찾을 수 없습니다.")
         )
     }
@@ -53,11 +50,6 @@ class UserServiceImpl(
 
         val user = userRepository.findByIdOrThrow(userUpdateRequest.id, "사용자를 찾을 수 없습니다.")
 
-//        val laundryId = loginUser.getLaundry()?.id
-//        val clientId = loginUser.getClient()?.id
-//        val departmentId = loginUser.getDepartment()?.id
-//        if (!loginUser.beAbleRole(laundryId, clientId, departmentId)) throw ForbiddenException()
-
         user.updateInfo(userUpdateRequest)
 
         userRepository.save(user)
@@ -65,8 +57,7 @@ class UserServiceImpl(
         user.update(loginUser.username)
     }
 
-    @Lock(value = LockModeType.PESSIMISTIC_WRITE) // 읽기 쓰기 모두 불가능하도록 LOCK 걸기
-    override fun deleteUser(id: Long): UserResponse {
+    override fun deleteUser(id: String): UserResponse {
         val user = userRepository.findByIdOrThrow(id, "사용자를 찾을 수 없습니다.")
 
         val loginUser = getAccountFromSecurityContext()
@@ -114,12 +105,38 @@ class UserServiceImpl(
         return "success"
     }
 
+    override fun testLogin(): LoginResponse {
+        val testUser = userRepository.findById("1").get()
+        return LoginResponse(
+            username = testUser.username,
+            userId = testUser.id,
+            name = testUser.name,
+            role = testUser.role,
+            changePassword = testUser.changePassword,
+            accessToken = jwtTokenProvider.createAccessToken(testUser.username),
+            refreshToken = jwtTokenProvider.createRefreshToken(testUser.username),
+        )
+    }
+
+    override fun saveUser(userCreateRequest: UserCreateRequest): User {
+        return userRepository.save(
+            User(
+                password = passwordEncoder.encode(UUID.randomUUID().toString()),
+                name = userCreateRequest.name,
+                nickname = userCreateRequest.nickname,
+                provider = userCreateRequest.provider,
+                providerId = userCreateRequest.providerId,
+                username = userCreateRequest.username,
+            )
+        )
+    }
+
+
     companion object {
         val log: Logger = LoggerFactory.getLogger(this::class.java)
 
         fun getAccountFromSecurityContext(): User {
             val authentication = SecurityContextHolder.getContext().authentication
-            log.info("authentication : $authentication")
             val principal = authentication.principal
             log.info("principal : $principal")
             if (principal == "anonymousUser") throw UnauthorizedException("계정이 확인되지 않습니다. 다시 로그인 해주세요.")

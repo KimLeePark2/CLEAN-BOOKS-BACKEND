@@ -20,6 +20,12 @@ dependencies {
      api("org.springframework.boot:spring-boot-starter-validation") // 파라미터 값 확인(인증, Bean Validation)을 위해
     api("org.springframework.data:spring-data-commons")
 
+    // querydsl, javax -> jakarta로 변경됨에 따라 :jakarta 추가
+    api("com.querydsl:querydsl-jpa:$querydslVersion:jakarta")
+    api("com.querydsl:querydsl-apt:$querydslVersion:jakarta")
+    api("com.querydsl:querydsl-kotlin-codegen:$querydslVersion") // kotlin code generation support
+    kapt("com.querydsl:querydsl-apt:$querydslVersion:jakarta") // 이게 없으면 build해도 Q class가 생성되지 않는다.
+
     // jwt
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
@@ -31,4 +37,6 @@ dependencies {
 
     // p6spy jdbc logger
     api("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0")
+
+    kapt("org.springframework.boot:spring-boot-configuration-processor")
 }

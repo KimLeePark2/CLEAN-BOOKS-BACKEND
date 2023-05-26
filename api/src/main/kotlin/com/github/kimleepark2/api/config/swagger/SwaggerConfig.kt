@@ -47,11 +47,11 @@ class SwaggerConfig {
                     "Authorization", jwtScheme
                 )
             )
-            .servers(
-                listOf(
-                    prodServer, localServer,
-                )
-            )
+//            .servers(
+//                listOf(
+//                    prodServer, localServer,
+//                )
+//            )
             .info(info)
             .security(listOf(SecurityRequirement().addList("Authorization")))
     }

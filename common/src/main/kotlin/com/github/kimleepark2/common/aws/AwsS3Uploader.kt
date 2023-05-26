@@ -21,9 +21,14 @@ class AwsS3Uploader(
     @Value("\${cloud.aws.s3.bucket}")
     var bucket: String? = null
 
-    val S3_BUCKET_DIRECTORY_NAME = "static"
+    @Value("\${cloud.aws.s3.bucket.directory-name:static}")
+    val S3_BUCKET_DIRECTORY_NAME: String = "static"
 
     private val log = LoggerFactory.getLogger(AwsS3Uploader::class.java)
+
+    init {
+        log.info("S3_BUCKET_DIRECTORY_NAME: $S3_BUCKET_DIRECTORY_NAME")
+    }
 
     fun upload(multipartFile: MultipartFile, dirName: String): String {
         // 메타데이터 설정

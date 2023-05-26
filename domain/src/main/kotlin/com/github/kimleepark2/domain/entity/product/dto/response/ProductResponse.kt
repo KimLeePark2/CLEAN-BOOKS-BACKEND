@@ -2,10 +2,12 @@ package com.github.kimleepark2.domain.entity.product.dto.response
 
 import com.github.kimleepark2.domain.entity.product.Product
 import com.github.kimleepark2.domain.entity.product.enums.ProductStatus
+import com.github.kimleepark2.domain.entity.user.dto.response.SellerResponse
 import com.github.kimleepark2.domain.entity.user.dto.response.UserResponse
+import com.querydsl.core.annotations.QueryProjection
 import io.swagger.v3.oas.annotations.media.Schema
 
-data class ProductResponse(
+data class ProductResponse @QueryProjection constructor(
     @Schema(description = "상품 번호")
     val id: Long,
 
@@ -31,7 +33,7 @@ data class ProductResponse(
     var thumbnailImagePath: String,
 
     @Schema(description = "책 판매자 정보")
-    val seller: UserResponse,
+    val seller: SellerResponse,
 
     @Schema(description = "책 좋아요 수")
     var wishes: Long,
@@ -45,7 +47,7 @@ data class ProductResponse(
         price = product.price,
         publisher = product.publisher,
         thumbnailImagePath = product.thumbnailImagePath,
-        seller = UserResponse(product.seller),
+        seller = SellerResponse(product.seller),
         wishes = product.wishes.size.toLong()
     )
 }
