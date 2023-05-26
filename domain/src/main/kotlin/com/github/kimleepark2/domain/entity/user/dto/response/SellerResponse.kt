@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 
 data class SellerResponse(
     @Schema(description = "기본키")
-    val id: Long,
+    val id: String,
 
     @Schema(description = "사용자 계정(아이디)")
     val username: String,
@@ -17,7 +17,7 @@ data class SellerResponse(
     val nickname: String,
 ) {
     constructor(user: User) : this(
-        id = user.id!!,
+        id = user.id,
         username = user.username,
         name = user.name,
         nickname = user.nickname,

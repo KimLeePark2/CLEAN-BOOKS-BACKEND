@@ -1,4 +1,4 @@
-package kr.co.jsol.core.util
+package com.github.kimleepark2.common.util
 
 /**
  * string pascal case to camel case

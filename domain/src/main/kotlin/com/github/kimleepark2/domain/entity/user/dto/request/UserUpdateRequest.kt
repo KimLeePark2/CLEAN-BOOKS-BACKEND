@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Min
 data class UserUpdateRequest(
     @Schema(name = "계정 번호", description = "필수 입력입니다.")
     @Min(value = 1, message = "계정 번호는 1 이상 입력해주세요.")
-    val id: Long,
+    val id: String,
 
     @Schema( description = "사용자 이름")
     @Length(min = 2, message = "이름은 2자 이상 입력해주세요.")

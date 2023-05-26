@@ -7,7 +7,7 @@ import com.github.kimleepark2.domain.entity.user.enum.UserRoleType
 
 data class UserResponse(
     @Schema(description = "사용자 번호")
-    val id: Long,
+    val id: String,
 
     @Schema(description = "사용자 로그인 이메일")
     val username: String,

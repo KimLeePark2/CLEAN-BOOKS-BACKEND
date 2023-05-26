@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Comment("회원")
 @Where(clause = "deleted_at IS NULL")
@@ -31,7 +32,7 @@ class User(
 
     @Column(name = "profile_image_path", length = 20, nullable = false)
     @Comment(value = "사용자 프로필 경로(S3 Path)")
-    var profileImagePath: String,
+    var profileImagePath: String = "",
 
     @Column(name = "provider", length = 255, nullable = false)
     @Comment(value = "사용자 oauth2 인증소")
@@ -58,7 +59,7 @@ class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
     @Comment(value = "사용자 고유번호")
-    val id: Long? = null,
+    val id: String = UUID.randomUUID().toString(),
 ) : UserDetails, BaseEntity() {
 
     private var loginAt: LocalDateTime? = null

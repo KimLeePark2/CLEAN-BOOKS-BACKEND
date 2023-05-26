@@ -1,4 +1,4 @@
-package kr.co.jsol.core.util
+package com.github.kimleepark2.common.util
 
 import java.time.LocalDateTime
 

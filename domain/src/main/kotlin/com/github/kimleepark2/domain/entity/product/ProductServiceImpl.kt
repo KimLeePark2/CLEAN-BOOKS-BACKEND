@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service
 @Service
 class ProductServiceImpl(
     private val productRepository: ProductRepository,
-    private val productQuery: ProductQueryRepository,
+//    private val productQuery: ProductQueryRepository,
     private val userRepository: UserRepository,
     private val awsS3Uploader: AwsS3Uploader,
 ) : ProductService {
@@ -34,7 +34,8 @@ class ProductServiceImpl(
 
     override fun getById(id: Long): ProductResponse {
 //        val product = productRepository.findById(id).orElseThrow { throw ProductNotFoundException("상품을 찾을 수 없습니다.") }
-        return productQuery.getById(id)
+//        return productQuery.getById(id)
+        TODO()
     }
 
     override fun update(userUpdateRequest: ProductUpdateRequest) {

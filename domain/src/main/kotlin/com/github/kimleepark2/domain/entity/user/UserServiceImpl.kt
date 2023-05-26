@@ -4,6 +4,7 @@ import com.github.kimleepark2.common.exception.UnauthorizedException
 import com.github.kimleepark2.common.jwt.JwtTokenProvider
 import com.github.kimleepark2.common.jwt.dto.JwtToken
 import com.github.kimleepark2.domain.entity.user.dto.request.RefreshTokenRequest
+import com.github.kimleepark2.domain.entity.user.dto.request.UserCreateRequest
 import com.github.kimleepark2.domain.entity.user.dto.request.UserUpdateRequest
 import com.github.kimleepark2.domain.entity.user.dto.response.LoginResponse
 import com.github.kimleepark2.domain.entity.user.dto.response.UserResponse
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.util.UUID
 
 @Service
 class UserServiceImpl(
@@ -32,7 +34,7 @@ class UserServiceImpl(
         return JwtToken(jwtTokenProvider.createAccessToken(userPk), jwtTokenProvider.createRefreshToken(userPk))
     }
 
-    override fun getUserById(id: Long): UserResponse {
+    override fun getUserById(id: String): UserResponse {
         return UserResponse(userRepository.findByIdOrThrow(id, "사용자를 찾을 수 없습니다."))
     }
 
@@ -55,7 +57,7 @@ class UserServiceImpl(
         user.update(loginUser.username)
     }
 
-    override fun deleteUser(id: Long): UserResponse {
+    override fun deleteUser(id: String): UserResponse {
         val user = userRepository.findByIdOrThrow(id, "사용자를 찾을 수 없습니다.")
 
         val loginUser = getAccountFromSecurityContext()
@@ -104,10 +106,10 @@ class UserServiceImpl(
     }
 
     override fun testLogin(): LoginResponse {
-        val testUser = userRepository.findById(1).get()
+        val testUser = userRepository.findById("1").get()
         return LoginResponse(
             username = testUser.username,
-            userId = testUser.id!!,
+            userId = testUser.id,
             name = testUser.name,
             role = testUser.role,
             changePassword = testUser.changePassword,
@@ -115,6 +117,20 @@ class UserServiceImpl(
             refreshToken = jwtTokenProvider.createRefreshToken(testUser.username),
         )
     }
+
+    override fun saveUser(userCreateRequest: UserCreateRequest): User {
+        return userRepository.save(
+            User(
+                password = passwordEncoder.encode(UUID.randomUUID().toString()),
+                name = userCreateRequest.name,
+                nickname = userCreateRequest.nickname,
+                provider = userCreateRequest.provider,
+                providerId = userCreateRequest.providerId,
+                username = userCreateRequest.username,
+            )
+        )
+    }
+
 
     companion object {
         val log: Logger = LoggerFactory.getLogger(this::class.java)

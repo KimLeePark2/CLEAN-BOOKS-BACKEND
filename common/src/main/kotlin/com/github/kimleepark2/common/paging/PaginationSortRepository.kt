@@ -3,13 +3,12 @@ package com.github.kimleepark2.common.paging
 import com.querydsl.core.types.Expression
 import com.querydsl.core.types.Order
 import com.querydsl.core.types.OrderSpecifier
-import com.querydsl.core.types.dsl.Expressions
+import com.querydsl.core.types.dsl.Expressions.stringPath
 import com.querydsl.core.types.dsl.PathBuilder
 import com.querydsl.core.types.dsl.StringPath
-import kr.co.jsol.core.util.pascalToCamel
+import com.github.kimleepark2.common.util.pascalToCamel
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
-
 
 interface PaginationSortRepository : PaginationRepository {
 
@@ -27,16 +26,31 @@ interface PaginationSortRepository : PaginationRepository {
         customOrderProperties: Map<String, String>,
         entityClass: Class<*>,
         entityAlias: String = entityClass.simpleName.pascalToCamel(),
+        defaultOrder: OrderSpecifier<*>? = null,
     ): Array<OrderSpecifier<*>> {
-        val sort = this.sort
+        var sort = this.sort
         var orders: Array<OrderSpecifier<*>> = arrayOf()
+
+        if (sort == (Sort.by("id.desc")) && defaultOrder != null) {
+            sort = Sort.by(
+                if (defaultOrder.isAscending) Sort.Direction.ASC else Sort.Direction.DESC,
+                defaultOrder.target.toString()
+                    // 기본 정렬로 설정된 값이 entityClass(기본 정렬 대상 클래스)와 동일한 경우 entityAlias를 제거한다.
+                    .replace(Regex("^$entityAlias."), "")
+                    // .으로 시작할 경우 오류가 발생하므로 .을 제거한다.
+                    .replace(Regex("^\\."), "")
+                    // '.'이 2개 연속 있는 경우 하나로 변경한다.
+                    .replace(Regex("\\.\\."), "."),
+
+                )
+        }
 
         // 커스텀 정렬 기능, 커스텀 정렬 대상이 없으면 기본 클래스를 대상으로 정렬한다.
         if (sort.isSorted && customOrderProperties.isNotEmpty()) {
             sort.stream().findFirst().ifPresent { order: Sort.Order ->
                 val direction = if (order.isAscending) Order.ASC else Order.DESC
                 val property = order.property
-                val orderByExpression: StringPath = Expressions.stringPath(property)
+                val orderByExpression: StringPath = stringPath(property)
 
                 if (customOrderProperties.contains(property)) {
                     try {
@@ -45,7 +59,7 @@ interface PaginationSortRepository : PaginationRepository {
                                 OrderSpecifier(
                                     direction,
                                     // customOrderProperties에 정의된 property가 있으면 해당 property를 사용하고 없으면 기존의 property를 사용한다.
-                                    Expressions.stringPath(customOrderProperties[property]) ?: orderByExpression
+                                    stringPath(customOrderProperties[property]) ?: orderByExpression
                                 )
                             )
                     } catch (_: Exception) {
@@ -56,9 +70,12 @@ interface PaginationSortRepository : PaginationRepository {
 
         // 커스텀 정렬된 값이 없으면 기본으로 지정된 entityClass sort를 사용한다.
         if (orders.isEmpty()) {
-            orders = getOrderSpecifiers(sort, entityClass, entityAlias)
+            orders = if (sort.isSorted) {
+                getOrderSpecifiers(sort, entityClass, entityAlias)
+            } else {
+                arrayOf()
+            }
         }
-
         return orders
     }
 
