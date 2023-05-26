@@ -45,7 +45,7 @@ class UserServiceImpl(
         )
     }
 
-    override fun updateUser(userUpdateRequest: UserUpdateRequest): Unit {
+    override fun updateUser(userUpdateRequest: UserUpdateRequest) {
         val loginUser = getAccountFromSecurityContext()
 
         val user = userRepository.findByIdOrThrow(userUpdateRequest.id, "사용자를 찾을 수 없습니다.")
@@ -130,7 +130,6 @@ class UserServiceImpl(
             )
         )
     }
-
 
     companion object {
         val log: Logger = LoggerFactory.getLogger(this::class.java)

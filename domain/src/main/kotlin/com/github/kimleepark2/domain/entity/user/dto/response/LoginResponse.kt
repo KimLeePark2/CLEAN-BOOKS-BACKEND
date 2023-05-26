@@ -2,7 +2,6 @@ package com.github.kimleepark2.domain.entity.user.dto.response
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.github.kimleepark2.domain.entity.user.enum.UserRoleType
-import com.github.kimleepark2.common.jwt.dto.JwtToken
 import io.swagger.v3.oas.annotations.media.Schema
 
 data class LoginResponse(

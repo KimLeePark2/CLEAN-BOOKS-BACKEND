@@ -33,5 +33,4 @@ class Wish(
     @Comment(value = "기본키")
     @Column(name = "wish_id")
     val id: Long? = null,
-) : BaseEntity() {
-}
+) : BaseEntity()
