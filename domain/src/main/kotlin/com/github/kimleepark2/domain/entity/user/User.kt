@@ -1,17 +1,16 @@
 package com.github.kimleepark2.domain.entity.user
 
 import com.github.kimleepark2.domain.entity.BaseEntity
-import com.github.kimleepark2.domain.entity.product.dto.request.ProductUpdateRequest
 import com.github.kimleepark2.domain.entity.user.dto.request.UserUpdateRequest
 import com.github.kimleepark2.domain.entity.user.enum.OAuth2Provider
 import com.github.kimleepark2.domain.entity.user.enum.UserRoleType
+import jakarta.persistence.*
 import org.hibernate.annotations.Comment
 import org.hibernate.annotations.Where
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.time.LocalDateTime
-import jakarta.persistence.*
 
 @Comment("회원")
 @Where(clause = "deleted_at IS NULL")
@@ -38,28 +37,28 @@ class User(
     @Comment(value = "사용자 oauth2 인증소")
     var provider: OAuth2Provider = OAuth2Provider.LOCAL,
 
-    @Column(name = "provider_id", length = 255)
+    @Column(length = 255)
     @Comment(value = "사용자 oauth2 인증소 id")
     var providerId: String? = null,
 
-    @Column(name = "role", length = 50, nullable = false)
+    @Column(length = 50, nullable = false)
     @Comment(value = "사용자 권한(ROLE_XXX)")
     @Enumerated(EnumType.STRING)
     val role: UserRoleType = UserRoleType.ROLE_USER,
 
-    @Column(name = "changePassword", length = 50, nullable = false)
+    @Column(length = 50, nullable = false)
     @Comment(value = "사용자 비밀번호 변경 유무")
     val changePassword: Boolean = false,
 
-    @Column(name = "email", length = 255, nullable = false)
-    @Comment(value = "사용자 이메일, 아이디")
-    private val email: String,
+    @Column(length = 255, nullable = false)
+    @Comment(value = "사용자 아이디(이메일)")
+    private val username: String,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
     @Comment(value = "사용자 고유번호")
-    val id: Long? = null
+    val id: Long? = null,
 ) : UserDetails, BaseEntity() {
 
     private var loginAt: LocalDateTime? = null
@@ -77,15 +76,10 @@ class User(
         return loginAt != null
     }
 
-    fun checkEmail(): Boolean {
-        return email.isNotEmpty()
-    }
-
     fun isChangePassword(): Boolean = this.changePassword
 
-    override fun getUsername(): String = this.email
-
     override fun getPassword(): String = this.password
+    override fun getUsername(): String = this.username
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         val authorities: MutableList<GrantedAuthority> = ArrayList()
@@ -115,7 +109,7 @@ class User(
 
     override
     fun toString(): String {
-        return "User(email='$email', password='$password', name='$name', role=$role, changePassword=$changePassword, loginAt=$loginAt)"
+        return "User(username='$username', password='$password', name='$name', role=$role, changePassword=$changePassword, loginAt=$loginAt)"
     }
 
     fun updateProvider(provider: OAuth2Provider, providerId: String) {

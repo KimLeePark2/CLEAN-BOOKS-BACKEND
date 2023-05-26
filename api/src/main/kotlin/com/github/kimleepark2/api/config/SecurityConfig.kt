@@ -3,6 +3,7 @@ package com.github.kimleepark2.api.config
 import com.github.kimleepark2.common.jwt.JwtTokenProvider
 import com.github.kimleepark2.common.jwt.filter.JwtAuthenticationFilter
 import com.github.kimleepark2.common.jwt.filter.JwtExceptionFilter
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -31,6 +32,9 @@ class SecurityConfig(
 //    private val userOAuth2Service: UserOAuth2Service,
 ) {
 
+    @Value("\${jwt.paths}")
+    val validPaths: List<String> = listOf()
+
     @Bean // 더블 슬래쉬 허용
     fun defaultHttpFirewall(): HttpFirewall {
         return DefaultHttpFirewall()
@@ -40,7 +44,7 @@ class SecurityConfig(
     fun authenticationManager(
         http: HttpSecurity,
         passwordEncoder: BCryptPasswordEncoder?,
-        userDetailsService: UserDetailsService?
+        userDetailsService: UserDetailsService?,
     ): AuthenticationManager? {
         return http.getSharedObject<AuthenticationManagerBuilder>(AuthenticationManagerBuilder::class.java)
             .userDetailsService<UserDetailsService>(userDetailsService)
@@ -76,6 +80,12 @@ class SecurityConfig(
 //            .userInfoEndpoint()
 //            .userService(userOAuth2Service)
 
+        // application.yml의 jwt.paths에 있는 경로는 인증필요
+        validPaths.forEach { path ->
+            http.authorizeHttpRequests()
+                .requestMatchers(path).authenticated()
+//                .antMatchers(path).authenticated()
+        }
         http
             // jwt 토큰 필터
             .addFilterBefore(

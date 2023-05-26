@@ -17,21 +17,54 @@ import org.springframework.web.bind.annotation.*
 class ProductRest(
     private val productService: ProductService,
 ) {
-
     @ApiResponses(
         ApiResponse(responseCode = "201", description = "성공"),
         ApiResponse(responseCode = "400", description = "잘못된 요청 정보"),
     )
     @Operation(
         summary = "상품 등록",
-        description = "사용자가 판매하고자 하는 상품(책)을 등록한다."
+        description = "사용자가 판매하고자 하는 상품(책)을 등록한다. 파일이 포함되어있어 Formdata로 보내야 한다."
     )
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    fun createUser(
+    fun createProduct(
         @ModelAttribute userCreateRequest: ProductCreateRequest,
     ): ProductResponse {
         return productService.createProduct(userCreateRequest)
     }
+
+    @ApiResponses(
+        ApiResponse(responseCode = "200", description = "성공"),
+        ApiResponse(responseCode = "400", description = "잘못된 요청 정보"),
+    )
+    @Operation(
+        summary = "상품 단일 상세조회",
+        description = "상품을 페이지네이션 처리된 리스트를 조회한다."
+    )
+    @GetMapping("/{productId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    fun getProducts(
+        @PathVariable productId: Long,
+    ): ProductResponse {
+        return productService.getById(productId)
+    }
+
+//    @ApiResponses(
+//        ApiResponse(responseCode = "200", description = "성공"),
+//        ApiResponse(responseCode = "400", description = "잘못된 요청 정보"),
+//    )
+//    @Operation(
+//        summary = "상품 페이지 조회",
+//        description = "상품을 페이지네이션 처리된 리스트를 조회한다."
+//    )
+//    @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
+//    @ResponseStatus(HttpStatus.CREATED)
+//    @ResponseBody
+//    fun getProducts(
+//        @ModelAttribute userCreateRequest: ProductCreateRequest,
+//    ): Page<ProductResponse> {
+//        return productService.getProductById(userCreateRequest)
+//    }
 }

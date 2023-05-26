@@ -40,7 +40,7 @@ data class ProductCreateRequest(
     @Length(min = 1, max = 50, message = "책 출판사는 1~50자 이내로 입력해주세요.")
     var publisher: String,
 
-    @Schema(description = "책 썸네일 (MultipartFile)")
+    @Schema(description = "책 썸네일 (MultipartFile)", defaultValue = "null")
     var thumbnailImage: MultipartFile? = null,
 ) {
     fun toEntity(imgPath: String, seller: User): Product = Product(

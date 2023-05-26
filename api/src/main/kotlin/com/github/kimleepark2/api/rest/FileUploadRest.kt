@@ -33,10 +33,6 @@ class FileUploadRest(
     fun uploadFile(
         @RequestParam("file") file: MultipartFile,
     ): FileResponse {
-//    : ResponseEntity<String> {
-//        val path = awsS3Uploader.upload(file, "test").trimIndent().trim()
-//        log.info("path: $path")
-//        return ResponseEntity.ok().body(path)
         return FileResponse(awsS3Uploader.upload(file, "test").trimIndent().trim())
     }
 
