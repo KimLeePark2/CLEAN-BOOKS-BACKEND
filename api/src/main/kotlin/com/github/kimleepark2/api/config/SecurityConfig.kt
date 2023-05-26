@@ -92,7 +92,6 @@ class SecurityConfig(
 //            .userInfoEndpoint()
 //            .userService(userOAuth2Service)
 
-
         http
             // jwt 토큰 필터
             .addFilterBefore(
