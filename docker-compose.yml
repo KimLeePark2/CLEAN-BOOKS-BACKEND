@@ -37,6 +37,8 @@ services:
       MARIADB_DATABASE: cleanbooks
       MARIADB_USER: cleanbooks
       MARIADB_PASSWORD: leehj12!$
-
+    volumes:
+      - mariadb:/var/lib/mysql
 volumes:
   cleanbooks-prod-server:
+  mariadb:
