@@ -1,7 +1,6 @@
 package com.github.kimleepark2.domain.entity.product
 
 import com.github.kimleepark2.common.aws.AwsS3Uploader
-import com.github.kimleepark2.common.exception.entities.product.ProductNotFoundException
 import com.github.kimleepark2.common.exception.entities.user.UserNotFoundException
 import com.github.kimleepark2.domain.entity.product.dto.request.ProductCreateRequest
 import com.github.kimleepark2.domain.entity.product.dto.request.ProductUpdateRequest

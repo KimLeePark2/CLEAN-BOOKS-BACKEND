@@ -1,10 +1,10 @@
 package com.github.kimleepark2.domain.entity.product
 
-//@Component
+// @Component
 // JPAQueryFactory를 사용하려면 QueryDslConfig 파일에 Bean 등록 해줘야함.
-//class ProductQueryRepository(
+// class ProductQueryRepository(
 //    private val queryFactory: JPAQueryFactory,
-//) {
+// ) {
 //
 //    fun getById(id: Long): ProductResponse {
 //        return queryFactory.select<ProductResponse>(
@@ -42,7 +42,7 @@ package com.github.kimleepark2.domain.entity.product
 //            )
 //            .fetchOne() ?: throw Exception("상품을 찾을 수 없습니다.")
 //    }
-//}
+// }
 
 /*
 

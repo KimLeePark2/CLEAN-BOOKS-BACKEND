@@ -1,10 +1,8 @@
 package com.github.kimleepark2.domain.entity.product.dto.request
 
 import com.github.kimleepark2.domain.entity.product.Product
-import com.github.kimleepark2.domain.entity.product.enums.ProductStatus
 import com.github.kimleepark2.domain.entity.user.User
 import io.swagger.v3.oas.annotations.media.Schema
-import com.github.kimleepark2.domain.entity.user.enum.UserRoleType
 import org.hibernate.validator.constraints.Length
 import jakarta.validation.constraints.NotBlank
 import org.springframework.web.multipart.MultipartFile
@@ -13,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile
 data class ProductCreateRequest(
     @Schema(description = "사용자 번호")
     @Length(min = 1, message = "사용자 번호를 입력해주세요.")
-    val userId: Long,
+    val userId: String,
 
     @Schema(description = "글 제목, 1~50자")
     @NotBlank(message = "비밀번호를 입력해주세요.")

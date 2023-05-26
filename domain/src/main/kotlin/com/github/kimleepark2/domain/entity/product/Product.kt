@@ -59,5 +59,4 @@ class Product(
     @Comment(value = "기본키")
     @Column(name = "product_id")
     val id: Long? = null,
-) : BaseEntity() {
-}
+) : BaseEntity()

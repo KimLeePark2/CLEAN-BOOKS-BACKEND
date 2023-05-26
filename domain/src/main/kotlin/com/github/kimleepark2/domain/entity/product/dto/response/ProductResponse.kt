@@ -3,7 +3,6 @@ package com.github.kimleepark2.domain.entity.product.dto.response
 import com.github.kimleepark2.domain.entity.product.Product
 import com.github.kimleepark2.domain.entity.product.enums.ProductStatus
 import com.github.kimleepark2.domain.entity.user.dto.response.SellerResponse
-import com.github.kimleepark2.domain.entity.user.dto.response.UserResponse
 import com.querydsl.core.annotations.QueryProjection
 import io.swagger.v3.oas.annotations.media.Schema
 
@@ -37,7 +36,7 @@ data class ProductResponse @QueryProjection constructor(
 
     @Schema(description = "책 좋아요 수")
     var wishes: Long,
-){
+) {
     constructor(product: Product) : this(
         id = product.id!!,
         title = product.title,

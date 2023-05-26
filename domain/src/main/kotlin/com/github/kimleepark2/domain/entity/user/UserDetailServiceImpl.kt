@@ -21,5 +21,4 @@ class UserDetailServiceImpl(
     override fun loadUserByUsername(username: String): UserDetails {
         return userRepository.findByUsername(username) ?: throw MyEntityNotFoundException("불가능한 계정입니다.")
     }
-
 }
