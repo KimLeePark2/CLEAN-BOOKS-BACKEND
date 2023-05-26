@@ -56,7 +56,6 @@ class User(
     private val username: String,
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
     @Comment(value = "사용자 고유번호")
     val id: String = UUID.randomUUID().toString(),
