@@ -7,13 +7,13 @@ import jakarta.validation.constraints.NotBlank
 import org.hibernate.validator.constraints.Length
 
 data class UserCreateRequest(
-    @Schema(description = "계정 아이디, 아이디는 4~16자 이내로 설정해주세요.")
-    @NotBlank(message = "아이디를 입력해주세요.")
-    @Length(min = 4, max = 16, message = "아이디는 4~16자 이내로 설정해주세요.")
-    val username: String,
+//    @Schema(description = "계정 아이디, 아이디는 4~16자 이내로 설정해주세요.")
+//    @NotBlank(message = "아이디를 입력해주세요.")
+//    @Length(min = 4, max = 16, message = "아이디는 4~16자 이내로 설정해주세요.")
+//    val username: String,
 
     @Schema(description = "사용자 이름")
-    @NotBlank(message = "이름을 입력해주세요.")
+//    @NotBlank(message = "이름을 입력해주세요.")
     @Length(min = 2, max = 50, message = "이름은 최대 50자 입니다.")
     val name: String,
 
