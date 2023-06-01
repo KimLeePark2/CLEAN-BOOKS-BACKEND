@@ -1,6 +1,6 @@
 package com.github.kimleepark2.common.aws
 
-import com.amazonaws.services.s3.AmazonS3Client
+import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.services.s3.model.PutObjectRequest
@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile
 import java.io.File
 import java.io.IOException
 import java.util.*
-
 
 @Component
 class AwsS3Uploader(
@@ -84,14 +83,14 @@ class AwsS3Uploader(
     // 3. 로컬에 생성된 파일삭제
     private fun removeNewFile(targetFile: File) {
         if (targetFile.delete()) {
-            log.info("File delete success");
+            log.info("File delete success")
             return
         }
-        log.info("File delete fail");
+        log.info("File delete fail")
     }
 
     fun delete(fileName: String?) {
-        log.info("File Delete : $fileName");
+        log.info("File Delete : $fileName")
         amazonS3Client.deleteObject(bucket, fileName)
     }
 }

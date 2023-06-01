@@ -17,7 +17,7 @@ dependencies {
     api("org.springframework.boot:spring-boot-starter-jdbc")
     api("org.springframework.boot:spring-boot-starter-security")
     api("org.springframework.security:spring-security-oauth2-client:6.0.1") // security.oauth2 사용을 위해 추가
-     api("org.springframework.boot:spring-boot-starter-validation") // 파라미터 값 확인(인증, Bean Validation)을 위해
+    api("org.springframework.boot:spring-boot-starter-validation") // 파라미터 값 확인(인증, Bean Validation)을 위해
     api("org.springframework.data:spring-data-commons")
 
     // querydsl, javax -> jakarta로 변경됨에 따라 :jakarta 추가
