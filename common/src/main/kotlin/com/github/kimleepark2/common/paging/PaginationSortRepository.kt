@@ -42,7 +42,7 @@ interface PaginationSortRepository : PaginationRepository {
                     // '.'이 2개 연속 있는 경우 하나로 변경한다.
                     .replace(Regex("\\.\\."), "."),
 
-                )
+            )
         }
 
         // 커스텀 정렬 기능, 커스텀 정렬 대상이 없으면 기본 클래스를 대상으로 정렬한다.

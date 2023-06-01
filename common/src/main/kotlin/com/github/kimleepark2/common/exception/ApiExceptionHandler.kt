@@ -16,7 +16,6 @@ import org.springframework.web.server.ResponseStatusException
 class ApiExceptionHandler {
     private val logger = LoggerFactory.getLogger(javaClass)
 
-
     @ExceptionHandler(InvalidDataAccessApiUsageException::class)
     fun invalidDataAccessApiUsageException(ex: InvalidDataAccessApiUsageException): ResponseEntity<BadRequestException> {
         val message = ex.message ?: "데이터베이스에서 데이터를 가져올 때 매핑할 수 없는 값이 포함되었습니다."
@@ -26,7 +25,7 @@ class ApiExceptionHandler {
             HttpStatus.INTERNAL_SERVER_ERROR,
         )
     }
-    
+
     @ExceptionHandler(HttpMessageNotReadableException::class)
     fun httpMessageNotReadableException(ex: HttpMessageNotReadableException): ResponseEntity<BadRequestException> {
         val message =
