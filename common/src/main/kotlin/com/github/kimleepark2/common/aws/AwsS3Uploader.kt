@@ -15,7 +15,7 @@ import java.util.*
 
 @Component
 class AwsS3Uploader(
-    private val amazonS3Client: AmazonS3Client,
+    private val amazonS3Client: AmazonS3,
 ) {
 
     @Value("\${cloud.aws.s3.bucket}")
@@ -66,19 +66,6 @@ class AwsS3Uploader(
 
         throw IOException("파일을 서버에 저장하는데 실패했습니다.")
     }
-
-    // 2. S3에 파일업로드
-//    private fun putS3(uploadFile: File, fileName: String): String {
-//        amazonS3Client.putObject(
-//            PutObjectRequest(
-//                bucket,
-//                fileName,
-//                uploadFile
-//            ).withCannedAcl(CannedAccessControlList.PublicRead)
-//        )
-//        log.info("File Upload : $fileName");
-//        return amazonS3Client.getUrl(bucket, fileName).toString()
-//    }
 
     private fun putS3(uploadFile: MultipartFile, objectMetadata: ObjectMetadata, fileName: String): String =
         try {
