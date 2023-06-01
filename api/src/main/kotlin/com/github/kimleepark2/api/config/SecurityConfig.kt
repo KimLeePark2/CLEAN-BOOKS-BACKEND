@@ -32,7 +32,7 @@ class SecurityConfig(
 //    private val userOAuth2Service: UserOAuth2Service,
 ) {
 
-    @Value("\${jwt.paths}")
+    @Value("\${jwt.paths:}")
     val validPaths: List<String> = listOf()
 
     @Bean // 더블 슬래쉬 허용

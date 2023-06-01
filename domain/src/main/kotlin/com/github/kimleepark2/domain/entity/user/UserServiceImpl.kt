@@ -126,7 +126,7 @@ class UserServiceImpl(
                 nickname = userCreateRequest.nickname,
                 provider = userCreateRequest.provider,
                 providerId = userCreateRequest.providerId,
-                username = userCreateRequest.username,
+                username = userCreateRequest.provider.name + userCreateRequest.providerId,
             )
         )
     }
