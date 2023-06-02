@@ -1,6 +1,7 @@
 package com.github.kimleepark2.domain.entity.product
 
 import com.github.kimleepark2.common.aws.AwsS3Uploader
+import com.github.kimleepark2.common.exception.entities.product.ProductNotFoundException
 import com.github.kimleepark2.common.exception.entities.user.UserNotFoundException
 import com.github.kimleepark2.domain.entity.product.dto.request.ProductCreateRequest
 import com.github.kimleepark2.domain.entity.product.dto.request.ProductUpdateRequest
@@ -25,16 +26,16 @@ class ProductServiceImpl(
             imgPath = awsS3Uploader.upload(productCreateRequest.thumbnailImage!!, "product")
         }
 
-        val product = productCreateRequest.toEntity(imgPath, user)
+        val product: Product = productCreateRequest.toEntity(imgPath, user)
         product.create(loginUser.username)
         productRepository.save(product)
         return ProductResponse(product)
     }
 
     override fun getById(id: Long): ProductResponse {
-//        val product = productRepository.findById(id).orElseThrow { throw ProductNotFoundException("상품을 찾을 수 없습니다.") }
+        val product = productRepository.findById(id).orElseThrow { throw ProductNotFoundException("상품을 찾을 수 없습니다.") }
+        return ProductResponse(product)
 //        return productQuery.getById(id)
-        TODO()
     }
 
     override fun update(userUpdateRequest: ProductUpdateRequest) {
