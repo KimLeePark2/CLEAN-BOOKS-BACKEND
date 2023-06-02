@@ -16,17 +16,8 @@ data class ProductResponse @QueryProjection constructor(
     @Schema(description = "글 상태")
     var status: ProductStatus = ProductStatus.SALE,
 
-    @Schema(description = "책 제목")
-    var bookTitle: String,
-
-    @Schema(description = "책 저자")
-    var author: String,
-
     @Schema(description = "책 가격")
     var price: Integer,
-
-    @Schema(description = "책 출판사")
-    var publisher: String,
 
     @Schema(description = "책 썸네일 경로")
     var thumbnailImagePath: String,
@@ -41,10 +32,7 @@ data class ProductResponse @QueryProjection constructor(
         id = product.id!!,
         title = product.title,
         status = product.status,
-        bookTitle = product.bookTitle,
-        author = product.author,
         price = product.price,
-        publisher = product.publisher,
         thumbnailImagePath = product.thumbnailImagePath,
         seller = SellerResponse(product.seller),
         wishes = product.wishes.size.toLong()
