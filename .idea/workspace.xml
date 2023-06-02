@@ -4,21 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2da9b406-185f-4999-bbf9-ac1ce44d403e" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/common/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common/aws/AwsS3Uploader.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common/aws/AwsS3Uploader.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common/exception/ApiExceptionHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common/exception/ApiExceptionHandler.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common/paging/PaginationSortRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common/paging/PaginationSortRepository.kt" afterDir="false" />
+    <list default="true" id="2da9b406-185f-4999-bbf9-ac1ce44d403e" name="변경" comment="[FEAT] 상품 및 찜 추가">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/Product.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/Product.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/ProductQueryRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/ProductQueryRepository.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/ProductServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/ProductServiceImpl.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/dto/request/ProductCreateRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/dto/request/ProductCreateRequest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/dto/request/ProductUpdateRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/dto/request/ProductUpdateRequest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/dto/response/ProductResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/dto/response/ProductResponse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/UserDetailServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/UserDetailServiceImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/request/UserUpdateRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/request/UserUpdateRequest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/response/LoginResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/response/LoginResponse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/wish/Wish.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/wish/Wish.kt" afterDir="false" />
     </list>
     <list id="27238f5b-7b79-4874-8ad6-70cd2a0493a3" name="local" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -174,11 +165,15 @@
   <component name="JpbToolWindowState">
     <option name="myId2FirstActivated">
       <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
         <entry key="com.haulmont.jpb.jpaStructure" value="true" />
       </map>
     </option>
     <option name="myId2Visible">
       <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
         <entry key="com.haulmont.jpb.jpaStructure" value="true" />
       </map>
     </option>
@@ -378,6 +373,7 @@
       <workItem from="1685063563461" duration="44000" />
       <workItem from="1685089486855" duration="2343000" />
       <workItem from="1685111719148" duration="3268000" />
+      <workItem from="1685703205086" duration="1013000" />
     </task>
     <task id="LOCAL-00001" summary="init gradle">
       <created>1684157731873</created>
