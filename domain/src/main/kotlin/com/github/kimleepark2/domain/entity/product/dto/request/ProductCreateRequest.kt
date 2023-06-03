@@ -14,20 +14,26 @@ data class ProductCreateRequest(
     val userId: String,
 
     @Schema(description = "글 제목, 1~50자")
-    @NotBlank(message = "비밀번호를 입력해주세요.")
+    @NotBlank(message = "게시글 제목을 입력해주세요.")
     @Length(min = 1, max = 50, message = "글 제목은 1~50자 이내로 입력해주세요.")
     val title: String,
+
+    @Schema(description = "글 제목, 1~8000자")
+    @NotBlank(message = "글 제목을 입력해주세요.")
+    @Length(min = 1, max = 8000, message = "글 제목은 1~8000자 이내로 입력해주세요.")
+    val description: String,
 
     @Schema(description = "책 판매 가격, 0 ~ 999_999_999")
     @NotBlank(message = "판매가를 입력해주세요.")
     @Length(min = 0, max = 999_999_999, message = "책 판매 가격은 0 ~ 999_999_999 이내로 입력해주세요")
-    var price: Integer,
+    var price: Int,
 
     @Schema(description = "책 썸네일 (MultipartFile)", defaultValue = "null")
     var thumbnailImage: MultipartFile? = null,
 ) {
     fun toEntity(imgPath: String, seller: User): Product = Product(
         title = title,
+        description = description,
         price = price,
         thumbnailImagePath = imgPath,
         seller = seller,

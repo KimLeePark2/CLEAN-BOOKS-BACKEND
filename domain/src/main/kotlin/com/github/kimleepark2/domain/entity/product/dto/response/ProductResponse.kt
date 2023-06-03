@@ -13,11 +13,14 @@ data class ProductResponse @QueryProjection constructor(
     @Schema(description = "글 제목")
     var title: String,
 
+    @Schema(description = "글 설명")
+    var description: String,
+
     @Schema(description = "글 상태")
     var status: ProductStatus = ProductStatus.SALE,
 
     @Schema(description = "책 가격")
-    var price: Integer,
+    var price: Int,
 
     @Schema(description = "책 썸네일 경로")
     var thumbnailImagePath: String,
@@ -31,6 +34,7 @@ data class ProductResponse @QueryProjection constructor(
     constructor(product: Product) : this(
         id = product.id!!,
         title = product.title,
+        description = product.description,
         status = product.status,
         price = product.price,
         thumbnailImagePath = product.thumbnailImagePath,
