@@ -17,6 +17,10 @@ class Product(
     @Comment(value = "상품 게시글 제목")
     var title: String,
 
+    @Column(name = "description", length = 8000, nullable = false)
+    @Comment(value = "상품 게시글 설명")
+    var description: String,
+
     @Column(name = "status", length = 20, nullable = false)
     @Enumerated(EnumType.STRING) // 문자열로 저장하기 위하여
     @Comment(value = "상태")
@@ -24,9 +28,9 @@ class Product(
 
     @Column(name = "price", length = 9, nullable = false)
     @Comment(value = "책 가격")
-    var price: Integer,
+    var price: Int,
 
-    @Column(name = "thumbnail_image_path", length = 255, nullable = false)
+    @Column(name = "thumbnail_image_path", length = 255)
     @Comment(value = "사용자 프로필 경로(S3 Path)")
     var thumbnailImagePath: String,
 
