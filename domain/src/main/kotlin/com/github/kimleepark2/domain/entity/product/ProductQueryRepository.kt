@@ -24,6 +24,8 @@ class ProductQueryRepository(
     private val queryFactory: JPAQueryFactory,
 ) : PaginationSortRepository {
 
+    override val customOrderProperties: Map<String, String> = mapOf()
+
     private val seller = QUser.user
 
     private val qProductResponse = QProductResponse(
