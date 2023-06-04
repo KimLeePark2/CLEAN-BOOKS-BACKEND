@@ -8,11 +8,12 @@ import com.github.kimleepark2.domain.entity.product.dto.request.ProductUpdateReq
 import com.github.kimleepark2.domain.entity.product.dto.response.ProductResponse
 import com.github.kimleepark2.domain.entity.user.UserRepository
 import com.github.kimleepark2.domain.entity.user.UserServiceImpl
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 
 @Service
 class ProductServiceImpl(
-    private val productRepository: ProductRepository,
+    private val productCommand: ProductRepository,
 //    private val productQuery: ProductQueryRepository,
     private val userRepository: UserRepository,
     private val awsS3Uploader: AwsS3Uploader,
@@ -28,15 +29,23 @@ class ProductServiceImpl(
 
         val product: Product = productCreateRequest.toEntity(imgPath, user)
         product.create(loginUser.username)
-        productRepository.save(product)
+        productCommand.save(product)
         return ProductResponse(product)
     }
 
     override fun getById(id: Long): ProductResponse {
-        val product = productRepository.findById(id).orElseThrow { throw ProductNotFoundException("상품을 찾을 수 없습니다.") }
+        val product = productCommand.findById(id).orElseThrow { throw ProductNotFoundException("상품을 찾을 수 없습니다.") }
         return ProductResponse(product)
 //        return productQuery.getById(id)
     }
+
+    override fun page(productPageRequest: ProductCreateRequest): Page<ProductResponse> {
+        TODO("Not yet implemented")
+//        return productQuery.page(
+//
+//        )
+    }
+
 
     override fun update(userUpdateRequest: ProductUpdateRequest) {
         TODO("Not yet implemented")

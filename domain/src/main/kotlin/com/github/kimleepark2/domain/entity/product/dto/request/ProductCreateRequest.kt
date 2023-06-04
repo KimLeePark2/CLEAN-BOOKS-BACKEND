@@ -18,7 +18,7 @@ data class ProductCreateRequest(
     @Length(min = 1, max = 50, message = "글 제목은 1~50자 이내로 입력해주세요.")
     val title: String,
 
-    @Schema(description = "글 제목, 1~8000자")
+    @Schema(description = "상세 설명, 1~8000자")
     @NotBlank(message = "글 제목을 입력해주세요.")
     @Length(min = 1, max = 8000, message = "글 제목은 1~8000자 이내로 입력해주세요.")
     val description: String,
