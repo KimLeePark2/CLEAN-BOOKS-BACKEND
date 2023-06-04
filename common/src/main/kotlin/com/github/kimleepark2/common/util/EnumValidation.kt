@@ -15,7 +15,7 @@ import kotlin.reflect.KClass
 @Retention(
     AnnotationRetention.RUNTIME
 )
-annotation class ValidEnum(
+annotation class EnumValidation(
     val message: String = "Invalid value. This is not permitted.",
     val groups: Array<KClass<*>> = [],
     val payload: Array<KClass<out Payload>> = [],
