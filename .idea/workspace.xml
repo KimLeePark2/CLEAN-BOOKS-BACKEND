@@ -5,11 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2da9b406-185f-4999-bbf9-ac1ce44d403e" name="변경" comment="[FEAT] 상품 및 찜 추가">
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/Product.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/Product.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/dto/request/ProductCreateRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/dto/request/ProductCreateRequest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/dto/request/ProductUpdateRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/dto/request/ProductUpdateRequest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/dto/response/ProductResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/product/dto/response/ProductResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/UserDetailServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/UserDetailServiceImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/UserServiceImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/UserServiceImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/request/UserUpdateRequest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/request/UserUpdateRequest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/response/LoginResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/dto/response/LoginResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/enum/OAuth2Provider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/user/enum/OAuth2Provider.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/wish/Wish.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain/entity/wish/Wish.kt" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <list id="27238f5b-7b79-4874-8ad6-70cd2a0493a3" name="local" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,6 +58,7 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="clean-books" type="f1a62948:ProjectNode" />
               </path>
+<<<<<<< Updated upstream
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="clean-books" type="f1a62948:ProjectNode" />
@@ -114,6 +127,8 @@
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="other" type="c8890929:TasksNode$1" />
               </path>
+=======
+>>>>>>> Stashed changes
             </expand>
             <select />
           </tree_state>
@@ -137,6 +152,7 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+<<<<<<< Updated upstream
   <component name="GitToolBoxStore">
     <option name="recentBranches">
       <RecentBranches>
@@ -160,6 +176,22 @@
           </list>
         </option>
       </RecentBranches>
+=======
+  <component name="JpbToolWindowState">
+    <option name="myId2FirstActivated">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+>>>>>>> Stashed changes
     </option>
   </component>
   <component name="MarkdownSettingsMigration">
@@ -203,6 +235,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+<<<<<<< Updated upstream
       <recent name="$PROJECT_DIR$/domain/src/main/kotlin/com/github/kimleepark2/domain" />
       <recent name="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common" />
       <recent name="$PROJECT_DIR$/common/src/main/kotlin/com/github/kimleepark2/common/util" />
@@ -364,13 +397,18 @@
       <workItem from="1684641781443" duration="596000" />
       <workItem from="1684675836697" duration="3048000" />
       <workItem from="1684682798501" duration="1124000" />
+<<<<<<< Updated upstream
       <workItem from="1684804316104" duration="11535000" />
       <workItem from="1684890151071" duration="597000" />
       <workItem from="1684976321414" duration="1449000" />
       <workItem from="1685063563461" duration="44000" />
       <workItem from="1685089486855" duration="2343000" />
       <workItem from="1685111719148" duration="3268000" />
-      <workItem from="1685703205086" duration="1013000" />
+=======
+      <workItem from="1684768206927" duration="2463000" />
+      <workItem from="1684770742688" duration="4032000" />
+      <workItem from="1684853461851" duration="155000" />
+>>>>>>> Stashed changes
     </task>
     <task id="LOCAL-00001" summary="init gradle">
       <created>1684157731873</created>
