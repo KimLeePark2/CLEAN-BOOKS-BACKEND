@@ -55,9 +55,12 @@ subprojects {
         // aws s3
         implementation("org.springframework.cloud:spring-cloud-starter-aws:${springAwsVersion}")
 
+
+
         // jpa가 사용하는 javax가 jakarta로 변경됨에 따라 아래 어노테이션 프로세서를 추가해줘야 한다.
         annotationProcessor ("jakarta.annotation:jakarta.annotation-api")
         annotationProcessor ("jakarta.persistence:jakarta.persistence-api")
+        // querydsl QClass 생성은 전역설정
         annotationProcessor ("com.querydsl:querydsl-apt:${querydslVersion}:jakarta")
 
         testImplementation("org.springframework.boot:spring-boot-starter-test")
