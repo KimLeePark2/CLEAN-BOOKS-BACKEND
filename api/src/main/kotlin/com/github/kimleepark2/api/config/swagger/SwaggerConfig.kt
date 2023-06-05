@@ -18,12 +18,6 @@ class SwaggerConfig {
 
     @Bean
     fun openAPI(@Value("\${springdoc.version:0.0.0}") appVersion: String?): OpenAPI {
-        val localServer = Server()
-        localServer.url = "http://localhost:53101"
-        localServer.description = "Server URL in Local environment"
-        val prodServer = Server()
-        prodServer.url = "http://43.201.203.197:53103"
-        prodServer.description = "Server URL in Production environment"
         val mitLicense = License()
             .name("MIT License")
             .url("https://choosealicense.com/licenses/mit/")
@@ -47,11 +41,6 @@ class SwaggerConfig {
                     "Authorization", jwtScheme
                 )
             )
-//            .servers(
-//                listOf(
-//                    prodServer, localServer,
-//                )
-//            )
             .info(info)
             .security(listOf(SecurityRequirement().addList("Authorization")))
     }
