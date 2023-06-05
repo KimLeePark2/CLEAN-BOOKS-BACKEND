@@ -1,7 +1,6 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 dependencies {
-    implementation(project(":common"))
     implementation(project(":domain"))
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

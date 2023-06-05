@@ -1,3 +1,4 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 val querydslVersion: String by System.getProperties()
 
@@ -33,10 +34,8 @@ dependencies {
     kapt("com.querydsl:querydsl-apt:$querydslVersion:jakarta") // 이게 없으면 build해도 Q class가 생성되지 않는다.
 
     // jwt
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
-    runtimeOnly("io.jsonwebtoken:jjwt-jakson:0.11.5")
-    api("io.jsonwebtoken:jjwt-gson:0.11.5") // implementation을 api로 변경하면 오류가 발생한다??
-    api("io.jsonwebtoken:jjwt-api:0.11.5") // implementation을 api로 변경하면 오류가 발생한다??
+    api("io.jsonwebtoken:jjwt-gson:0.11.5")
+    api("io.jsonwebtoken:jjwt-api:0.11.5")
 
     // swagger
     api("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
@@ -46,4 +45,12 @@ dependencies {
 
     // Q CLASS 생성을 위해 필요
     kapt("org.springframework.boot:spring-boot-configuration-processor")
+}
+
+tasks.withType<Jar> {
+    enabled = true
+}
+
+tasks.withType<BootJar> {
+    enabled = false
 }
