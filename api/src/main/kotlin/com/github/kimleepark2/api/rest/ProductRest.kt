@@ -60,8 +60,8 @@ class ProductRest(
         summary = "상품 페이지 조회",
         description = "상품을 페이지네이션 처리된 리스트를 조회한다."
     )
-    @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
-    @ResponseStatus(HttpStatus.CREATED)
+    @GetMapping("/")
+    @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     fun pageProducts(
         @RequestBody userCreateRequest: ProductCreateRequest,
