@@ -28,4 +28,4 @@ data class ProductPageRequest(
     @Schema(description = "최대 판매 가격, MIN ~ 999_999_999")
     @Max(value = 999_999_999, message = "최대 판매 가격은 999_999_999 이하로 입력해주세요.")
     var maxPrice: Int? = 999_999_999
-): BaseCondition() 
+) : BaseCondition()

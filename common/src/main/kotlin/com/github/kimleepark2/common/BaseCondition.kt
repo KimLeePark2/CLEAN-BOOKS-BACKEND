@@ -1,6 +1,5 @@
 package com.github.kimleepark2.common
 
-import com.github.kimleepark2.common.util.removeTime
 import org.springframework.format.annotation.DateTimeFormat
 import java.time.LocalDate
 import java.time.LocalDateTime

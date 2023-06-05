@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 group = "com.github.kimleepark2"
 version = ""
@@ -55,8 +56,6 @@ subprojects {
         // aws s3
         implementation("org.springframework.cloud:spring-cloud-starter-aws:${springAwsVersion}")
 
-
-
         // jpa가 사용하는 javax가 jakarta로 변경됨에 따라 아래 어노테이션 프로세서를 추가해줘야 한다.
         annotationProcessor ("jakarta.annotation:jakarta.annotation-api")
         annotationProcessor ("jakarta.persistence:jakarta.persistence-api")
@@ -104,7 +103,7 @@ subprojects {
     }
 
     // BootJar 기본 false, 프로젝트 빌드 후 실행해야 하는 모듈이면 BootJar true 해줘야 함.
-    tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
+    tasks.withType<BootJar> {
         enabled = false
     }
 }

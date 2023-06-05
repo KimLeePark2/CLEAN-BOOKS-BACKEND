@@ -2,7 +2,6 @@ package com.github.kimleepark2.domain.entity.product
 
 import com.github.kimleepark2.common.paging.PaginationSortRepository
 import com.github.kimleepark2.domain.entity.product.QProduct.Companion.product
-import com.github.kimleepark2.domain.entity.product.dto.request.ProductPageRequest
 import com.github.kimleepark2.domain.entity.product.dto.response.ProductResponse
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.domain.Page
@@ -19,7 +18,7 @@ import org.springframework.data.domain.Pageable
 import java.time.LocalDateTime
 
 @Component
-/////// JPAQueryFactory를 사용하려면 QueryDslConfig 파일에 Bean 등록 해줘야함.
+// ///// JPAQueryFactory를 사용하려면 QueryDslConfig 파일에 Bean 등록 해줘야함.
 class ProductQueryRepository(
     private val queryFactory: JPAQueryFactory,
 ) : PaginationSortRepository {
@@ -119,7 +118,6 @@ class ProductQueryRepository(
             .fetchOne() ?: 0
 
         return PageImpl(products, pageable, count)
-
     }
 
     private fun search(
@@ -134,7 +132,6 @@ class ProductQueryRepository(
         pageable: Pageable,
     ): BooleanBuilder {
         val condition = BooleanBuilder()
-
 
         condition.and(product.title.startsWith(title))
         condition.and(product.description.contains(description))
@@ -156,7 +153,6 @@ class ProductQueryRepository(
 
             condition.and(product.createdAt.between(startTime, endDate))
         }
-
 
         return condition
     }

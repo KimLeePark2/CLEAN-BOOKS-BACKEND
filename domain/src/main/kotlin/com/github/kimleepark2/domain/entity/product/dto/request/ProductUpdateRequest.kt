@@ -3,7 +3,6 @@ package com.github.kimleepark2.domain.entity.product.dto.request
 import io.swagger.v3.oas.annotations.media.Schema
 import org.hibernate.validator.constraints.Length
 import jakarta.validation.constraints.Min
-import jakarta.validation.constraints.NotBlank
 import org.springframework.web.multipart.MultipartFile
 
 data class ProductUpdateRequest(

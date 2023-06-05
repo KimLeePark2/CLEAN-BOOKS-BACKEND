@@ -21,7 +21,6 @@ noArg {
     annotation("jakarta.persistence.MappedSuperclass")
 }
 
-
 val kotestVersion: String by System.getProperties()
 
 dependencies {
