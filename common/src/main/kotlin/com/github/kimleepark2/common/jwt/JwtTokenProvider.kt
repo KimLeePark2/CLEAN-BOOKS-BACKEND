@@ -66,7 +66,9 @@ class JwtTokenProvider(private val userDetailsService: UserDetailsService) {
     }
 
     fun resolveToken(request: HttpServletRequest): String? {
-        val token = request.getHeader("Authorization") ?: return null
+        val authorizationValue = request.getHeader("Authorization")
+        log.info("resolve token : {}", authorizationValue)
+        val token = authorizationValue ?: return null
         return if (token.indexOf("Bearer ") > -1) token.replace("Bearer ", "") else ""
     }
 
