@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/products")
-@Tag(name = "100. 상품", description = "상품 관리 API")
+@Tag(name = "200. 상품", description = "상품 관리 API")
 class ProductRest(
     private val productService: ProductService,
 ) {
