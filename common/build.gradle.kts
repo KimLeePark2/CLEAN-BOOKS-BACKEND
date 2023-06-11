@@ -34,6 +34,8 @@ dependencies {
     kapt("com.querydsl:querydsl-apt:$querydslVersion:jakarta") // 이게 없으면 build해도 Q class가 생성되지 않는다.
 
     // jwt
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5") // 없으면 사용 불가능한게 있음
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5") // 없으면 사용 불가능한게 있음
     api("io.jsonwebtoken:jjwt-gson:0.11.5")
     api("io.jsonwebtoken:jjwt-api:0.11.5")
 
