@@ -3,7 +3,6 @@ package com.github.kimleepark2.api.rest
 import com.github.kimleepark2.domain.entity.user.UserService
 import com.github.kimleepark2.domain.entity.user.UserServiceImpl
 import com.github.kimleepark2.domain.entity.user.dto.request.LoginRequest
-import com.github.kimleepark2.domain.entity.user.dto.request.UserCreateRequest
 import com.github.kimleepark2.domain.entity.user.dto.response.LoginResponse
 import com.github.kimleepark2.domain.entity.user.dto.response.UserResponse
 import io.swagger.v3.oas.annotations.Operation
