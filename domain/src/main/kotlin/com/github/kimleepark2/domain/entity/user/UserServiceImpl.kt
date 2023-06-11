@@ -8,6 +8,7 @@ import com.github.kimleepark2.domain.entity.user.dto.request.UserCreateRequest
 import com.github.kimleepark2.domain.entity.user.dto.request.UserUpdateRequest
 import com.github.kimleepark2.domain.entity.user.dto.response.LoginResponse
 import com.github.kimleepark2.domain.entity.user.dto.response.UserResponse
+import com.github.kimleepark2.domain.entity.user.enum.OAuth2Provider
 import com.github.kimleepark2.domain.entity.util.findByIdOrThrow
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -29,22 +30,19 @@ class UserServiceImpl(
 //    @Value("\${auth.kakao.logout.redirect.url}")
 //    private lateinit var kakaoLogoutRedirectUrl: String
 
-    override fun refreshToken(refreshTokenRequest: RefreshTokenRequest): JwtToken {
-        val userPk = jwtTokenProvider.getUserPk(refreshTokenRequest.refreshToken)
-        return JwtToken(jwtTokenProvider.createAccessToken(userPk), jwtTokenProvider.createRefreshToken(userPk))
-    }
 
-    override fun getUserById(id: String): UserResponse {
-        return UserResponse(userRepository.findByIdOrThrow(id, "사용자를 찾을 수 없습니다."))
-    }
-
-    override fun getUserByUsername(email: String): UserResponse {
-        return UserResponse(
-            userRepository.findByUsername(email)
-                ?: throw IllegalArgumentException("사용자를 찾을 수 없습니다.")
+    override fun saveUser(userCreateRequest: UserCreateRequest): User {
+        return userRepository.save(
+            User(
+                password = passwordEncoder.encode(UUID.randomUUID().toString()),
+                name = userCreateRequest.name,
+                nickname = userCreateRequest.nickname,
+                provider = userCreateRequest.provider,
+                providerId = userCreateRequest.providerId,
+                username = userCreateRequest.provider.name + userCreateRequest.providerId,
+            )
         )
     }
-
     override fun updateUser(userUpdateRequest: UserUpdateRequest) {
         val loginUser = getAccountFromSecurityContext()
 
@@ -84,6 +82,41 @@ class UserServiceImpl(
 //        return true
 //    }
 
+    override fun getUserById(id: String): UserResponse {
+        return UserResponse(userRepository.findByIdOrThrow(id, "사용자를 찾을 수 없습니다."))
+    }
+
+    override fun getUserByUsername(email: String): UserResponse {
+        return UserResponse(
+            userRepository.findByUsername(email)
+                ?: throw IllegalArgumentException("사용자를 찾을 수 없습니다.")
+        )
+    }
+
+    override fun list(): List<UserResponse>{
+        return userRepository.findAllBy();
+    }
+
+
+    override fun login(provider: OAuth2Provider, providerId: String): LoginResponse {
+        val user = userRepository.findByProviderAndProviderId(provider, providerId)
+            ?: throw UnauthorizedException("존재하지 않는 유저입니다.")
+        return LoginResponse(
+            username = user.username,
+            userId = user.id,
+            name = user.name,
+            role = user.role,
+            changePassword = user.changePassword,
+            accessToken = jwtTokenProvider.createAccessToken(user.username),
+            refreshToken = jwtTokenProvider.createRefreshToken(user.username),
+        )
+    }
+
+    override fun refreshToken(refreshTokenRequest: RefreshTokenRequest): JwtToken {
+        val userPk = jwtTokenProvider.getUserPk(refreshTokenRequest.refreshToken)
+        return JwtToken(jwtTokenProvider.createAccessToken(userPk), jwtTokenProvider.createRefreshToken(userPk))
+    }
+
     override fun kakaoLogout(): String {
 //        val loginUser: User = getAccountFromSecurityContext()
 //        log.info("카카오 로그아웃 - $adminKey,${loginUser.providerId!!}")
@@ -103,32 +136,6 @@ class UserServiceImpl(
 //        val response = client.send(request, HttpResponse.BodyHandlers.ofString())
 //        log.info("${response.body()[0]} 유저 로그아웃")
         return "success"
-    }
-
-    override fun testLogin(): LoginResponse {
-        val testUser = userRepository.findById("1").get()
-        return LoginResponse(
-            username = testUser.username,
-            userId = testUser.id,
-            name = testUser.name,
-            role = testUser.role,
-            changePassword = testUser.changePassword,
-            accessToken = jwtTokenProvider.createAccessToken(testUser.username),
-            refreshToken = jwtTokenProvider.createRefreshToken(testUser.username),
-        )
-    }
-
-    override fun saveUser(userCreateRequest: UserCreateRequest): User {
-        return userRepository.save(
-            User(
-                password = passwordEncoder.encode(UUID.randomUUID().toString()),
-                name = userCreateRequest.name,
-                nickname = userCreateRequest.nickname,
-                provider = userCreateRequest.provider,
-                providerId = userCreateRequest.providerId,
-                username = userCreateRequest.provider.name + userCreateRequest.providerId,
-            )
-        )
     }
 
     companion object {
