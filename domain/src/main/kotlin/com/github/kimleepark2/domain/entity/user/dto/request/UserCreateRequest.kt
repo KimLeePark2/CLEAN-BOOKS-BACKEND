@@ -12,23 +12,21 @@ data class UserCreateRequest(
 //    @Length(min = 4, max = 16, message = "아이디는 4~16자 이내로 설정해주세요.")
 //    val username: String,
 
-    @Schema(description = "사용자 이름")
-//    @NotBlank(message = "이름을 입력해주세요.")
-    @Length(min = 2, max = 50, message = "이름은 최대 50자 입니다.")
-    val name: String,
-
-    @Schema(description = "사용자 닉네임")
+    @Schema(description = "사용자 닉네임", required = true)
     @NotBlank(message = "닉네임을 입력해주세요.")
     val nickname: String,
 
-    @Schema(description = "사용자 OAuth2 로그인 제공자")
+    @Schema(description = "사용자 OAuth2 로그인 제공자", required = true)
     @EnumValidation(enumClass = OAuth2Provider::class, message = "유효하지 않은 OAuth2 제공자입니다.")
     val provider: OAuth2Provider,
 
-    @Schema(description = "사용자 OAuth2 로그인 제공자")
+    @Schema(description = "사용자 OAuth2 로그인 제공자", required = true)
     @NotBlank(message = "OAuth2 개인 인증키를 입력해주세요.")
     val providerId: String,
 
-    @Schema(description = "구분자로 사이에 -를 입력해주세요.")
+    @Schema(description = "사용자 이름", required = false)
+    val name: String,
+
+    @Schema(description = "사용자 연락처", required = false)
     val phone: String,
 )

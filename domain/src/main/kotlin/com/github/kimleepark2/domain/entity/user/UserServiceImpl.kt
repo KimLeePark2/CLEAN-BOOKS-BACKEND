@@ -31,8 +31,8 @@ class UserServiceImpl(
 //    private lateinit var kakaoLogoutRedirectUrl: String
 
 
-    override fun saveUser(userCreateRequest: UserCreateRequest): User {
-        return userRepository.save(
+    override fun saveUser(userCreateRequest: UserCreateRequest): LoginResponse {
+        val user = userRepository.save(
             User(
                 password = passwordEncoder.encode(UUID.randomUUID().toString()),
                 name = userCreateRequest.name,
@@ -41,6 +41,15 @@ class UserServiceImpl(
                 providerId = userCreateRequest.providerId,
                 username = userCreateRequest.provider.name + userCreateRequest.providerId,
             )
+        )
+        return LoginResponse(
+            username = user.username,
+            userId = user.id,
+            name = user.name,
+            role = user.role,
+            changePassword = user.changePassword,
+            accessToken = jwtTokenProvider.createAccessToken(user.username),
+            refreshToken = jwtTokenProvider.createRefreshToken(user.username),
         )
     }
     override fun updateUser(userUpdateRequest: UserUpdateRequest) {
