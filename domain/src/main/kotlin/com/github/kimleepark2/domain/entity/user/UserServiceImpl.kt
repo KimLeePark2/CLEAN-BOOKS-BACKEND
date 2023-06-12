@@ -1,5 +1,6 @@
 package com.github.kimleepark2.domain.entity.user
 
+import com.github.kimleepark2.common.exception.ConflictException
 import com.github.kimleepark2.common.exception.UnauthorizedException
 import com.github.kimleepark2.common.jwt.JwtTokenProvider
 import com.github.kimleepark2.common.jwt.dto.JwtToken
@@ -32,14 +33,27 @@ class UserServiceImpl(
 
 
     override fun saveUser(userCreateRequest: UserCreateRequest): LoginResponse {
+        val provider = userCreateRequest.provider
+        var providerId = userCreateRequest.providerId
+        var username = provider.name + providerId
+        if(provider == OAuth2Provider.LOCAL){
+            providerId = UUID.randomUUID().toString()
+            if(userCreateRequest.email.isNullOrBlank()){
+                throw IllegalArgumentException("이메일을 입력해주세요.")
+            }
+            if(userRepository.existsByUsername(userCreateRequest.email)){
+                throw ConflictException("이미 존재하는 이메일입니다.")
+            }
+            username = userCreateRequest.email
+        }
         val user = userRepository.save(
             User(
                 password = passwordEncoder.encode(UUID.randomUUID().toString()),
-                name = userCreateRequest.name,
+                name = userCreateRequest.name ?: "",
                 nickname = userCreateRequest.nickname,
-                provider = userCreateRequest.provider,
-                providerId = userCreateRequest.providerId,
-                username = userCreateRequest.provider.name + userCreateRequest.providerId,
+                provider = provider,
+                providerId = providerId,
+                username = username,
             )
         )
         return LoginResponse(
