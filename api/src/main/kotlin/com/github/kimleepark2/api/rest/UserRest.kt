@@ -2,6 +2,7 @@ package com.github.kimleepark2.api.rest
 
 import com.github.kimleepark2.domain.entity.user.UserService
 import com.github.kimleepark2.domain.entity.user.dto.request.UserCreateRequest
+import com.github.kimleepark2.domain.entity.user.dto.response.LoginResponse
 import com.github.kimleepark2.domain.entity.user.dto.response.UserResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -34,8 +35,8 @@ class UserRest(
     @PostMapping("")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    fun createUser(@RequestBody userCreateRequest: UserCreateRequest): UserResponse {
-        return UserResponse(userService.saveUser(userCreateRequest))
+    fun createUser(@RequestBody userCreateRequest: UserCreateRequest): LoginResponse {
+        return userService.saveUser(userCreateRequest)
     }
 
     @ApiResponses(
