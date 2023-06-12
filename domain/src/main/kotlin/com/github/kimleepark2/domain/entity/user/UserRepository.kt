@@ -5,6 +5,7 @@ import com.github.kimleepark2.domain.entity.user.enum.OAuth2Provider
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface UserRepository : JpaRepository<User, String> {
+    fun existsByUsername(username: String): Boolean
     fun findByUsername(username: String): User?
     fun findByProviderAndProviderId(provider: OAuth2Provider, providerId: String): User?
     fun findAllBy(): List<UserResponse>
