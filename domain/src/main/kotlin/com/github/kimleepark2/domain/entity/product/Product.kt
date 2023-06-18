@@ -1,6 +1,7 @@
 package com.github.kimleepark2.domain.entity.product
 
 import com.github.kimleepark2.domain.entity.BaseEntity
+import com.github.kimleepark2.domain.entity.file.File
 import com.github.kimleepark2.domain.entity.product.enums.ProductStatus
 import com.github.kimleepark2.domain.entity.user.User
 import com.github.kimleepark2.domain.entity.wish.Wish
@@ -30,9 +31,14 @@ class Product(
     @Comment(value = "책 가격")
     var price: Int,
 
-    @Column(name = "thumbnail_image_path", length = 255)
-    @Comment(value = "사용자 프로필 경로(S3 Path)")
-    var thumbnailImagePath: String,
+    // one to many
+    @OneToMany(
+        mappedBy = "product",
+        cascade = [CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH],
+        orphanRemoval = true
+    )
+    @Comment(value = "상품 이미지들")
+    var files: MutableList<File> = mutableListOf(),
 
     @ManyToOne(
         fetch = FetchType.LAZY,
@@ -42,7 +48,11 @@ class Product(
     @Comment(value = "판매자 번호")
     val seller: User,
 
-    @OneToMany(mappedBy = "product", cascade = [CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH ], orphanRemoval = true)
+    @OneToMany(
+        mappedBy = "product",
+        cascade = [CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH],
+        orphanRemoval = true
+    )
     @Comment(value = "상품 찜들")
     var wishes: MutableList<Wish> = mutableListOf(),
 
@@ -50,5 +60,39 @@ class Product(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Comment(value = "기본키")
     @Column(name = "product_id")
-    val id: Long? = null,
-) : BaseEntity()
+    val id: Long = 0L,
+) : BaseEntity() {
+
+    fun update(
+        title: String?,
+        description: String?,
+        price: Int?,
+    ) {
+        this.title = title ?: this.title
+        this.description = description ?: this.description
+        this.price = price ?: this.price
+    }
+
+    fun addFile(path: String) {
+        files.add(File(
+            path = path,
+            product = this
+        ))
+    }
+
+    fun deleteFile(file: File) {
+        files.remove(file)
+    }
+
+    fun sale() {
+        this.status = ProductStatus.SALE
+    }
+
+    fun sold() {
+        this.status = ProductStatus.SOLD_OUT
+    }
+
+    fun addWish(wish: Wish) {
+        wishes.add(wish)
+    }
+}
