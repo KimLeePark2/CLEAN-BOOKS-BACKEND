@@ -9,7 +9,7 @@ data class LoginResponse(
     val userId: String,
 
     @Schema(description = "사용자 로그인 이메일")
-    val username: String,
+    val email: String,
 
     @Schema(description = "사용자 이름")
     val name: String,

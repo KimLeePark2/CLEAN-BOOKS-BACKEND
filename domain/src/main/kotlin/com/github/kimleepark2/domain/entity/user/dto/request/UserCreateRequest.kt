@@ -4,7 +4,6 @@ import com.github.kimleepark2.common.util.EnumValidation
 import com.github.kimleepark2.domain.entity.user.enum.OAuth2Provider
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
-import org.hibernate.validator.constraints.Length
 
 data class UserCreateRequest(
 //    @Schema(description = "계정 아이디, 아이디는 4~16자 이내로 설정해주세요.")

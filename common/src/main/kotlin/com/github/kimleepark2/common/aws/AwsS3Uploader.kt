@@ -2,7 +2,6 @@ package com.github.kimleepark2.common.aws
 
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.CannedAccessControlList
-import com.amazonaws.services.s3.model.DeleteObjectRequest
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.services.s3.model.PutObjectRequest
 import org.slf4j.LoggerFactory
@@ -88,18 +87,19 @@ class AwsS3Uploader(
             S3_BUCKET_DIRECTORY_NAME,
             key,
         ).joinToString("/")
-        log.info("""
+        log.info(
+            """
             File Delete
             bucket : $bucket
             S3_BUCKET_DIRECTORY_NAME : $S3_BUCKET_DIRECTORY_NAME
             key : $key
             request key : $requestKey
-        """.trimIndent())
+            """.trimIndent()
+        )
         amazonS3Client.deleteObject(bucket, requestKey)
     }
 
-
-    companion object{
+    companion object {
         fun getS3Key(s3BucketFolder: String, filePath: String) = "$s3BucketFolder/${filePath.split("/").last()}"
     }
 }

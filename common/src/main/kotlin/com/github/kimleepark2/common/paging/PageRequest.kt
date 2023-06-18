@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 
 @ParameterObject
-class PageRequest{
+class PageRequest {
     @Schema(description = "페이지 번호(1부터 시작)", defaultValue = "1")
     var page: Int = 1
 

@@ -7,9 +7,6 @@ data class SellerResponse(
     @Schema(description = "기본키")
     val id: String,
 
-    @Schema(description = "사용자 계정(아이디)")
-    val username: String,
-
     @Schema(description = "사용자 이름")
     val name: String,
 
@@ -18,7 +15,6 @@ data class SellerResponse(
 ) {
     constructor(user: User) : this(
         id = user.id,
-        username = user.username,
         name = user.name,
         nickname = user.nickname,
     )

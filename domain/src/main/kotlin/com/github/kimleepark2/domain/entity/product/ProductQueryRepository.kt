@@ -39,7 +39,6 @@ class ProductQueryRepository(
         Projections.constructor(
             SellerResponse::class.java,
             seller.id,
-            seller.username,
             seller.nickname,
             seller.profileImagePath
         ).`as`("seller"),
@@ -148,7 +147,7 @@ class ProductQueryRepository(
 //                        product.description.`as`("description"),
 //                        product.status.`as`("status"),
 //                        product.price.`as`("price"),
-////                        Expressions.asString(""),
+// //                        Expressions.asString(""),
 //                        list(file.path).`as`("thumbnailImagePaths"),
 //                        Projections.constructor(
 //                            SellerResponse::class.java,

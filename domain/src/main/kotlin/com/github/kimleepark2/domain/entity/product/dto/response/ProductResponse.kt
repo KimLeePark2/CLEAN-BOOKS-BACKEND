@@ -1,7 +1,5 @@
 package com.github.kimleepark2.domain.entity.product.dto.response
 
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.github.kimleepark2.domain.entity.file.File
 import com.github.kimleepark2.domain.entity.product.Product
 import com.github.kimleepark2.domain.entity.product.enums.ProductStatus
 import com.github.kimleepark2.domain.entity.user.dto.response.SellerResponse
@@ -41,7 +39,6 @@ data class ProductResponse @QueryProjection constructor(
 //
 //    @Schema(description = "책 썸네일 경로")
 //    var thumbnailImagePaths: List<String> = files.map { it.path }
-
 
     constructor(product: Product) : this(
         id = product.id,
