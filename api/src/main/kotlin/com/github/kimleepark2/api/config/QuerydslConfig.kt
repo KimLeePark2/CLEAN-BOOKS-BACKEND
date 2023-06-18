@@ -15,8 +15,8 @@ class QuerydslConfig(
 //        return JPAQueryFactory(em)
 //    }
     @Bean
-    fun queryDsl(): JPAQueryFactory{
+    fun queryDsl(): JPAQueryFactory {
         // transform 사용 시 에러발생 해결
-        return JPAQueryFactory(JPQLTemplates.DEFAULT, em);
+        return JPAQueryFactory(JPQLTemplates.DEFAULT, em)
     }
 }
