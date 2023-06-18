@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/v1/auths")
+@RequestMapping("/api/auths")
 @Tag(name = "000. 계정", description = "사용자 계정 관리 API")
 class AuthRest(
     private val userService: UserService,

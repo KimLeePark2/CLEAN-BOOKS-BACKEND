@@ -6,7 +6,7 @@
             <pattern>%d{yyyyMMdd HH:mm:ss.SSS} [%thread] %-5level [%logger{0}:%line] - %msg %n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/zip/application.log.%d{yyyy-MM-dd HH}.gz</fileNamePattern>
+            <fileNamePattern>logs/zip/application.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
             <maxHistory>168</maxHistory>
             <totalSizeCap>5GB</totalSizeCap>
         </rollingPolicy>
@@ -23,7 +23,7 @@
             <pattern>%d{yyyyMMdd HH:mm:ss.SSS} [%thread] %-5level [%logger{0}:%line] - %msg %n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/zip/warn.log.%d{yyyy-MM-dd HH}.gz</fileNamePattern>
+            <fileNamePattern>logs/zip/warn.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
             <maxHistory>168</maxHistory>
             <totalSizeCap>5GB</totalSizeCap>
         </rollingPolicy>
@@ -40,7 +40,7 @@
             <pattern>%d{yyyyMMdd HH:mm:ss.SSS} [%thread] %-5level [%logger{0}:%line] - %msg %n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/zip/error.log.%d{yyyy-MM-dd HH}.gz</fileNamePattern>
+            <fileNamePattern>logs/zip/error.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
             <maxHistory>168</maxHistory>
             <totalSizeCap>5GB</totalSizeCap>
         </rollingPolicy>
@@ -57,5 +57,7 @@
 
     <root level="info">
         <appender-ref ref="INFO_LOG"/>
+        <appender-ref ref="WARN_LOG"/>
+        <appender-ref ref="ERROR_LOG"/>
     </root>
 </configuration>

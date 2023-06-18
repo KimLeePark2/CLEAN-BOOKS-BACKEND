@@ -41,6 +41,10 @@ dependencies {
 
     // kotlin-faker
     testApi("io.github.serpro69:kotlin-faker:1.11.0")
+    // test dependencies
+    testApi("org.springframework.boot:spring-boot-starter-test")
+    testApi("org.springframework.security:spring-security-test:5.7.3")
+    testApi(project(":common"))
 }
 
 tasks.withType<Jar> {

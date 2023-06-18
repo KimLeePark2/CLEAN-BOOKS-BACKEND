@@ -1,40 +1,34 @@
 package com.github.kimleepark2.common.paging
 
-import org.springframework.data.domain.PageRequest
+import io.swagger.v3.oas.annotations.media.Schema
+import org.springdoc.core.annotations.ParameterObject
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 
-class PageRequest {
-    private var page: Int = 1
-    private var size: Int = 10
-//    private var direction: Sort.Direction = Sort.Direction.DESC
+@ParameterObject
+class PageRequest{
+    @Schema(description = "페이지 번호(1부터 시작)", defaultValue = "1")
+    var page: Int = 1
 
-    // custom sort information
-    private var sort: List<String>? = null
+    @Schema(description = "페이지 크기", defaultValue = "10")
+    var size: Int = 10
 
-    // 페이지네이션 사용 여부 / false로 주면 모든 데이터를 가져옴
-    private var paged = true
+    @Schema(description = "정렬 정보", defaultValue = "id.desc")
+    var sort: List<String>? = null
 
-    fun setPage(page: Int) {
+    @Schema(description = "페이지네이션 사용 여부/false로 주면 모든 데이터를 가져옴", defaultValue = "true")
+    var paged = true
+
+    fun setPage(page: Int): PageRequest {
         this.page = if (page <= 0) 1 else page
+        return this
     }
 
-    fun setSize(size: Int) {
+    fun setSize(size: Int): PageRequest {
         val DEFAULT_SIZE = 10
         val MAX_SIZE = Int.MAX_VALUE
         this.size = if (size > MAX_SIZE) DEFAULT_SIZE else size
-    }
-
-//    fun setDirection(direction: Sort.Direction) {
-//        this.direction = direction
-//    }
-
-    fun setSort(sort: List<String>?) {
-        this.sort = sort
-    }
-
-    fun setPaged(paged: Boolean) {
-        this.paged = paged
+        return this
     }
 
     fun of(): Pageable {
@@ -68,7 +62,7 @@ class PageRequest {
         val sortBy = Sort.by(orders)
 
         return if (paged) {
-            PageRequest.of(page - 1, size, sortBy)
+            org.springframework.data.domain.PageRequest.of(page - 1, size, sortBy)
         } else {
             Pageable.unpaged()
         }

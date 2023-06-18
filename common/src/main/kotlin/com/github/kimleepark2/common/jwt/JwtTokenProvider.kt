@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.security.Key
 import java.util.*
 import jakarta.servlet.http.HttpServletRequest
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.userdetails.UserDetailsService
 
 @Component

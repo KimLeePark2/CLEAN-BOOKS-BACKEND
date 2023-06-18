@@ -20,16 +20,13 @@ class AwsS3Uploader(
     @Value("\${cloud.aws.s3.bucket}")
     var bucket: String? = null
 
-    @Value("\${cloud.aws.s3.bucket.directory-name:static}")
+    @Value("\${cloud.aws.s3.directory-name:static}")
     val S3_BUCKET_DIRECTORY_NAME: String = "static"
 
     private val log = LoggerFactory.getLogger(AwsS3Uploader::class.java)
 
-    init {
-        log.info("S3_BUCKET_DIRECTORY_NAME: $S3_BUCKET_DIRECTORY_NAME")
-    }
-
     fun upload(multipartFile: MultipartFile, dirName: String): String {
+        log.info("S3_BUCKET_DIRECTORY_NAME: $S3_BUCKET_DIRECTORY_NAME")
         // 메타데이터 설정
         val objectMetadata = ObjectMetadata()
         objectMetadata.contentType = multipartFile.contentType
@@ -79,15 +76,6 @@ class AwsS3Uploader(
             log.error("S3 파일 업로드에 실패했습니다. {}", e.message)
             throw IllegalStateException("S3 파일 업로드에 실패했습니다.")
         }
-
-    // 3. 로컬에 생성된 파일삭제
-    private fun removeNewFile(targetFile: File) {
-        if (targetFile.delete()) {
-            log.info("File delete success")
-            return
-        }
-        log.info("File delete fail")
-    }
 
     fun delete(fileName: String?) {
         log.info("File Delete : $fileName")
