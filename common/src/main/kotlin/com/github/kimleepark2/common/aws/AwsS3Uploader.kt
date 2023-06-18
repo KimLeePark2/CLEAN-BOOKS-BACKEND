@@ -38,10 +38,7 @@ class AwsS3Uploader(
         // 경로가 "//"인 경우 replace로 "/"로 변경
         var path = S3_BUCKET_DIRECTORY_NAME + "/$dirName/" + UUID.randomUUID()
         path = path.replace("//", "/")
-        val fileName: String = path + "." + multipartFile.originalFilename
-
-        //        removeNewFile(multipartFile)
-        return putS3(multipartFile, objectMetadata, fileName)
+        return putS3(multipartFile, objectMetadata, path)
     }
 
     // 1. 로컬에 파일생성
