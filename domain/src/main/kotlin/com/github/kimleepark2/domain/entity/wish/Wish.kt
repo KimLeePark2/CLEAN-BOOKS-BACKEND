@@ -6,6 +6,7 @@ import com.github.kimleepark2.domain.entity.user.User
 import jakarta.persistence.*
 import org.hibernate.annotations.Comment
 import org.hibernate.annotations.Where
+import org.hibernate.annotations.WhereJoinTable
 
 @Comment("찜")
 @Where(clause = "deleted_at IS NULL")
@@ -16,7 +17,8 @@ class Wish(
         fetch = FetchType.LAZY,
         cascade = [CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH]
     )
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", foreignKey = ForeignKey(name = "fk_wish_product_id"))
+    @WhereJoinTable(clause = "deleted_at IS NULL")
     @Comment(value = "상품 번호")
     val product: Product,
 
@@ -24,7 +26,8 @@ class Wish(
         fetch = FetchType.LAZY,
         cascade = [CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH]
     )
-    @JoinColumn(name = "user_email")
+    @JoinColumn(name = "user_email", foreignKey = ForeignKey(name = "fk_wish_user_email"))
+    @WhereJoinTable(clause = "deleted_at IS NULL")
     @Comment(value = "회원 번호")
     val user: User,
 
