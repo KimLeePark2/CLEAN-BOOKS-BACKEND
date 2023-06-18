@@ -10,7 +10,7 @@ data class UserResponse(
     val id: String,
 
     @Schema(description = "사용자 로그인 이메일")
-    val username: String,
+    val email: String,
 
     @Schema(description = "사용자 이름")
     val name: String,
@@ -26,8 +26,8 @@ data class UserResponse(
     var changePassword: Boolean? = null,
 ) {
     constructor(user: User, isFirst: Boolean? = null) : this(
-        id = user.id!!,
-        username = user.username,
+        id = user.id,
+        email = user.username,
         name = user.name,
         nickname = user.nickname,
         role = user.role,

@@ -16,5 +16,4 @@ interface ProductService {
     fun getById(id: Long): ProductResponse
 
     fun page(productPageRequest: ProductPageRequest, pageable: Pageable): Page<ProductResponse>
-
 }

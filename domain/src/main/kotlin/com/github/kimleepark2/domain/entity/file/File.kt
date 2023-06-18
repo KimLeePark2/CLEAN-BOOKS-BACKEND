@@ -1,11 +1,9 @@
 package com.github.kimleepark2.domain.entity.file
 
-import com.github.kimleepark2.domain.entity.BaseEntity
 import com.github.kimleepark2.domain.entity.product.Product
 import com.github.kimleepark2.domain.entity.user.User
 import jakarta.persistence.*
 import org.hibernate.annotations.Comment
-import org.hibernate.annotations.Where
 import org.hibernate.annotations.WhereJoinTable
 import java.time.LocalDateTime
 

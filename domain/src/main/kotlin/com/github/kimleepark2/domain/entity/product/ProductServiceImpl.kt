@@ -81,7 +81,6 @@ class ProductServiceImpl(
             }
         }
 
-
         product.update(
             title = productUpdateRequest.title,
             description = productUpdateRequest.description,

@@ -6,8 +6,6 @@ import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 import jakarta.persistence.*
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
 // hibernate 자체에서 inheritance를 지원하지 않는다.
 // @Where(clause = "deleted_at IS NULL")

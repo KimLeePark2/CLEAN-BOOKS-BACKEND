@@ -2,7 +2,7 @@ package com.github.kimleepark2.domain.entity.product
 
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface ProductRepository : JpaRepository<Product, Long>{
+interface ProductRepository : JpaRepository<Product, Long> {
     fun existsByTitle(title: String): Boolean
     fun findByTitle(title: String): Product?
     fun findAllBy(): List<Product>

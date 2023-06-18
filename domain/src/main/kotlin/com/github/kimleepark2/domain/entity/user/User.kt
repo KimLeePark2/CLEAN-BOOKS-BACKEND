@@ -40,7 +40,7 @@ class User(
 
     @Column(length = 255)
     @Comment(value = "사용자 oauth2 인증소 id")
-    var providerId: String? = null,
+    var providerId: String,
 
     @Column(length = 50, nullable = false)
     @Comment(value = "사용자 권한(ROLE_XXX)")
@@ -53,7 +53,7 @@ class User(
 
     @Column(length = 255, nullable = false)
     @Comment(value = "사용자 아이디(이메일)")
-    private val username: String,
+    private val email: String,
 
     @Id
     @Column(name = "user_id", nullable = false)
@@ -79,7 +79,7 @@ class User(
     fun isChangePassword(): Boolean = this.changePassword
 
     override fun getPassword(): String = this.password
-    override fun getUsername(): String = this.username
+    override fun getUsername(): String = this.email
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         val authorities: MutableList<GrantedAuthority> = ArrayList()
@@ -109,7 +109,7 @@ class User(
 
     override
     fun toString(): String {
-        return "User(username='$username', password='$password', name='$name', role=$role, changePassword=$changePassword, loginAt=$loginAt)"
+        return "User(username='$email', password='$password', name='$name', role=$role, changePassword=$changePassword, loginAt=$loginAt)"
     }
 
     fun updateProvider(provider: OAuth2Provider, providerId: String) {

@@ -31,20 +31,23 @@ class UserServiceImpl(
 //    @Value("\${auth.kakao.logout.redirect.url}")
 //    private lateinit var kakaoLogoutRedirectUrl: String
 
-
     override fun saveUser(userCreateRequest: UserCreateRequest): LoginResponse {
         val provider = userCreateRequest.provider
         var providerId = userCreateRequest.providerId
-        var username = provider.name + providerId
-        if(provider == OAuth2Provider.LOCAL){
-            providerId = UUID.randomUUID().toString()
-            if(userCreateRequest.email.isNullOrBlank()){
+
+        if (userRepository.findByProviderAndProviderId(provider, providerId) != null) {
+            throw ConflictException("이미 존재하는 계정입니다.")
+        }
+
+        var username = provider.name + "-" + providerId
+        if (provider == OAuth2Provider.LOCAL) {
+            if (userCreateRequest.email.isNullOrBlank()) {
                 throw IllegalArgumentException("이메일을 입력해주세요.")
             }
-            if(userRepository.existsByUsername(userCreateRequest.email)){
+            if (userRepository.existsByEmail(userCreateRequest.email)) {
                 throw ConflictException("이미 존재하는 이메일입니다.")
             }
-            username = userCreateRequest.email
+            providerId = userCreateRequest.email
         }
         val user = userRepository.save(
             User(
@@ -53,19 +56,20 @@ class UserServiceImpl(
                 nickname = userCreateRequest.nickname,
                 provider = provider,
                 providerId = providerId,
-                username = username,
+                email = username,
             )
         )
         return LoginResponse(
-            username = user.username,
+            email = user.username,
             userId = user.id,
             name = user.name,
             role = user.role,
             changePassword = user.changePassword,
-            accessToken = jwtTokenProvider.createAccessToken(user.username),
-            refreshToken = jwtTokenProvider.createRefreshToken(user.username),
+            accessToken = jwtTokenProvider.createAccessToken(user.provider.toString(), user.providerId),
+            refreshToken = jwtTokenProvider.createRefreshToken(user.provider.toString(), user.providerId),
         )
     }
+
     override fun updateUser(userUpdateRequest: UserUpdateRequest) {
         val loginUser = getAccountFromSecurityContext()
 
@@ -111,33 +115,36 @@ class UserServiceImpl(
 
     override fun getUserByUsername(email: String): UserResponse {
         return UserResponse(
-            userRepository.findByUsername(email)
+            userRepository.findByEmail(email)
                 ?: throw IllegalArgumentException("사용자를 찾을 수 없습니다.")
         )
     }
 
-    override fun list(): List<UserResponse>{
-        return userRepository.findAllBy();
+    override fun list(): List<UserResponse> {
+        return userRepository.findAllBy()
     }
-
 
     override fun login(provider: OAuth2Provider, providerId: String): LoginResponse {
         val user = userRepository.findByProviderAndProviderId(provider, providerId)
             ?: throw UnauthorizedException("존재하지 않는 유저입니다.")
         return LoginResponse(
-            username = user.username,
+            email = user.username,
             userId = user.id,
             name = user.name,
             role = user.role,
             changePassword = user.changePassword,
-            accessToken = jwtTokenProvider.createAccessToken(user.username),
-            refreshToken = jwtTokenProvider.createRefreshToken(user.username),
+            accessToken = jwtTokenProvider.createAccessToken(user.provider.toString(), user.providerId),
+            refreshToken = jwtTokenProvider.createRefreshToken(user.provider.toString(), user.providerId),
         )
     }
 
     override fun refreshToken(refreshTokenRequest: RefreshTokenRequest): JwtToken {
-        val userPk = jwtTokenProvider.getUserPk(refreshTokenRequest.refreshToken)
-        return JwtToken(jwtTokenProvider.createAccessToken(userPk), jwtTokenProvider.createRefreshToken(userPk))
+        val provider = jwtTokenProvider.getProvider(refreshTokenRequest.refreshToken)
+        val providerId = jwtTokenProvider.getProviderId(refreshTokenRequest.refreshToken)
+        return JwtToken(
+            jwtTokenProvider.createAccessToken(provider.toString(), providerId),
+            jwtTokenProvider.createRefreshToken(provider.toString(), providerId)
+        )
     }
 
     override fun kakaoLogout(): String {

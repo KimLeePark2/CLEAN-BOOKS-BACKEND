@@ -1,21 +1,10 @@
 package com.github.kimleepark2.domain.product
 
-import com.github.kimleepark2.domain.entity.product.Product
-import com.github.kimleepark2.domain.entity.product.ProductRepository
-import com.github.kimleepark2.domain.entity.user.User
-import com.github.kimleepark2.domain.entity.user.UserRepository
-import io.github.serpro69.kfaker.Faker
-import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.transaction.annotation.Transactional
-
-
-//@SpringBootTest
-//class ProductQueryRepoTest @Autowired constructor(
+// @SpringBootTest
+// class ProductQueryRepoTest @Autowired constructor(
 //    private val userCommand: UserRepository,
 //    private val productCommand: ProductRepository,
-//) {
+// ) {
 
 //    fun groupByCountry(): Map<String, List<Product>> {
 //        return from(member)
@@ -79,4 +68,4 @@ import org.springframework.transaction.annotation.Transactional
 //        }
 //        return entities
 //    }
-//}
+// }

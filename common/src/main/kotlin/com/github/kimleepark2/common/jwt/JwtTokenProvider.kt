@@ -13,11 +13,11 @@ import org.springframework.transaction.annotation.Transactional
 import java.security.Key
 import java.util.*
 import jakarta.servlet.http.HttpServletRequest
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.security.core.userdetails.UserDetailsService
 
 @Component
-class JwtTokenProvider(private val userDetailsService: UserDetailsService) {
+class JwtTokenProvider(
+    private val userProviderService: UserProviderService,
+) {
 
     val log: Logger = LoggerFactory.getLogger(this.javaClass)
 
@@ -30,9 +30,10 @@ class JwtTokenProvider(private val userDetailsService: UserDetailsService) {
     // 토큰 유효시간 30일
     private val refreshTokenValidTime = 30 * 24 * 60 * 60 * 1000L
 
-    private fun createToken(userPk: String, validTime: Long): String {
-        val claims: Claims = Jwts.claims().setSubject(userPk)
-        claims["userPk"] = userPk
+    private fun createToken(provider: String, providerId: String, validTime: Long): String {
+        val claims: Claims = Jwts.claims().setSubject(providerId)
+        claims["provider"] = provider
+        claims["providerId"] = providerId
         val now = Date()
 
         val expiredTime = now.time + validTime
@@ -44,25 +45,38 @@ class JwtTokenProvider(private val userDetailsService: UserDetailsService) {
             .compact()
     }
 
-    fun createAccessToken(userPk: String): String {
-        log.info("create accessToken - userPK : $userPk")
-        return createToken(userPk, accessTokenValidTime)
+    fun createAccessToken(provider: String, providerId: String): String {
+        log.info("create accessToken - provider: $provider, providerId : $providerId")
+        return createToken(provider, providerId, accessTokenValidTime)
     }
 
-    fun createRefreshToken(userPk: String): String {
-        return createToken(userPk, refreshTokenValidTime)
+    fun createRefreshToken(provider: String, providerId: String): String {
+        log.info("create accessToken - provider: $provider, providerId : $providerId")
+        return createToken(provider, providerId, refreshTokenValidTime)
     }
 
     @Transactional(readOnly = true)
     fun getAuthentication(token: String): Authentication {
-        val userDetails = userDetailsService.loadUserByUsername(getUserPk(token))
+        val userDetails = userProviderService.findByProviderAndProviderId(
+            getProvider(token),
+            getProviderId(token),
+        )
         log.info("jwt get authentication - user details : {}", userDetails)
         return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)
     }
 
-    fun getUserPk(token: String): String {
+    fun getProvider(token: String): String {
+        val subject = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).body.get(
+            "provider",
+            String::class.java
+        )
+        if (subject.isBlank()) throw UnauthorizedException("Invalid JWT token, please update token")
+        return subject
+    }
+
+    fun getProviderId(token: String): String {
         val subject = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).body.subject
-        if (subject.isBlank())throw UnauthorizedException("Invalid JWT token, please update token")
+        if (subject.isBlank()) throw UnauthorizedException("Invalid JWT token, please update token")
         return subject
     }
 
