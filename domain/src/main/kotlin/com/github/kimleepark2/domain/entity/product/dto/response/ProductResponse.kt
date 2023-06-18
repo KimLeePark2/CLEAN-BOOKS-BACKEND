@@ -1,5 +1,7 @@
 package com.github.kimleepark2.domain.entity.product.dto.response
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.github.kimleepark2.domain.entity.file.File
 import com.github.kimleepark2.domain.entity.product.Product
 import com.github.kimleepark2.domain.entity.product.enums.ProductStatus
 import com.github.kimleepark2.domain.entity.user.dto.response.SellerResponse
@@ -22,8 +24,10 @@ data class ProductResponse @QueryProjection constructor(
     @Schema(description = "책 가격")
     var price: Int,
 
+    // 이 밑으론 QClass 사용 부분이라 건드리지 않는다.
+
     @Schema(description = "책 썸네일 경로")
-    var thumbnailImagePath: String,
+    var thumbnailImagePaths: List<String>,
 
     @Schema(description = "책 판매자 정보")
     val seller: SellerResponse,
@@ -31,14 +35,23 @@ data class ProductResponse @QueryProjection constructor(
     @Schema(description = "책 좋아요 수")
     var wishes: Long,
 ) {
+//    @JsonIgnore
+//    @Transient
+//    var files: List<File>
+//
+//    @Schema(description = "책 썸네일 경로")
+//    var thumbnailImagePaths: List<String> = files.map { it.path }
+
+
     constructor(product: Product) : this(
-        id = product.id!!,
+        id = product.id,
         title = product.title,
         description = product.description,
         status = product.status,
         price = product.price,
-        thumbnailImagePath = product.thumbnailImagePath,
+        thumbnailImagePaths = product.files.map { it.path },
         seller = SellerResponse(product.seller),
-        wishes = product.wishes.size.toLong()
+        wishes = product.wishes.size.toLong(),
+//        files = product.files,
     )
 }

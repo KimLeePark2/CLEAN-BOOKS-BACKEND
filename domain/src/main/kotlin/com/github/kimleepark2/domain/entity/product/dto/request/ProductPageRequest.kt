@@ -6,7 +6,9 @@ import com.github.kimleepark2.domain.entity.product.enums.ProductStatus
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
+import org.springdoc.core.annotations.ParameterObject
 
+@ParameterObject
 data class ProductPageRequest(
     @Schema(description = "판매자명, 값으로 시작하는 결과만 조회, 1~50자")
     val sellerName: String?,
@@ -23,9 +25,9 @@ data class ProductPageRequest(
 
     @Schema(description = "최소 판매 가격, 0 ~ MAX ~ 999_999_999")
     @Min(value = 0, message = "최소 판매 가격은 0 이상으로 입력해주세요.")
-    var minPrice: Int? = 0,
+    var minPrice: Int? = null,
 
     @Schema(description = "최대 판매 가격, MIN ~ 999_999_999")
     @Max(value = 999_999_999, message = "최대 판매 가격은 999_999_999 이하로 입력해주세요.")
-    var maxPrice: Int? = 999_999_999
+    var maxPrice: Int? = null,
 ) : BaseCondition()
