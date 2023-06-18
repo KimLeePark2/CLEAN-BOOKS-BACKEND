@@ -8,6 +8,9 @@ import com.github.kimleepark2.domain.entity.wish.Wish
 import jakarta.persistence.*
 import org.hibernate.annotations.Comment
 import org.hibernate.annotations.Where
+import org.hibernate.annotations.WhereJoinTable
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 @Comment("상품")
 @Where(clause = "deleted_at IS NULL")
@@ -44,7 +47,8 @@ class Product(
         fetch = FetchType.LAZY,
         cascade = [CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH]
     )
-    @JoinColumn(name = "seller_id")
+    @JoinColumn(name = "seller_id", foreignKey = ForeignKey(name = "fk_product_seller_id"))
+    @WhereJoinTable(clause = "deleted_at IS NULL")
     @Comment(value = "판매자 번호")
     val seller: User,
 
@@ -62,7 +66,6 @@ class Product(
     @Column(name = "product_id")
     val id: Long = 0L,
 ) : BaseEntity() {
-
     fun update(
         title: String?,
         description: String?,
@@ -73,11 +76,14 @@ class Product(
         this.price = price ?: this.price
     }
 
-    fun addFile(path: String) {
-        files.add(File(
-            path = path,
-            product = this
-        ))
+    fun addFile(path: String, key: String) {
+        files.add(
+            File(
+                path = path,
+                key = key,
+                product = this
+            )
+        )
     }
 
     fun deleteFile(file: File) {

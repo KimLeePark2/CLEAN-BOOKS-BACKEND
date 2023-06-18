@@ -58,10 +58,7 @@ class ProductQueryRepository(
             product.id.eq(wish.product.id),
             wish.deletedAt.isNull,
         )
-        .leftJoin(file).on(
-            product.id.eq(file.product.id),
-            file.deletedAt.isNull,
-        )
+        .leftJoin(product.files, file)
 
     private val countQuery = queryFactory.select(
         product.id.countDistinct(),
@@ -100,16 +97,21 @@ class ProductQueryRepository(
                 product.id.eq(wish.product.id),
                 wish.deletedAt.isNull,
             ).fetchJoin()
-            .leftJoin(file).on(
-                product.id.eq(file.product.id),
-                file.deletedAt.isNull,
-            ).fetchJoin()
+            .leftJoin(product.files, file).fetchJoin()
             .where(
                 search(
                     condition = condition,
                     pageable = pageable,
                 )
-            ).fetch().map {
+            )
+            .orderBy(
+                *pageable.getCustomOrder(
+                    customOrderProperties,
+                    Product::class.java,
+                )
+            )
+            .pagination(pageable)
+            .fetch().map {
                 ProductResponse(
                     id = it.id,
                     title = it.title,

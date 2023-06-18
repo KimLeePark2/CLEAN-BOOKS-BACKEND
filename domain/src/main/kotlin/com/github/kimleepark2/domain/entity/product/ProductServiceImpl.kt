@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.multipart.MultipartFile
 
 @Service
 class ProductServiceImpl(
@@ -29,20 +31,39 @@ class ProductServiceImpl(
     @Value("\${product.thumbnail.max-size}")
     private val maxThumbnailSize: Int = 0
 
+    private final val S3_BUCKET_FOLDER = "product"
+
+    @Transactional
     override fun save(productCreateRequest: ProductCreateRequest): Long {
         val loginUser = UserServiceImpl.getAccountFromSecurityContext()
         val user = userCommand.findById(productCreateRequest.userId).orElseThrow { throw UserNotFoundException() }
         val product: Product = productCreateRequest.toEntity(user)
 
-        val thumbnailImages = productCreateRequest.thumbnailImages?.subList(0, maxThumbnailSize)
-        log.info("thumbnailImages.size : ${thumbnailImages?.size ?: 0}")
-        thumbnailImages?.forEach { file ->
-            val filePath = awsS3Uploader.upload(file, "product")
-            product.addFile(filePath)
+        productCreateRequest.thumbnailImages?.let { files ->
+            val maxSize = getFilesMaxSize(files)
+            log.info("file add max size : $maxSize")
+            files.subList(0, maxSize).forEach { file ->
+                addFile(file, product)
+            }
         }
+
         product.create(loginUser.username)
         productCommand.save(product)
         return product.id
+    }
+
+    private fun getFilesMaxSize(files: List<MultipartFile>) =
+        if (files.size > maxThumbnailSize) maxThumbnailSize else files.size
+
+    private fun addFile(
+        file: MultipartFile,
+        product: Product
+    ) {
+        val filePath = awsS3Uploader.upload(file, S3_BUCKET_FOLDER)
+        val key = AwsS3Uploader.getS3Key(S3_BUCKET_FOLDER, filePath)
+        log.info("s3 key : $key")
+        product.addFile(filePath, key)
+        productCommand.save(product)
     }
 
     override fun update(id: Long, productUpdateRequest: ProductUpdateRequest): Long {
@@ -51,23 +72,15 @@ class ProductServiceImpl(
         val product: Product = productCommand.findByIdAndSellerId(id, sellerId) ?: throw ProductNotFoundException()
 
         // 삭제할 파일 경로들을 받아서, 파일을 삭제하고, product에서도 삭제
-        productUpdateRequest.deleteFilePaths?.forEach {existFilePath ->
+        productUpdateRequest.deleteFilePaths?.forEach { existFilePath ->
             log.info("existFilePath : $existFilePath")
-            fileCommand.findByPath(existFilePath)?.let {
+            fileCommand.findByPathAndProduct(existFilePath, product)?.let {
                 log.info("exist file: $it")
-                awsS3Uploader.delete(it.path)
+                awsS3Uploader.delete(it.key)
                 product.deleteFile(it)
             }
         }
 
-        // 새로 등록할 파일을 받아서 업로드하고, product에 추가
-        val thumbnailImages = productUpdateRequest.thumbnailImages?.subList(0, maxThumbnailSize)
-        log.info("thumbnailImages.size : ${thumbnailImages?.size ?: 0}")
-        productUpdateRequest.thumbnailImages?.forEach { newFile->
-            log.info("file: $newFile")
-            val newPath = awsS3Uploader.upload(newFile, "product")
-            product.addFile(newPath)
-        }
 
         product.update(
             title = productUpdateRequest.title,
@@ -77,6 +90,15 @@ class ProductServiceImpl(
 
         product.update(loginUser.username)
         productCommand.save(product)
+
+        // 새로 등록할 파일을 받아서 업로드하고, product에 추가
+        productUpdateRequest.thumbnailImages?.let { files ->
+            val maxSize = getFilesMaxSize(files)
+            log.info("file add max size : $maxSize")
+            files.subList(0, maxSize).forEach { file ->
+                addFile(file, product)
+            }
+        }
         return product.id
     }
 
@@ -85,7 +107,9 @@ class ProductServiceImpl(
         val sellerId = loginUser.id
         val product: Product = productCommand.findByIdAndSellerId(id, sellerId) ?: throw ProductNotFoundException()
         product.softDelete(loginUser.username)
-        product.files
+        product.files.forEach { file ->
+            awsS3Uploader.delete(file.key)
+        }
         productCommand.save(product)
     }
 

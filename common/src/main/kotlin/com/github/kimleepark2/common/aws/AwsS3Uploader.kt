@@ -2,6 +2,7 @@ package com.github.kimleepark2.common.aws
 
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.CannedAccessControlList
+import com.amazonaws.services.s3.model.DeleteObjectRequest
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.services.s3.model.PutObjectRequest
 import org.slf4j.LoggerFactory
@@ -77,8 +78,28 @@ class AwsS3Uploader(
             throw IllegalStateException("S3 파일 업로드에 실패했습니다.")
         }
 
-    fun delete(fileName: String?) {
-        log.info("File Delete : $fileName")
-        amazonS3Client.deleteObject(bucket, fileName)
+    /**
+     * S3에 저장된 파일 삭제
+     * @param key S3에 저장된 파일명, 폴더/폴더/.../폴더/파일명.확장자
+     */
+    fun delete(key: String) {
+
+        val requestKey = listOf(
+            S3_BUCKET_DIRECTORY_NAME,
+            key,
+        ).joinToString("/")
+        log.info("""
+            File Delete
+            bucket : $bucket
+            S3_BUCKET_DIRECTORY_NAME : $S3_BUCKET_DIRECTORY_NAME
+            key : $key
+            request key : $requestKey
+        """.trimIndent())
+        amazonS3Client.deleteObject(bucket, requestKey)
+    }
+
+
+    companion object{
+        fun getS3Key(s3BucketFolder: String, filePath: String) = "$s3BucketFolder/${filePath.split("/").last()}"
     }
 }
