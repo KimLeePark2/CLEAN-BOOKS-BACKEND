@@ -28,12 +28,4 @@ data class ProductPageRequest(
 //    @Schema(description = "최대 판매 가격, MIN ~ 999_999_999")
 //    @Max(value = 999_999_999, message = "최대 판매 가격은 999_999_999 이하로 입력해주세요.")
 //    var maxPrice: Int?,
-
-    @Schema(description = "찜 필터링, true=찜 조회, false=전체조회")
-    val isWish: Boolean?,
-
-    @Schema(description = "내 판매물품 조회, true=내거만, false=전체조회")
-    val isMine: Boolean?,
-) : BaseCondition(){
-    var sellerId: String? = null
-}
+) : BaseCondition()

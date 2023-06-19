@@ -86,8 +86,8 @@ class ProductQueryRepository(
         condition: ProductPageRequest,
         pageable: Pageable = Pageable.unpaged(),
     ): Page<ProductResponse> {
-        val products: List<ProductResponse> = queryFactory
-            .selectFrom(product)
+        val query = queryFactory
+            .from(product)
             .leftJoin(seller).on(
                 product.seller.id.eq(seller.id),
                 seller.deletedAt.isNull,
@@ -96,13 +96,16 @@ class ProductQueryRepository(
                 product.id.eq(wish.product.id),
                 wish.deletedAt.isNull,
             ).fetchJoin()
-            .leftJoin(product.files, file).fetchJoin()
             .where(
                 search(
                     condition = condition,
                     pageable = pageable,
                 )
             )
+
+        val products: List<ProductResponse> = query.clone()
+            .select(product)
+            .leftJoin(product.files, file).fetchJoin()
             .orderBy(
                 *pageable.getCustomOrder(
                     customOrderProperties,
@@ -123,62 +126,153 @@ class ProductQueryRepository(
                 )
             }
 
-//        val products = queryFactory
-//            .selectFrom(product)
-//            .leftJoin(seller).on(
-//                product.seller.id.eq(seller.id),
-//                seller.deletedAt.isNull,
-//            )
-//            .leftJoin(wish).on(
-//                product.id.eq(wish.product.id),
-//                wish.deletedAt.isNull,
-//            )
-//            .leftJoin(file).on(
-//                product.id.eq(file.product.id),
-//                file.deletedAt.isNull,
-//            )
-//            .distinct()
-//            .transform(
-//                groupBy(product.id).list(
-//                    Projections.constructor(
-//                        ProductResponse::class.java,
-//                        product.id.`as`("id"),
-//                        product.title.`as`("title"),
-//                        product.description.`as`("description"),
-//                        product.status.`as`("status"),
-//                        product.price.`as`("price"),
-// //                        Expressions.asString(""),
-//                        list(file.path).`as`("thumbnailImagePaths"),
-//                        Projections.constructor(
-//                            SellerResponse::class.java,
-//                            seller.id,
-//                            seller.username,
-//                            seller.nickname,
-//                            seller.profileImagePath
-//                        ).`as`("seller"),
-//                        wish.countDistinct().`as`("wishes"),
-//                    )
-//                )
-//            )
-//        val query = selectQuery.clone()
-//            .where(
-//                search(
-//                    condition = condition,
-//                    pageable = pageable,
-//                )
-//            )
-//        val products: List<ProductResponse> = query
-//            .distinct()
-//            .orderBy(
-//                *pageable.getCustomOrder(
-//                    customOrderProperties,
-//                    Product::class.java,
-//                )
-//            )
-//            .pagination(pageable)
-//            .fetch()
-//
-        val count: Long = countQuery.clone()
+        val count: Long = query.clone()
+            .select(product.id.countDistinct())
+            .fetchOne() ?: 0
+
+        /* val products = queryFactory
+             .selectFrom(product)
+             .leftJoin(seller).on(
+                 product.seller.id.eq(seller.id),
+                 seller.deletedAt.isNull,
+             )
+             .leftJoin(wish).on(
+                 product.id.eq(wish.product.id),
+                 wish.deletedAt.isNull,
+             )
+             .leftJoin(file).on(
+                 product.id.eq(file.product.id),
+                 file.deletedAt.isNull,
+             )
+             .distinct()
+             .transform(
+                 groupBy(product.id).list(
+                     Projections.constructor(
+                         ProductResponse::class.java,
+                         product.id.`as`("id"),
+                         product.title.`as`("title"),
+                         product.description.`as`("description"),
+                         product.status.`as`("status"),
+                         product.price.`as`("price"),
+  //                        Expressions.asString(""),
+                         list(file.path).`as`("thumbnailImagePaths"),
+                         Projections.constructor(
+                             SellerResponse::class.java,
+                             seller.id,
+                             seller.username,
+                             seller.nickname,
+                             seller.profileImagePath
+                         ).`as`("seller"),
+                         wish.countDistinct().`as`("wishes"),
+                     )
+                 )
+             )
+         val query = selectQuery.clone()
+             .where(
+                 search(
+                     condition = condition,
+                     pageable = pageable,
+                 )
+             )
+         val products: List<ProductResponse> = query
+             .distinct()
+             .orderBy(
+                 *pageable.getCustomOrder(
+                     customOrderProperties,
+                     Product::class.java,
+                 )
+             )
+             .pagination(pageable)
+             .fetch()*/
+
+        return PageImpl(products, pageable, count)
+    }
+
+    fun userSales(userId: String, pageable: Pageable): Page<ProductResponse> {
+        val query = queryFactory
+            .from(product)
+            .leftJoin(seller).on(
+                product.seller.id.eq(seller.id),
+                seller.deletedAt.isNull,
+            ).fetchJoin()
+            .leftJoin(wish).on(
+                product.id.eq(wish.product.id),
+                wish.deletedAt.isNull,
+            ).fetchJoin()
+            .where(
+                product.seller.id.eq(userId),
+            )
+
+        val products: List<ProductResponse> = query.clone()
+            .select(product)
+            .leftJoin(product.files, file).fetchJoin()
+            .orderBy(
+                *pageable.getCustomOrder(
+                    customOrderProperties,
+                    Product::class.java,
+                )
+            )
+            .pagination(pageable)
+            .fetch().map {
+                ProductResponse(
+                    id = it.id,
+                    title = it.title,
+                    description = it.description,
+                    status = it.status,
+                    price = it.price,
+                    thumbnailImagePaths = it.files.map { file -> file.path },
+                    seller = SellerResponse(it.seller),
+                    wishes = it.wishes.size.toLong(),
+                )
+            }
+
+        val count: Long = query.clone()
+            .select(product.id.countDistinct())
+            .fetchOne() ?: 0
+
+        return PageImpl(products, pageable, count)
+    }
+
+    fun userWishes(userId: String, pageable: Pageable): Page<ProductResponse> {
+        val query = queryFactory
+            .from(product)
+            .leftJoin(seller).on(
+                product.seller.id.eq(seller.id),
+                seller.deletedAt.isNull,
+            ).fetchJoin()
+            .leftJoin(wish).on(
+                product.id.eq(wish.product.id),
+                wish.deletedAt.isNull,
+            ).fetchJoin()
+            .where(
+                wish.user.id.eq(userId),
+            )
+
+        val products: List<ProductResponse> = query.clone()
+            .select(product)
+            .leftJoin(product.files, file).fetchJoin()
+            .orderBy(
+                *pageable.getCustomOrder(
+                    customOrderProperties,
+                    Product::class.java,
+                )
+            )
+            .pagination(pageable)
+            .fetch().map {
+                ProductResponse(
+                    id = it.id,
+                    title = it.title,
+                    description = it.description,
+                    status = it.status,
+                    price = it.price,
+                    thumbnailImagePaths = it.files.map { file -> file.path },
+                    seller = SellerResponse(it.seller),
+                    wishes = it.wishes.size.toLong(),
+                )
+            }
+
+        val count: Long = query.clone()
+            .select(product.id.countDistinct())
             .fetchOne() ?: 0
 
         return PageImpl(products, pageable, count)
@@ -192,8 +286,8 @@ class ProductQueryRepository(
         condition.title?.let { builder.and(product.title.startsWith(it)) }
         condition.description?.let { builder.and(product.description.contains(it)) }
         condition.status?.let { builder.and(product.status.eq(it)) }
-        condition.isWish?.let { builder.and(wish.id.isNotNull) }
-        condition.isMine?.let { builder.and(product.seller.id.eq(condition.sellerId)) }
+//        condition.isWish?.let { builder.and(wish.id.isNotNull) }
+//        condition.isMine?.let { builder.and(product.seller.id.eq(condition.sellerId)) }
 //        val minPrice: Long = condition.minPrice?.toLong() ?: 0
 //        val maxPrice: Long = condition.maxPrice?.toLong() ?: Long.MAX_VALUE
         // between 으로 쓰니 int타입 불가능하다고 함... 왜인지 모르겠음

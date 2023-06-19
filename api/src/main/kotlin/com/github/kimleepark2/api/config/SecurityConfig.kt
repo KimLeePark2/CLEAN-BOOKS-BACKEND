@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
@@ -72,8 +73,21 @@ class SecurityConfig(
             // springboot 3 버전부터 변경됨
             http.authorizeHttpRequests { requests ->
                 requests
-                    .requestMatchers(AntPathRequestMatcher("/openapi/openapi.yml")).authenticated()
+                    .requestMatchers(AntPathRequestMatcher(path)).authenticated()
             }
+        }
+
+        http.authorizeHttpRequests { requests ->
+            // 허용 경로
+            requests.requestMatchers(HttpMethod.GET, "/api/v1/products/{userId}/sales").permitAll()
+            requests.requestMatchers(HttpMethod.GET, "/api/v1/products/{productId}").permitAll()
+            requests.requestMatchers(HttpMethod.GET, "/api/v1/products").permitAll()
+            requests.requestMatchers("/api/auths/**").permitAll()
+
+            // 인증이 필요한 경로
+
+            requests.requestMatchers(AntPathRequestMatcher("/api/v1/products/{userId}/wishes")).authenticated()
+            requests.requestMatchers(AntPathRequestMatcher("/api/**")).authenticated()
         }
 
         // jwt 처리 인증 처리에서 걸러내지 않은 모든 요청은 허용한다.
