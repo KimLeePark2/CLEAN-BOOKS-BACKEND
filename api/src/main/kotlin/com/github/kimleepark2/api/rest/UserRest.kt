@@ -23,22 +23,6 @@ import org.springframework.web.bind.annotation.RestController
 class UserRest(
     private val userService: UserService,
 ) {
-
-    @ApiResponses(
-        ApiResponse(responseCode = "200", description = "성공"),
-        ApiResponse(responseCode = "400", description = "잘못된 요청 정보"),
-    )
-    @Operation(
-        summary = "사용자 등록",
-        description = "OAuth2 사용자 정보로 등록"
-    )
-    @PostMapping("")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.CREATED)
-    fun createUser(@RequestBody userCreateRequest: UserCreateRequest): LoginResponse {
-        return userService.saveUser(userCreateRequest)
-    }
-
     @ApiResponses(
         ApiResponse(responseCode = "200", description = "성공"),
     )

@@ -3,6 +3,7 @@ package com.github.kimleepark2.api.rest
 import com.github.kimleepark2.domain.entity.user.UserService
 import com.github.kimleepark2.domain.entity.user.UserServiceImpl
 import com.github.kimleepark2.domain.entity.user.dto.request.LoginRequest
+import com.github.kimleepark2.domain.entity.user.dto.request.UserCreateRequest
 import com.github.kimleepark2.domain.entity.user.dto.response.LoginResponse
 import com.github.kimleepark2.domain.entity.user.dto.response.UserResponse
 import io.swagger.v3.oas.annotations.Operation
@@ -41,6 +42,21 @@ class AuthRest(
             provider = loginRequest.provider,
             providerId = loginRequest.providerId,
         )
+    }
+
+    @ApiResponses(
+        ApiResponse(responseCode = "201", description = "성공"),
+        ApiResponse(responseCode = "400", description = "잘못된 요청 정보"),
+    )
+    @Operation(
+        summary = "사용자 등록",
+        description = "OAuth2 사용자 정보로 등록"
+    )
+    @PostMapping("/join")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createUser(@RequestBody userCreateRequest: UserCreateRequest): LoginResponse {
+        return userService.saveUser(userCreateRequest)
     }
 
     @ApiResponses(
