@@ -65,13 +65,15 @@ class Product(
     val id: Long = 0L,
 ) : BaseEntity() {
     fun update(
-        title: String?,
-        description: String?,
-        price: Int?,
+        title: String? = null,
+        description: String? = null,
+        price: Int? = null,
+        status: ProductStatus? = null,
     ) {
         this.title = title ?: this.title
         this.description = description ?: this.description
         this.price = price ?: this.price
+        this.status = status ?: this.status
     }
 
     fun addFile(path: String, key: String) {
@@ -93,10 +95,19 @@ class Product(
     }
 
     fun sold() {
-        this.status = ProductStatus.SOLD_OUT
+        this.status = ProductStatus.SOLD
     }
 
-    fun addWish(wish: Wish) {
-        wishes.add(wish)
+    fun wish(user: User) {
+        wishes.add(
+            Wish(
+                product = this,
+                user = user,
+            )
+        )
+    }
+
+    fun deleteWish(wish: Wish) {
+        wishes.remove(wish)
     }
 }

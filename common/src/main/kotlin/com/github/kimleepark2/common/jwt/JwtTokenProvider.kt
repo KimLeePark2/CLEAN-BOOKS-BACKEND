@@ -30,10 +30,9 @@ class JwtTokenProvider(
     // 토큰 유효시간 30일
     private val refreshTokenValidTime = 30 * 24 * 60 * 60 * 1000L
 
-    private fun createToken(provider: String, providerId: String, validTime: Long): String {
-        val claims: Claims = Jwts.claims().setSubject(providerId)
-        claims["provider"] = provider
-        claims["providerId"] = providerId
+    private fun createToken(userId: String, validTime: Long): String {
+        val claims: Claims = Jwts.claims().setSubject(userId)
+        claims["userId"] = userId
         val now = Date()
 
         val expiredTime = now.time + validTime
@@ -45,36 +44,35 @@ class JwtTokenProvider(
             .compact()
     }
 
-    fun createAccessToken(provider: String, providerId: String): String {
-        log.info("create accessToken - provider: $provider, providerId : $providerId")
-        return createToken(provider, providerId, accessTokenValidTime)
+    fun createAccessToken(userId: String): String {
+        log.info("create accessToken - userId: $userId")
+        return createToken(userId, accessTokenValidTime)
     }
 
-    fun createRefreshToken(provider: String, providerId: String): String {
-        log.info("create accessToken - provider: $provider, providerId : $providerId")
-        return createToken(provider, providerId, refreshTokenValidTime)
+    fun createRefreshToken(userId: String): String {
+        log.info("create accessToken - userId: $userId")
+        return createToken(userId, refreshTokenValidTime)
     }
 
     @Transactional(readOnly = true)
     fun getAuthentication(token: String): Authentication {
-        val userDetails = userProviderService.findByProviderAndProviderId(
-            getProvider(token),
-            getProviderId(token),
+        val userDetails = userProviderService.findByUserId(
+            getUserId(token),
         )
         log.info("jwt get authentication - user details : {}", userDetails)
         return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)
     }
 
-    fun getProvider(token: String): String {
-        val subject = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).body.get(
-            "provider",
-            String::class.java
-        )
-        if (subject.isBlank()) throw UnauthorizedException("Invalid JWT token, please update token")
-        return subject
-    }
+//    fun getProvider(token: String): String {
+//        val subject = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).body.get(
+//            "provider",
+//            String::class.java
+//        )
+//        if (subject.isBlank()) throw UnauthorizedException("Invalid JWT token, please update token")
+//        return subject
+//    }
 
-    fun getProviderId(token: String): String {
+    fun getUserId(token: String): String {
         val subject = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).body.subject
         if (subject.isBlank()) throw UnauthorizedException("Invalid JWT token, please update token")
         return subject

@@ -192,9 +192,10 @@ class ProductQueryRepository(
         condition.title?.let { builder.and(product.title.startsWith(it)) }
         condition.description?.let { builder.and(product.description.contains(it)) }
         condition.status?.let { builder.and(product.status.eq(it)) }
-
-        val minPrice: Long = condition.minPrice?.toLong() ?: 0
-        val maxPrice: Long = condition.maxPrice?.toLong() ?: Long.MAX_VALUE
+        condition.isWish?.let { builder.and(wish.id.isNotNull) }
+        condition.isMine?.let { builder.and(product.seller.id.eq(condition.sellerId)) }
+//        val minPrice: Long = condition.minPrice?.toLong() ?: 0
+//        val maxPrice: Long = condition.maxPrice?.toLong() ?: Long.MAX_VALUE
         // between 으로 쓰니 int타입 불가능하다고 함... 왜인지 모르겠음
         // https://github.com/querydsl/querydsl/pull/3346 querydsl에 issue가 올라가있음. 현재 사용 불가?
 //        builder.and(

@@ -65,8 +65,8 @@ class UserServiceImpl(
             name = user.name,
             role = user.role,
             changePassword = user.changePassword,
-            accessToken = jwtTokenProvider.createAccessToken(user.provider.toString(), user.providerId),
-            refreshToken = jwtTokenProvider.createRefreshToken(user.provider.toString(), user.providerId),
+            accessToken = jwtTokenProvider.createAccessToken(user.id),
+            refreshToken = jwtTokenProvider.createRefreshToken(user.id),
         )
     }
 
@@ -133,17 +133,16 @@ class UserServiceImpl(
             name = user.name,
             role = user.role,
             changePassword = user.changePassword,
-            accessToken = jwtTokenProvider.createAccessToken(user.provider.toString(), user.providerId),
-            refreshToken = jwtTokenProvider.createRefreshToken(user.provider.toString(), user.providerId),
+            accessToken = jwtTokenProvider.createAccessToken(user.id),
+            refreshToken = jwtTokenProvider.createRefreshToken(user.id),
         )
     }
 
     override fun refreshToken(refreshTokenRequest: RefreshTokenRequest): JwtToken {
-        val provider = jwtTokenProvider.getProvider(refreshTokenRequest.refreshToken)
-        val providerId = jwtTokenProvider.getProviderId(refreshTokenRequest.refreshToken)
+        val userId = jwtTokenProvider.getUserId(refreshTokenRequest.refreshToken)
         return JwtToken(
-            jwtTokenProvider.createAccessToken(provider.toString(), providerId),
-            jwtTokenProvider.createRefreshToken(provider.toString(), providerId)
+            jwtTokenProvider.createAccessToken(userId),
+            jwtTokenProvider.createRefreshToken(userId)
         )
     }
 
