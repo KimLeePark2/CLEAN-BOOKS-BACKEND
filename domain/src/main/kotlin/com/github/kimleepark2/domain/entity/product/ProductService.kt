@@ -15,8 +15,8 @@ interface ProductService {
     fun sale(productId: Long, userId: String): Boolean
     fun wish(id: Long, userId: String): Boolean
     fun deleteById(id: Long)
-
     fun getById(id: Long): ProductResponse
-
     fun page(productPageRequest: ProductPageRequest, pageable: Pageable): Page<ProductResponse>
+    fun userSales(userId: String, pageable: Pageable): Page<ProductResponse>
+    fun userWishes(userId: String, pageable: Pageable): Page<ProductResponse>
 }

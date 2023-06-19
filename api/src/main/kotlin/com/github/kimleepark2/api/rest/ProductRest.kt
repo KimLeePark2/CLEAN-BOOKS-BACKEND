@@ -155,4 +155,46 @@ class ProductRest(
         val pageable = pageRequest.of()
         return productService.page(productPageRequest, pageable)
     }
+
+    @ApiResponses(
+        ApiResponse(responseCode = "200", description = "성공"),
+        ApiResponse(responseCode = "400", description = "잘못된 요청 정보"),
+    )
+    @Operation(
+        summary = "내 판매목록 리스트 조회",
+        description = "사용자의 판매목록을 전체 조회한다."
+    )
+    @GetMapping("/{userId}/sales")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    fun getUserSales(
+        @PathVariable userId: String,
+        @ParameterObject pageRequest: PageRequest,
+    ): Page<ProductResponse> {
+        val loginUser = UserServiceImpl.getAccountFromSecurityContext()
+        val userId = loginUser.id
+        val pageable = pageRequest.of()
+        return productService.userSales(userId, pageable)
+    }
+
+    @ApiResponses(
+        ApiResponse(responseCode = "200", description = "성공"),
+        ApiResponse(responseCode = "400", description = "잘못된 요청 정보"),
+    )
+    @Operation(
+        summary = "사용자 찜 리스트 조회",
+        description = "사용자의 찜 리스트를 전체 조회한다."
+    )
+    @GetMapping("/{userId}/wishes")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    fun getUserWishes(
+        @PathVariable userId: String,
+        @ParameterObject pageRequest: PageRequest,
+    ): Page<ProductResponse> {
+        val loginUser = UserServiceImpl.getAccountFromSecurityContext()
+        val userId = loginUser.id
+        val pageable = pageRequest.of()
+        return productService.userSales(userId, pageable)
+    }
 }

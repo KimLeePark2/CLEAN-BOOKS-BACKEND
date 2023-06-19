@@ -11,7 +11,6 @@ import com.github.kimleepark2.domain.entity.product.dto.response.ProductResponse
 import com.github.kimleepark2.domain.entity.product.enums.ProductStatus
 import com.github.kimleepark2.domain.entity.user.UserRepository
 import com.github.kimleepark2.domain.entity.user.UserServiceImpl
-import com.github.kimleepark2.domain.entity.user.enum.OAuth2Provider
 import com.github.kimleepark2.domain.entity.wish.WishRepository
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -92,14 +91,14 @@ class ProductServiceImpl(
         return product.id
     }
 
-    override fun sold(productId: Long,  userId: String): Boolean {
+    override fun sold(productId: Long, userId: String): Boolean {
         val product = productCommand.findById(productId).orElseThrow { throw ProductNotFoundException() }
         val user = userCommand.findByIdOrNull(userId)
             ?: throw UserNotFoundException("판매하는 유저 정보가 존재하지 않습니다.")
-        if(product.seller != user) {
+        if (product.seller != user) {
             throw UserNotFoundException("요청자가 판매자가 아닙니다.")
         }
-        if(product.status == ProductStatus.SOLD) {
+        if (product.status == ProductStatus.SOLD) {
             throw ProductNotFoundException("이미 판매된 상품입니다.")
         }
         product.sold()
@@ -107,14 +106,14 @@ class ProductServiceImpl(
         return product.status == ProductStatus.SOLD
     }
 
-    override fun sale(productId: Long,  userId: String): Boolean {
+    override fun sale(productId: Long, userId: String): Boolean {
         val product = productCommand.findById(productId).orElseThrow { throw ProductNotFoundException() }
         val user = userCommand.findByIdOrNull(userId)
             ?: throw UserNotFoundException("판매하는 유저 정보가 존재하지 않습니다.")
-        if(product.seller != user) {
+        if (product.seller != user) {
             throw UserNotFoundException("요청자가 판매자가 아닙니다.")
         }
-        if(product.status == ProductStatus.SALE) {
+        if (product.status == ProductStatus.SALE) {
             throw ProductNotFoundException("이미 판매중인 상품입니다.")
         }
         product.sale()
@@ -122,7 +121,7 @@ class ProductServiceImpl(
         return product.status == ProductStatus.SALE
     }
 
-    override fun wish(id: Long,  userId: String): Boolean {
+    override fun wish(id: Long, userId: String): Boolean {
         val wishUser = userCommand.findByIdOrNull(userId)
             ?: throw UserNotFoundException("찜하는 유저 정보가 존재하지 않습니다.")
 
@@ -167,6 +166,14 @@ class ProductServiceImpl(
             condition = productPageRequest,
             pageable = pageable,
         )
+    }
+
+    override fun userSales(userId: String, pageable: Pageable): Page<ProductResponse> {
+        return productQuery.userSales(userId, pageable)
+    }
+
+    override fun userWishes(userId: String, pageable: Pageable): Page<ProductResponse> {
+        return productQuery.userWishes(userId, pageable)
     }
 
     private fun getFilesMaxSize(files: List<MultipartFile>) =
