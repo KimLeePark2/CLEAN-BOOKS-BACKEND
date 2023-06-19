@@ -98,7 +98,7 @@ class ProductRest(
     ): Boolean {
         val loginUser = UserServiceImpl.getAccountFromSecurityContext()
         val userId = loginUser.id
-        return productService.sale(productId,userId)
+        return productService.sale(productId, userId)
     }
 
     @ApiResponses(
@@ -117,7 +117,7 @@ class ProductRest(
     ): Boolean {
         val loginUser = UserServiceImpl.getAccountFromSecurityContext()
         val userId = loginUser.id
-        return productService.wish(productId,userId)
+        return productService.wish(productId, userId)
     }
 
     @ApiResponses(
