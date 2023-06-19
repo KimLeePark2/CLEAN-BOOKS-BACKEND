@@ -10,9 +10,9 @@ import org.springframework.web.multipart.MultipartFile
 
 // 유저 id, 글 제목, 책 제목, 출판사, 가격, 지역, 등록일, 작가 , 사진
 data class ProductCreateRequest(
-    @Schema(description = "사용자 번호")
-    @Length(min = 1, message = "사용자 번호를 입력해주세요.")
-    val userId: String,
+//    @Schema(description = "사용자 번호")
+//    @Length(min = 1, message = "사용자 번호를 입력해주세요.")
+//    val userId: String,
 
     @Schema(description = "글 제목, 1~50자")
     @NotBlank(message = "게시글 제목을 입력해주세요.")

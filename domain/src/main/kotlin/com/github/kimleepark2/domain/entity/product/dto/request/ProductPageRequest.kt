@@ -4,8 +4,6 @@ import com.github.kimleepark2.common.BaseCondition
 import com.github.kimleepark2.common.util.EnumValidation
 import com.github.kimleepark2.domain.entity.product.enums.ProductStatus
 import io.swagger.v3.oas.annotations.media.Schema
-import jakarta.validation.constraints.Max
-import jakarta.validation.constraints.Min
 import org.springdoc.core.annotations.ParameterObject
 
 @ParameterObject
@@ -23,11 +21,19 @@ data class ProductPageRequest(
     @EnumValidation(enumClass = ProductStatus::class)
     val status: ProductStatus?,
 
-    @Schema(description = "최소 판매 가격, 0 ~ MAX ~ 999_999_999")
-    @Min(value = 0, message = "최소 판매 가격은 0 이상으로 입력해주세요.")
-    var minPrice: Int? = null,
+//    @Schema(description = "최소 판매 가격, 0 ~ MAX ~ 999_999_999")
+//    @Min(value = 0, message = "최소 판매 가격은 0 이상으로 입력해주세요.")
+//    var minPrice: Int? = null,
+//
+//    @Schema(description = "최대 판매 가격, MIN ~ 999_999_999")
+//    @Max(value = 999_999_999, message = "최대 판매 가격은 999_999_999 이하로 입력해주세요.")
+//    var maxPrice: Int?,
 
-    @Schema(description = "최대 판매 가격, MIN ~ 999_999_999")
-    @Max(value = 999_999_999, message = "최대 판매 가격은 999_999_999 이하로 입력해주세요.")
-    var maxPrice: Int? = null,
-) : BaseCondition()
+    @Schema(description = "찜 필터링, true=찜 조회, false=전체조회")
+    val isWish: Boolean?,
+
+    @Schema(description = "내 판매물품 조회, true=내거만, false=전체조회")
+    val isMine: Boolean?,
+) : BaseCondition(){
+    var sellerId: String? = null
+}

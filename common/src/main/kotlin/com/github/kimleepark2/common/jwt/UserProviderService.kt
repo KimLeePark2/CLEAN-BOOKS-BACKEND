@@ -4,4 +4,5 @@ import org.springframework.security.core.userdetails.UserDetails
 
 interface UserProviderService {
     fun findByProviderAndProviderId(provider: String, providerId: String): UserDetails
+    fun findByUserId(userId: String): UserDetails
 }

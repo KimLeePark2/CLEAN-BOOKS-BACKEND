@@ -1,7 +1,9 @@
 package com.github.kimleepark2.domain.entity.user
 
 import com.github.kimleepark2.common.exception.MyEntityNotFoundException
+import com.github.kimleepark2.common.exception.entities.user.UserNotFoundException
 import com.github.kimleepark2.common.jwt.UserProviderService
+import com.github.kimleepark2.domain.common.findByIdOrThrow
 import com.github.kimleepark2.domain.entity.user.enum.OAuth2Provider
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -27,5 +29,11 @@ class UserDetailServiceImpl(
     override fun findByProviderAndProviderId(provider: String, providerId: String): UserDetails {
         return userRepository.findByProviderAndProviderId(OAuth2Provider.valueOf(provider), providerId)
             ?: throw MyEntityNotFoundException("불가능한 계정입니다.")
+    }
+
+    override fun findByUserId(userId: String): User {
+        userRepository.findById(userId)
+            .orElseThrow { UserNotFoundException() }
+            .let { return it }
     }
 }

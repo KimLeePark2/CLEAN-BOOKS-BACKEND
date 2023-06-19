@@ -6,6 +6,7 @@ import com.github.kimleepark2.domain.entity.product.dto.request.ProductCreateReq
 import com.github.kimleepark2.domain.entity.product.dto.request.ProductPageRequest
 import com.github.kimleepark2.domain.entity.product.dto.request.ProductUpdateRequest
 import com.github.kimleepark2.domain.entity.product.dto.response.ProductResponse
+import com.github.kimleepark2.domain.entity.user.UserServiceImpl
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
@@ -36,11 +37,13 @@ class ProductRest(
     fun createProduct(
         @ModelAttribute userCreateRequest: ProductCreateRequest,
     ): Long {
-        return productService.save(userCreateRequest)
+        val loginUser = UserServiceImpl.getAccountFromSecurityContext()
+        val userId = loginUser.id
+        return productService.save(userId, userCreateRequest)
     }
 
     @ApiResponses(
-        ApiResponse(responseCode = "201", description = "성공"),
+        ApiResponse(responseCode = "200", description = "성공"),
         ApiResponse(responseCode = "400", description = "잘못된 요청 정보"),
     )
     @Operation(
@@ -58,6 +61,63 @@ class ProductRest(
         @ModelAttribute productUpdateRequest: ProductUpdateRequest,
     ): Long {
         return productService.update(productId, productUpdateRequest)
+    }
+
+    @ApiResponses(
+        ApiResponse(responseCode = "200", description = "성공"),
+        ApiResponse(responseCode = "400", description = "잘못된 요청 정보"),
+    )
+    @Operation(
+        summary = "상품 판매완료 처리",
+        description = "상품을 판매완료 처리한다"
+    )
+    @PatchMapping("/{productId}/sold")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    fun updateProductSold(
+        @PathVariable productId: Long,
+    ): Boolean {
+        val loginUser = UserServiceImpl.getAccountFromSecurityContext()
+        val userId = loginUser.id
+        return productService.sold(productId, userId)
+    }
+
+    @ApiResponses(
+        ApiResponse(responseCode = "200", description = "성공"),
+        ApiResponse(responseCode = "400", description = "잘못된 요청 정보"),
+    )
+    @Operation(
+        summary = "상품 판매중 처리",
+        description = "상품을 판매중 처리한다"
+    )
+    @PatchMapping("/{productId}/sale")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    fun updateProductSale(
+        @PathVariable productId: Long,
+    ): Boolean {
+        val loginUser = UserServiceImpl.getAccountFromSecurityContext()
+        val userId = loginUser.id
+        return productService.sale(productId,userId)
+    }
+
+    @ApiResponses(
+        ApiResponse(responseCode = "200", description = "성공"),
+        ApiResponse(responseCode = "400", description = "잘못된 요청 정보"),
+    )
+    @Operation(
+        summary = "상품 찜 토글처리",
+        description = "상품을 찜(즐겨찾기) 등록/취소한다."
+    )
+    @PatchMapping("/{productId}/wish")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    fun updateProductWish(
+        @PathVariable productId: Long,
+    ): Boolean {
+        val loginUser = UserServiceImpl.getAccountFromSecurityContext()
+        val userId = loginUser.id
+        return productService.wish(productId,userId)
     }
 
     @ApiResponses(

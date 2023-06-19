@@ -4,13 +4,16 @@ import com.github.kimleepark2.domain.entity.product.dto.request.ProductCreateReq
 import com.github.kimleepark2.domain.entity.product.dto.request.ProductPageRequest
 import com.github.kimleepark2.domain.entity.product.dto.request.ProductUpdateRequest
 import com.github.kimleepark2.domain.entity.product.dto.response.ProductResponse
+import com.github.kimleepark2.domain.entity.user.enum.OAuth2Provider
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 
 interface ProductService {
-    fun save(productCreateRequest: ProductCreateRequest): Long
+    fun save(userId: String, productCreateRequest: ProductCreateRequest): Long
     fun update(id: Long, productUpdateRequest: ProductUpdateRequest): Long
-
+    fun sold(productId: Long, userId: String): Boolean
+    fun sale(productId: Long, userId: String): Boolean
+    fun wish(id: Long, userId: String): Boolean
     fun deleteById(id: Long)
 
     fun getById(id: Long): ProductResponse
