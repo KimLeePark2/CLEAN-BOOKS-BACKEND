@@ -61,6 +61,14 @@ class User(
     val id: String = UUID.randomUUID().toString(),
 ) : UserDetails, BaseEntity() {
 
+    constructor(): this(
+        password = "",
+        name = "",
+        nickname = "",
+        providerId = "",
+        email = ""
+    )
+
     private var loginAt: LocalDateTime? = null
 
     fun updateInfo(userUpdateRequest: UserUpdateRequest) {

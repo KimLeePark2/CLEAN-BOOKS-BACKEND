@@ -13,6 +13,7 @@ import com.github.kimleepark2.domain.entity.user.enum.OAuth2Provider
 import com.github.kimleepark2.domain.entity.util.findByIdOrThrow
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -171,8 +172,8 @@ class UserServiceImpl(
         val log: Logger = LoggerFactory.getLogger(this::class.java)
 
         fun getAccountFromSecurityContext(): User {
-            val authentication = SecurityContextHolder.getContext().authentication
-            val principal = authentication.principal
+            val authentication: Authentication? = SecurityContextHolder.getContext().authentication
+            val principal = authentication?.principal ?: return User()
             log.info("principal : $principal")
             if (principal == "anonymousUser") throw UnauthorizedException("계정이 확인되지 않습니다. 다시 로그인 해주세요.")
             return principal as User
