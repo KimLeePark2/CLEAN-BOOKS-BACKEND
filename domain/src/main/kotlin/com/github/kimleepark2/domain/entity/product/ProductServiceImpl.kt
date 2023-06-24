@@ -125,7 +125,6 @@ class ProductServiceImpl(
         val wishUser = userCommand.findByIdOrNull(userId)
             ?: throw UserNotFoundException("찜하는 유저 정보가 존재하지 않습니다.")
 
-
         val product = productCommand.findById(id).orElseThrow { throw ProductNotFoundException() }
         val wish = wishCommand.findByProductAndUser(product, wishUser)
         log.info("product : $product")

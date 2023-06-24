@@ -61,7 +61,7 @@ class User(
     val id: String = UUID.randomUUID().toString(),
 ) : UserDetails, BaseEntity() {
 
-    constructor(): this(
+    constructor() : this(
         password = "",
         name = "",
         nickname = "",
