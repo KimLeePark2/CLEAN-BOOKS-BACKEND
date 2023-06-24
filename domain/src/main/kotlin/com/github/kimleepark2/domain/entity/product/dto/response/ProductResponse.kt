@@ -5,6 +5,7 @@ import com.github.kimleepark2.domain.entity.product.enums.ProductStatus
 import com.github.kimleepark2.domain.entity.user.dto.response.SellerResponse
 import com.querydsl.core.annotations.QueryProjection
 import io.swagger.v3.oas.annotations.media.Schema
+import java.time.LocalDateTime
 
 data class ProductResponse @QueryProjection constructor(
     @Schema(description = "상품 번호")
@@ -32,6 +33,9 @@ data class ProductResponse @QueryProjection constructor(
 
     @Schema(description = "책 좋아요 수")
     var wishes: Long,
+
+    @Schema(description = "책 생성일")
+    val createdAt: LocalDateTime,
 ) {
 //    @JsonIgnore
 //    @Transient
@@ -49,6 +53,7 @@ data class ProductResponse @QueryProjection constructor(
         thumbnailImagePaths = product.files.map { it.path },
         seller = SellerResponse(product.seller),
         wishes = product.wishes.size.toLong(),
+        createdAt = product.createdAt,
 //        files = product.files,
     )
 }
