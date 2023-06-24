@@ -4,7 +4,6 @@ import com.github.kimleepark2.domain.entity.product.dto.request.ProductCreateReq
 import com.github.kimleepark2.domain.entity.product.dto.request.ProductPageRequest
 import com.github.kimleepark2.domain.entity.product.dto.request.ProductUpdateRequest
 import com.github.kimleepark2.domain.entity.product.dto.response.ProductResponse
-import com.github.kimleepark2.domain.entity.user.enum.OAuth2Provider
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 

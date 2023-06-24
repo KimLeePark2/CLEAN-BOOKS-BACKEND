@@ -43,6 +43,7 @@ class ProductQueryRepository(
             seller.profileImagePath
         ).`as`("seller"),
         wish.countDistinct(),
+        product.createdAt,
     )
 
     private val selectQuery = queryFactory.select(
@@ -123,6 +124,7 @@ class ProductQueryRepository(
                     thumbnailImagePaths = it.files.map { file -> file.path },
                     seller = SellerResponse(it.seller),
                     wishes = it.wishes.size.toLong(),
+                    createdAt = it.createdAt,
                 )
             }
 
@@ -223,6 +225,7 @@ class ProductQueryRepository(
                     thumbnailImagePaths = it.files.map { file -> file.path },
                     seller = SellerResponse(it.seller),
                     wishes = it.wishes.size.toLong(),
+                    createdAt = it.createdAt,
                 )
             }
 
@@ -268,6 +271,7 @@ class ProductQueryRepository(
                     thumbnailImagePaths = it.files.map { file -> file.path },
                     seller = SellerResponse(it.seller),
                     wishes = it.wishes.size.toLong(),
+                    createdAt = it.createdAt,
                 )
             }
 

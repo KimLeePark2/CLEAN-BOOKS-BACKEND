@@ -3,7 +3,6 @@ package com.github.kimleepark2.domain.entity.user
 import com.github.kimleepark2.common.exception.MyEntityNotFoundException
 import com.github.kimleepark2.common.exception.entities.user.UserNotFoundException
 import com.github.kimleepark2.common.jwt.UserProviderService
-import com.github.kimleepark2.domain.common.findByIdOrThrow
 import com.github.kimleepark2.domain.entity.user.enum.OAuth2Provider
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
