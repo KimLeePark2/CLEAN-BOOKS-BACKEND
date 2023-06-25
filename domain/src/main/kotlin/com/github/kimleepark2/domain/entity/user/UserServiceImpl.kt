@@ -173,7 +173,9 @@ class UserServiceImpl(
 
         fun getAccountFromSecurityContext(): User {
             val authentication: Authentication? = SecurityContextHolder.getContext().authentication
-            val principal = authentication?.principal ?: throw UnauthorizedException("계정이 확인되지 않습니다. 다시 로그인 해주세요.")
+
+            // anonymousUser 로그인 권한이 필요한 요청은 security config에서 관리합시다~
+            val principal = authentication?.principal ?: User()
 //            log.info("principal : $principal")
 //            if (principal == "anonymousUser") throw UnauthorizedException("계정이 확인되지 않습니다. 다시 로그인 해주세요.")
             return principal as User
