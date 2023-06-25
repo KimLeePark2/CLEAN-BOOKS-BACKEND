@@ -144,15 +144,14 @@ class ProductServiceImpl(
         return wish == null
     }
 
-    override fun deleteById(id: Long) {
-        val loginUser = UserServiceImpl.getAccountFromSecurityContext()
-        val sellerId = loginUser.id
+    override fun deleteById(id: Long, sellerId: String, deletedBy: String): Boolean {
         val product: Product = productCommand.findByIdAndSellerId(id, sellerId) ?: throw ProductNotFoundException()
-        product.softDelete(loginUser.username)
+        product.softDelete(deletedBy)
         product.files.forEach { file ->
             awsS3Uploader.delete(file.key)
         }
         productCommand.save(product)
+        return true
     }
 
     override fun getById(id: Long): ProductResponse {
