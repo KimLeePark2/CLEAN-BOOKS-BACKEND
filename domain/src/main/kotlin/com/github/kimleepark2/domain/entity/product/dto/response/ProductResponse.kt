@@ -2,6 +2,7 @@ package com.github.kimleepark2.domain.entity.product.dto.response
 
 import com.github.kimleepark2.domain.entity.product.Product
 import com.github.kimleepark2.domain.entity.product.enums.ProductStatus
+import com.github.kimleepark2.domain.entity.user.User
 import com.github.kimleepark2.domain.entity.user.dto.response.SellerResponse
 import com.querydsl.core.annotations.QueryProjection
 import io.swagger.v3.oas.annotations.media.Schema
@@ -36,6 +37,9 @@ data class ProductResponse @QueryProjection constructor(
 
     @Schema(description = "책 생성일")
     val createdAt: LocalDateTime,
+
+    @Schema(description = "사용자 찜 여부")
+    val isWished: Boolean,
 ) {
 //    @JsonIgnore
 //    @Transient
@@ -44,7 +48,7 @@ data class ProductResponse @QueryProjection constructor(
 //    @Schema(description = "책 썸네일 경로")
 //    var thumbnailImagePaths: List<String> = files.map { it.path }
 
-    constructor(product: Product) : this(
+    constructor(product: Product, customer: User) : this(
         id = product.id,
         title = product.title,
         description = product.description,
@@ -54,6 +58,8 @@ data class ProductResponse @QueryProjection constructor(
         seller = SellerResponse(product.seller),
         wishes = product.wishes.size.toLong(),
         createdAt = product.createdAt,
+        // wishes 중 user가 있다면 true, 없다면 false
+        isWished = product.wishes.any { it.user == customer },
 //        files = product.files,
     )
 }

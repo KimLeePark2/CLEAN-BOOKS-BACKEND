@@ -7,6 +7,7 @@ import com.github.kimleepark2.domain.entity.product.dto.request.ProductPageReque
 import com.github.kimleepark2.domain.entity.product.dto.response.ProductResponse
 import com.github.kimleepark2.domain.entity.product.dto.response.QProductResponse
 import com.github.kimleepark2.domain.entity.user.QUser
+import com.github.kimleepark2.domain.entity.user.QUser.Companion.user
 import com.github.kimleepark2.domain.entity.user.dto.response.SellerResponse
 import com.github.kimleepark2.domain.entity.wish.QWish.Companion.wish
 import com.querydsl.core.BooleanBuilder
@@ -44,6 +45,7 @@ class ProductQueryRepository(
         ).`as`("seller"),
         wish.countDistinct(),
         product.createdAt,
+        wish.user.ne(user),
     )
 
     private val selectQuery = queryFactory.select(
@@ -87,6 +89,7 @@ class ProductQueryRepository(
         condition: ProductPageRequest,
         pageable: Pageable = Pageable.unpaged(),
     ): Page<ProductResponse> {
+        log.info("condition: $condition, pageable: $pageable")
         val query = queryFactory
             .from(product)
             .leftJoin(seller).on(
@@ -125,6 +128,7 @@ class ProductQueryRepository(
                     seller = SellerResponse(it.seller),
                     wishes = it.wishes.size.toLong(),
                     createdAt = it.createdAt,
+                    isWished = it.wishes.any { wish -> wish.user.id != condition.userId },
                 )
             }
 
@@ -191,6 +195,7 @@ class ProductQueryRepository(
     }
 
     fun userSales(userId: String, pageable: Pageable): Page<ProductResponse> {
+        log.info("userSales: $userId, $pageable")
         val query = queryFactory
             .from(product)
             .leftJoin(seller).on(
@@ -226,6 +231,18 @@ class ProductQueryRepository(
                     seller = SellerResponse(it.seller),
                     wishes = it.wishes.size.toLong(),
                     createdAt = it.createdAt,
+                    isWished = try {
+                        log.info("userId: $userId")
+                        it.wishes.first { wish ->
+                            log.info("wish.user.id: ${wish.user.id}")
+                            wish.user.id == userId
+                        }
+                        log.info("isWished: true")
+                        true
+                    } catch (e: NoSuchElementException) {
+                        log.info("isWished: false")
+                        false
+                    },
                 )
             }
 
@@ -237,6 +254,7 @@ class ProductQueryRepository(
     }
 
     fun userWishes(userId: String, pageable: Pageable): Page<ProductResponse> {
+        log.info("userWishes: $userId, $pageable")
         val query = queryFactory
             .from(product)
             .leftJoin(seller).on(
@@ -272,6 +290,18 @@ class ProductQueryRepository(
                     seller = SellerResponse(it.seller),
                     wishes = it.wishes.size.toLong(),
                     createdAt = it.createdAt,
+                    isWished = try {
+                        log.info("userId: $userId")
+                        it.wishes.first { wish ->
+                            log.info("wish.user.id: ${wish.user.id}")
+                            wish.user.id == userId
+                        }
+                        log.info("isWished: true")
+                        true
+                    } catch (e: NoSuchElementException) {
+                        log.info("isWished: false")
+                        false
+                    },
                 )
             }
 

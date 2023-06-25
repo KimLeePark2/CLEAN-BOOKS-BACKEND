@@ -125,6 +125,26 @@ class ProductRest(
         ApiResponse(responseCode = "400", description = "잘못된 요청 정보"),
     )
     @Operation(
+        summary = "상품 삭제",
+        description = "상품을 삭제한다. 현재 자신만 가능(관리자도 불가)"
+    )
+    @DeleteMapping("/{productId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    fun deleteProduct(
+        @PathVariable productId: Long,
+    ): Boolean {
+        val loginUser = UserServiceImpl.getAccountFromSecurityContext()
+        val sellerId = loginUser.id
+        val deletedBy = loginUser.id
+        return productService.deleteById(productId, sellerId, deletedBy)
+    }
+
+    @ApiResponses(
+        ApiResponse(responseCode = "200", description = "성공"),
+        ApiResponse(responseCode = "400", description = "잘못된 요청 정보"),
+    )
+    @Operation(
         summary = "상품 단일 상세조회",
         description = "상품을 페이지네이션 처리된 리스트를 조회한다."
     )
@@ -195,6 +215,6 @@ class ProductRest(
         val loginUser = UserServiceImpl.getAccountFromSecurityContext()
         val userId = loginUser.id
         val pageable = pageRequest.of()
-        return productService.userSales(userId, pageable)
+        return productService.userWishes(userId, pageable)
     }
 }
