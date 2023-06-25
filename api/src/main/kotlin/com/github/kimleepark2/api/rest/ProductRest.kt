@@ -195,6 +195,6 @@ class ProductRest(
         val loginUser = UserServiceImpl.getAccountFromSecurityContext()
         val userId = loginUser.id
         val pageable = pageRequest.of()
-        return productService.userSales(userId, pageable)
+        return productService.userWishes(userId, pageable)
     }
 }

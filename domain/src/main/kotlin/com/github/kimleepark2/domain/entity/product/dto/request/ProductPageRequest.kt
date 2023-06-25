@@ -1,5 +1,6 @@
 package com.github.kimleepark2.domain.entity.product.dto.request
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.github.kimleepark2.common.BaseCondition
 import com.github.kimleepark2.common.util.EnumValidation
 import com.github.kimleepark2.domain.entity.product.enums.ProductStatus
@@ -28,4 +29,9 @@ data class ProductPageRequest(
 //    @Schema(description = "최대 판매 가격, MIN ~ 999_999_999")
 //    @Max(value = 999_999_999, message = "최대 판매 가격은 999_999_999 이하로 입력해주세요.")
 //    var maxPrice: Int?,
-) : BaseCondition()
+) : BaseCondition() {
+    @JsonIgnore
+    @Transient
+    // @Schema(description = "고객 아이디, 찜 여부 확인을 위해 사용")
+    val userId: String? = null
+}

@@ -9,6 +9,7 @@ import com.github.kimleepark2.domain.entity.product.dto.request.ProductPageReque
 import com.github.kimleepark2.domain.entity.product.dto.request.ProductUpdateRequest
 import com.github.kimleepark2.domain.entity.product.dto.response.ProductResponse
 import com.github.kimleepark2.domain.entity.product.enums.ProductStatus
+import com.github.kimleepark2.domain.entity.user.User
 import com.github.kimleepark2.domain.entity.user.UserRepository
 import com.github.kimleepark2.domain.entity.user.UserServiceImpl
 import com.github.kimleepark2.domain.entity.wish.WishRepository
@@ -155,9 +156,14 @@ class ProductServiceImpl(
     }
 
     override fun getById(id: Long): ProductResponse {
+        val customerId = UserServiceImpl.getAccountFromSecurityContext().id
+        val customer = userCommand.findById(customerId).orElseThrow { throw UserNotFoundException() }
+        return getById(id, customer)
+    }
+
+    private fun getById(id: Long, customer: User): ProductResponse {
         val product = productCommand.findById(id).orElseThrow { throw ProductNotFoundException("상품을 찾을 수 없습니다.") }
-        return ProductResponse(product)
-//        return productQuery.getById(id)
+        return ProductResponse(product, customer)
     }
 
     override fun page(productPageRequest: ProductPageRequest, pageable: Pageable): Page<ProductResponse> {
