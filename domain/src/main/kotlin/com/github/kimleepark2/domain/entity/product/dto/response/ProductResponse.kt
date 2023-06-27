@@ -48,7 +48,7 @@ data class ProductResponse @QueryProjection constructor(
 //    @Schema(description = "책 썸네일 경로")
 //    var thumbnailImagePaths: List<String> = files.map { it.path }
 
-    constructor(product: Product, customer: User) : this(
+    constructor(product: Product, customer: User?) : this(
         id = product.id,
         title = product.title,
         description = product.description,

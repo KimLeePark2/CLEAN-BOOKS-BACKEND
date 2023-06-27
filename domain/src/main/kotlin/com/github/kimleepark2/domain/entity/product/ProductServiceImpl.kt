@@ -21,6 +21,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class ProductServiceImpl(
@@ -156,11 +157,11 @@ class ProductServiceImpl(
 
     override fun getById(id: Long): ProductResponse {
         val customerId = UserServiceImpl.getAccountFromSecurityContext().id
-        val customer = userCommand.findById(customerId).orElseThrow { throw UserNotFoundException() }
+        val customer = userCommand.findByIdOrNull(customerId)
         return getById(id, customer)
     }
 
-    private fun getById(id: Long, customer: User): ProductResponse {
+    private fun getById(id: Long, customer: User?): ProductResponse {
         val product = productCommand.findById(id).orElseThrow { throw ProductNotFoundException("상품을 찾을 수 없습니다.") }
         return ProductResponse(product, customer)
     }
